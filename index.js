@@ -23,11 +23,11 @@ onAuthStateChanged(auth, (user) => {
             // User is signed in
             window.location.href = "landingPage.html";
         } else {
-            window.location.href = "login.html";
+            window.location.href = "login_user.html";
         }
     } else {
         // No user is signed in
         console.log("No user is logged in.");
-        window.location.href = "login.html";
+        window.location.href = "login_user.html";
     }
 });
