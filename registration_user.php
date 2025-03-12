@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+    <link rel="stylesheet" type="text/css" href="registration_user.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form id="registrationForm" action="register.php" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="password">Password:</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword('password')">&#128068;</span>
+            </div><br>
+            
+            <label for="confirmPassword">Confirm Password:</label>
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="toggle-password" onclick="togglePassword('confirmPassword')">&#128068;</span>
+            </div><br>
+            
+            <div id="errorMessage" class="error-message"></div>
+            <button type="submit" onclick="return validatePasswords()">Register</button>
+        </form>
+        
+        <p class="login-prompt">
+            Already have an account? 
+            <a href="login_user.php">Login here</a>.
+        </p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
