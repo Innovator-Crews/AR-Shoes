@@ -1,0 +1,141 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2c3e50, #2c3e50);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95); /* Slightly less transparency */
+    padding: 50px; /* Increased padding */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+    width: 90%;
+    max-width: 400px; /* Increased maximum width */
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    color: #263238;
+    margin-bottom: 35px; /* Increased margin */
+    font-size: 28px; /* Slightly larger font */
+    font-weight: 600; /* Semi-bold */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Increased margin */
+    font-weight: 600;
+    color: #263238;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 12px; /* Increased padding */
+    margin-bottom: 25px; /* Increased margin */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* More rounded corners */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    font-size: 16px; /* Slightly larger font */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Subtle focus shadow */
+}
+
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* Increased margin */
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+    flex-grow: 0.915;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    width: 200px;
+    box-sizing: border-box;
+}
+
+#togglePassword {
+    background: #e0e0e0;
+    color: #263238;
+    border: none;
+    padding: 12px 18px; /* Increased padding */
+    border-radius: 8px; /* More rounded corners */
+    cursor: pointer;
+    min-width: 70px; /* Increased minimum width */
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#togglePassword:hover {
+    background-color: #d0d0d0;
+}
+
+button[type="submit"] {
+    background: #2c3e50;
+    color: white;
+    width: 95%;
+    padding: 14px 25px; /* Increased padding */
+    border: none;
+    border-radius: 8px; /* More rounded corners */
+    cursor: pointer;
+    font-size: 18px; /* Larger font */
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+}
+
+button[type="submit"]:hover {
+    background-color: #1a252f;
+}
+
+/* Media Queries for Responsiveness */
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 40px;
+    }
+
+    .password-wrapper input[type="password"],
+    .password-wrapper input[type="text"] {
+        flex-grow: 0.89;
+        width: auto;
+    }
+}
+
+@media (max-width: 400px) {
+    .login-container{
+        padding: 30px;
+    }
+    button[type="submit"] {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+}

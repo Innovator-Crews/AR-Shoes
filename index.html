@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Shop Portal</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Find Your Perfect Pair</h1>
+        <p>Explore a wide range of shoes from local shops and top brands.</p>
+    </header>
+
+    <div class="maincontainer">
+        <section class="featured-shoes">
+            <h2>New Arrivals</h2>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <div class="carousel-item">
+                        <img src="images/shoe1.png" alt="Shoe 1" onclick="openModal('images/shoe1.png')">
+                        <p>Shoe 1</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe2.png" alt="Shoe 2" onclick="openModal('images/shoe2.png')">
+                        <p>Shoe 2</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe3.png" alt="Shoe 3" onclick="openModal('images/shoe3.png')">
+                        <p>Shoe 3</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe1.png" alt="Shoe 1" onclick="openModal('images/shoe1.png')">
+                        <p>Shoe 1</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe2.png" alt="Shoe 2" onclick="openModal('images/shoe2.png')">
+                        <p>Shoe 2</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe3.png" alt="Shoe 3" onclick="openModal('images/shoe3.png')">
+                        <p>Shoe 3</p>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/shoe1.png" alt="Shoe 1" onclick="openModal('images/shoe1.png')">
+                        <p>Shoe 1</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="smallcontainer">
+            <section class="shop-categories">
+                <h2>Shop by Category</h2>
+                <div class="grid">
+                    <div class="category-card">
+                        <img src="images/shoe1.png" alt="Sneakers">
+                        <h3>Sneakers</h3>
+                        <p>Find the latest styles and comfort.</p>
+                        <a href="#">Explore Sneakers</a>
+                    </div>
+                    <div class="category-card">
+                        <img src="images/shoe2.png" alt="Formal Shoes">
+                        <h3>Formal Shoes</h3>
+                        <p>Elegant footwear for any occasion.</p>
+                        <a href="#">Explore Formal Shoes</a>
+                    </div>
+                    <div class="category-card">
+                        <img src="images/shoe3.png" alt="Boots">
+                        <h3>Boots</h3>
+                        <p>Durable and stylish boots for all seasons.</p>
+                        <a href="#">Explore Boots</a>
+                    </div>
+                    <div class="category-card">
+                        <img src="images/shoe1.png" alt="Sandals">
+                        <h3>Sandals</h3>
+                        <p>Comfortable and trendy sandals for summer.</p>
+                        <a href="#">Explore Sandals</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="smallcontainer">
+            <section class="ar-try-on">
+                <h2>Try Shoes with AR</h2>
+                <p>Experience our mobile AR try-on feature! See how shoes look on your feet before you buy.</p>
+                <div class="ar-models">
+                    <div class="ar-model-item">
+                        <img src="images/shoe1.png" alt="AR Model 1">
+                        <p>Classic Sneakers</p>
+                    </div>
+                    <div class="ar-model-item">
+                        <img src="images/shoe2.png" alt="AR Model 2">
+                        <p>Elegant Loafers</p>
+                    </div>
+                    <div class="ar-model-item">
+                        <img src="images/shoe3.png" alt="AR Model 3">
+                        <p>Hiking Boots</p>
+                    </div>
+                </div>
+                <a href="#" class="ar-try-button">Try AR Now</a>
+            </section>
+        </div>
+
+        <div class="smallcontainer">
+            <section class="featured-shops">
+                <h2>Featured Shops</h2>
+                <div class="grid">
+                    <div class="card">
+                        <img src="images/shoe1.png" alt="Shop 1">
+                        <h3>Urban Sneakers</h3>
+                        <p>Premium sneakers from top brands.</p>
+                    </div>
+                    <div class="card">
+                        <img src="images/shoe2.png" alt="Shop 2">
+                        <h3>Classic Footwear</h3>
+                        <p>Timeless styles for every occasion.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    
+
+    <div class="cta">
+        <a href="register.html">Register Your Shop</a>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
+        <a href="admin_login.html">Are you an admin? Login here</a>
+    </footer>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        function openModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').classList.add('active'); // Add 'active' class
+        }
+    
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active'); // Remove 'active' class
+        }
+    </script>
+</body>
+</html>
