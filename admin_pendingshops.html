@@ -578,7 +578,7 @@
             // --- Shop approval/rejection functions ---
             function approveShop(row) {
                 const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[0]?.textContent || '[Unknown Shop]';
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
 
                 console.log(`Approving shop ID: ${shopId}, Name: ${shopName}`); // Log action
 
@@ -600,7 +600,7 @@
 
             function rejectShop(row) {
                 const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[0]?.textContent || '[Unknown Shop]';
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
 
                 // Use prompt to get the reason
                 const reason = prompt(`Please enter the reason for rejecting "${shopName}":`);
