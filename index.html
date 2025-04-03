@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Shop Portal</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-top animate-fade">
+                <div class="logo">
+                    <i class="fas fa-shoe-prints"></i>
+                    <span>Shoe Shop Portal</span>
+                </div>
+                <a href="user_login.html" class="login-btn">Login</a>
+            </div>
+            <h1 class="animate-fade delay-1">Find Your Perfect Pair</h1>
+            <p class="animate-fade delay-2">Explore a wide range of shoes from local shops and top brands.</p>
+            <div class="search-bar animate-fade">
+                <input type="text" placeholder="Search for shoes, brands, or shops...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="maincontainer">
+
+        <!-- User Options Section -->
+        <section class="user-options">
+            <div class="backgroundimg animate-left">
+                <div class="option-card">
+                    <h2>For Shop Owners</h2>
+                    <ul>
+                        <li>Register your shop and showcase your products</li>
+                        <li>Gain visibility and attract more customers</li>
+                        <li>Manage your shop profile and update offerings</li>
+                    </ul>
+                    <a href="shop_register.html" class="useroptionbtn">Register Your Shop</a>
+                </div>
+                <div class="option-image">
+                    <img src="images/shopowner.jpg" alt="Shop Owner">
+                </div>
+            </div>
+            <div class="backgroundimg animate-right">
+                <div class="option-card">
+                    <h2>For Customers</h2>
+                    <ul>
+                        <li>Browse multiple shops in one place</li>
+                        <li>Discover trending and featured shoes</li>
+                        <li>Connect with shop owners easily</li>
+                    </ul>
+                    <a href="customer_register.html" class="useroptionbtn">Register as a Customer</a>
+                </div>
+                <div class="option-image">
+                    <img src="images/customers.jpg" alt="Shop Owner">
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Banner -->
+        <section class="stats-banner">
+            <div class="stat-item animate-fade delay-1">
+                <h3>10,000+</h3>
+                <p>Shoes Available</p>
+            </div>
+            <div class="stat-item animate-fade delay-2">
+                <h3>200+</h3>
+                <p>Local Shops</p>
+            </div>
+            <div class="stat-item animate-fade delay-3">
+                <h3>50+</h3>
+                <p>Brands</p>
+            </div>
+            <div class="stat-item animate-fade delay-4">
+                <h3>24/7</h3>
+                <p>Customer Support</p>
+            </div>
+        </section>
+        
+        <!-- Featured Shoes Carousel -->
+        <section class="featured-shoes">
+            <div class="section-header">
+                <h2>New Arrivals</h2>
+                <a href="devonprocess.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="carousel">
+                <div class="carousel-container">
+                    <!-- Original Items -->
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe1.png" alt="Shoe 1" onclick="openModal('images/shoe1.png')">
+                        <p>Shoe 1</p>
+                    </div>
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe2.png" alt="Shoe 2" onclick="openModal('images/shoe2.png')">
+                        <p>Shoe 2</p>
+                    </div>
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe3.png" alt="Shoe 3" onclick="openModal('images/shoe3.png')">
+                        <p>Shoe 3</p>
+                    </div>
+                    <!-- Duplicate Items for Seamless Looping -->
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe1.png" alt="Shoe 1" onclick="openModal('images/shoe1.png')">
+                        <p>Shoe 1</p>
+                    </div>
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe2.png" alt="Shoe 2" onclick="openModal('images/shoe2.png')">
+                        <p>Shoe 2</p>
+                    </div>
+                    <div class="carousel-item animate-fade">
+                        <img src="images/shoe3.png" alt="Shoe 3" onclick="openModal('images/shoe3.png')">
+                        <p>Shoe 3</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Categories Section -->
+         <div class="smallcontainer">
+            <section class="shop-categories">
+                <div class="section-header">
+                    <h2>Shop by Category</h2>
+                    <a href="devonprocess.html" class="view-all">All Categories <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="grid">
+                    <div class="category-card animate-fade delay-1">
+                        <img src="images/shoe1.png" alt="Sneakers">
+                        <h3>Sneakers</h3>
+                        <p>Find the latest styles and comfort.</p>
+                        <a href="devonprocess.html">Explore Sneakers</a>
+                    </div>
+                    <div class="category-card animate-fade delay-2">
+                        <img src="images/shoe2.png" alt="Formal Shoes">
+                        <h3>Formal Shoes</h3>
+                        <p>Elegant footwear for any occasion.</p>
+                        <a href="devonprocess.html">Explore Formal Shoes</a>
+                    </div>
+                    <div class="category-card animate-fade delay-3">
+                        <img src="images/shoe3.png" alt="Boots">
+                        <h3>Boots</h3>
+                        <p>Durable and stylish boots for all seasons.</p>
+                        <a href="devonprocess.html">Explore Boots</a>
+                    </div>
+                    <div class="category-card animate-fade delay-4">
+                        <img src="images/shoe1.png" alt="Sandals">
+                        <h3>Sandals</h3>
+                        <p>Comfortable and trendy sandals for summer.</p>
+                        <a href="devonprocess.html">Explore Sandals</a>
+                    </div>
+                    <div class="category-card animate-fade delay-5">
+                        <img src="images/shoe1.png" alt="Sneakers">
+                        <h3>Sneakers</h3>
+                        <p>Find the latest styles and comfort.</p>
+                        <a href="devonprocess.html">Explore Sneakers</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-container">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Found the perfect running shoes through this portal. The AR try-on feature helped me make the right choice!"</p>
+                    <div class="customer">
+                        <img src="images/shoe2.png" alt="Customer">
+                        <h4>Sarah Johnson</h4>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Found the perfect running shoes through this portal. The AR try-on feature helped me make the right choice!"</p>
+                    <div class="customer">
+                        <img src="images/shoe2.png" alt="Customer">
+                        <h4>Sarah Johnson</h4>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Found the perfect running shoes through this portal. The AR try-on feature helped me make the right choice!"</p>
+                    <div class="customer">
+                        <img src="images/shoe2.png" alt="Customer">
+                        <h4>Sarah Johnson</h4>
+                    </div>
+                </div>
+                <!-- Add 2 more testimonial cards -->
+            </div>
+        </section>
+
+       <!-- AR Try-On Section -->
+        <section class="ar-try-on">
+            <div class="ar-content">
+                <div class="ar-text animate-left">
+                    <h2>Try Before You Buy</h2>
+                    <p>Experience our revolutionary AR try-on feature! See how shoes look on your feet before purchasing.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Realistic 3D visualization</li>
+                        <li><i class="fas fa-check-circle"></i> Works on any smartphone</li>
+                        <li><i class="fas fa-check-circle"></i> Save your favorite looks</li>
+                    </ul>
+                    <a href="#" class="ar-try-button">Try AR Now <i class="fas fa-mobile-alt"></i></a>
+                </div>
+                <div class="ar-image animate-right animate-float">
+                    <img src="images/shoe2.png" alt="AR Demo">
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to get exclusive offers and new arrivals</p>
+                <form>
+                    <input type="email" placeholder="Your email address">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+       <!-- Featured Shops -->
+       <div class="smallcontainer">
+        <section class="featured-shops">
+            <div class="section-header">
+                <h2>Featured Shops</h2>
+                <a href="#" class="view-all">View All Shops <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="grid">
+                    <div class="card">
+                        <img src="images/shoe1.png" alt="Shop 1">
+                        <h3>Urban Sneakers</h3>
+                        <p>Premium sneakers from top brands.</p>
+                    </div>
+                    <div class="card">
+                        <img src="images/shoe2.png" alt="Shop 2">
+                        <h3>Classic Footwear</h3>
+                        <p>Timeless styles for every occasion.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta">
+        <div class="cta-content">
+            <h3>Ready to showcase your products?</h3>
+            <a href="register.html" class="cta-button">Register Your Shop Now</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Connecting customers with local shoe shops since 2020.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="devonprocess.html">Home</a></li>
+                    <li><a href="devonprocess.html">Shops</a></li>
+                    <li><a href="devonprocess.html">Categories</a></li>
+                    <li><a href="devonprocess.html">AR Try-On</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> info@shoeshopportal.com</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-x"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
+            <a href="admin_login.html">Are you an admin? Login here</a>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    
+
+    <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const carouselContainer = document.querySelector(".carousel-container");
+        
+        // Clone the items for a smooth loop
+        const items = carouselContainer.innerHTML;
+        carouselContainer.innerHTML += items; // Duplicate items
+
+        // Set up animation reset when halfway through
+        let scrollSpeed = 0.85; // Adjust for smooth speed
+        function moveCarousel() {
+            carouselContainer.style.transform = `translateX(-${scrollSpeed}px)`;
+            scrollSpeed += 1;
+            if (scrollSpeed >= carouselContainer.scrollWidth / 2) {
+                scrollSpeed = 0; // Reset to create an infinite loop effect
+            }
+            requestAnimationFrame(moveCarousel);
+        }
+        moveCarousel();
+    });
+
+        function openModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').classList.add('active'); // Add 'active' class
+        }
+    
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active'); // Remove 'active' class
+        }
+    </script>
+    
+</body>
+</html>

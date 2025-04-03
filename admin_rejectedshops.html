@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Shops - Admin</title>
+    <link rel="stylesheet" href="css/admin_rejectedshops.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+    
+    <!-- Confirmation Dialog -->
+    <div id="confirmationDialog" class="confirmation-dialog">
+        <p id="dialogMessage">Are you sure you want to perform this action?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelAction" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmAction" class="approve-btn"><i class="fas fa-check"></i> Confirm</button>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Dialog -->
+    <div id="logoutDialog" class="confirmation-dialog">
+        <p>Are you sure you want to logout?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelLogout" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmLogout" class="reject-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <nav>
+        <div class="nav-header">
+            <ul class="nav-links">
+                <li><a href="admin_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="admin_pendingshops.html"><i class="fas fa-clock"></i> Pending Shops</a></li>
+                <li><a href="admin_approvedshops.html"><i class="fas fa-check-circle"></i> Approved Shops</a></li>
+                <li><a href="admin_rejectedshops.html" class="active"><i class="fas fa-times-circle"></i> Rejected Shops</a></li>
+                <li><a href="admin_login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="right-menu">
+                <span class="username-display">Admin</span>
+                <div class="menu-btn"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container animate-fade">
+        <h1 class="animate-slide"><i class="fas fa-times-circle"></i> Rejected Shops</h1>
+
+        <div class="search-container animate-slide">
+            <input type="text" id="shopSearch" placeholder="Search shops by id, name, owner, or email..." class="search-input">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            <button id="clearSearch" class="clear-btn"><i class="fas fa-eraser"></i> Clear</button>
+        </div>
+
+        <section id="rejected-shops" class="animate-fade">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-alt"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-day"></i> Date Submitted</th>
+                            <th><i class="fas fa-comment-alt"></i> Reason</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-id="41" class="animate-fade">
+                            <td>041</td>
+                            <td>Fake Sneakers</td>
+                            <td>Mark Counter</td>
+                            <td>markc@example.com</td>
+                            <td><a href="uploads/permit41.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 10, 2025</td>
+                            <td>Incomplete Documentation</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="42" class="animate-fade">
+                            <td>042</td>
+                            <td>Quick Kicks</td>
+                            <td>Sarah Miller</td>
+                            <td>sarahm@example.com</td>
+                            <td><a href="uploads/permit42.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 9, 2025</td>
+                            <td>Fake business permit</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="43" class="animate-fade">
+                            <td>043</td>
+                            <td>Fast Feet Co.</td>
+                            <td>James Wilson</td>
+                            <td>jamesw@example.com</td>
+                            <td><a href="uploads/permit43.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 8, 2025</td>
+                            <td>Selling counterfeit products</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="44" class="animate-fade">
+                            <td>044</td>
+                            <td>Urban Steps</td>
+                            <td>Lisa Johnson</td>
+                            <td>lisaj@example.com</td>
+                            <td><a href="uploads/permit44.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 7, 2025</td>
+                            <td>Multiple customer complaints</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="45" class="animate-fade">
+                            <td>045</td>
+                            <td>Elite Sneakers</td>
+                            <td>David Brown</td>
+                            <td>davidb@example.com</td>
+                            <td><a href="uploads/permit45.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 6, 2025</td>
+                            <td>Violated terms of service</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="46" class="animate-fade">
+                            <td>046</td>
+                            <td>City Kicks</td>
+                            <td>Emily Davis</td>
+                            <td>emilyd@example.com</td>
+                            <td><a href="uploads/permit46.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 5, 2025</td>
+                            <td>Invalid tax information</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="47" class="animate-fade">
+                            <td>047</td>
+                            <td>Premium Steps</td>
+                            <td>Michael Taylor</td>
+                            <td>michaelt@example.com</td>
+                            <td><a href="uploads/permit47.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 4, 2025</td>
+                            <td>Failed verification process</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="48" class="animate-fade">
+                            <td>048</td>
+                            <td>Golden Shoes</td>
+                            <td>Jennifer Lee</td>
+                            <td>jenniferl@example.com</td>
+                            <td><a href="uploads/permit48.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 3, 2025</td>
+                            <td>Duplicate application</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="49" class="animate-fade">
+                            <td>049</td>
+                            <td>Street Style</td>
+                            <td>Robert Clark</td>
+                            <td>robertc@example.com</td>
+                            <td><a href="uploads/permit49.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 2, 2025</td>
+                            <td>Business location not verified</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="50" class="animate-fade">
+                            <td>050</td>
+                            <td>Trendy Footwear</td>
+                            <td>Patricia Hall</td>
+                            <td>patriciah@example.com</td>
+                            <td><a href="uploads/permit50.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 1, 2025</td>
+                            <td>Incomplete application</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="51" class="animate-fade">
+                            <td>051</td>
+                            <td>Luxury Kicks</td>
+                            <td>Daniel Young</td>
+                            <td>daniely@example.com</td>
+                            <td><a href="uploads/permit51.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 28, 2025</td>
+                            <td>Suspicious activity</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="52" class="animate-fade">
+                            <td>052</td>
+                            <td>Sporty Steps</td>
+                            <td>Nancy Allen</td>
+                            <td>nancya@example.com</td>
+                            <td><a href="uploads/permit52.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 27, 2025</td>
+                            <td>Invalid business license</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="53" class="animate-fade">
+                            <td>053</td>
+                            <td>Modern Sneakers</td>
+                            <td>Thomas Walker</td>
+                            <td>thomasw@example.com</td>
+                            <td><a href="uploads/permit53.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 26, 2025</td>
+                            <td>Fraudulent documents</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="54" class="animate-fade">
+                            <td>054</td>
+                            <td>Classic Kicks</td>
+                            <td>Karen White</td>
+                            <td>karenw@example.com</td>
+                            <td><a href="uploads/permit54.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 25, 2025</td>
+                            <td>Business category mismatch</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="55" class="animate-fade">
+                            <td>055</td>
+                            <td>Bold Footwear</td>
+                            <td>Christopher Harris</td>
+                            <td>christopherh@example.com</td>
+                            <td><a href="uploads/permit55.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 24, 2025</td>
+                            <td>Previous ban violation</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="56" class="animate-fade">
+                            <td>056</td>
+                            <td>Fresh Steps</td>
+                            <td>Matthew Martin</td>
+                            <td>matthewm@example.com</td>
+                            <td><a href="uploads/permit56.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 23, 2025</td>
+                            <td>Unverified identity</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="57" class="animate-fade">
+                            <td>057</td>
+                            <td>Urban Trend</td>
+                            <td>Amanda Scott</td>
+                            <td>amandas@example.com</td>
+                            <td><a href="uploads/permit57.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 22, 2025</td>
+                            <td>Inappropriate content</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="58" class="animate-fade">
+                            <td>058</td>
+                            <td>Prime Kicks</td>
+                            <td>Richard King</td>
+                            <td>richardk@example.com</td>
+                            <td><a href="uploads/permit58.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 21, 2025</td>
+                            <td>Policy violation</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="59" class="animate-fade">
+                            <td>059</td>
+                            <td>Elite Steps</td>
+                            <td>Jessica Green</td>
+                            <td>jessicag@example.com</td>
+                            <td><a href="uploads/permit59.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 20, 2025</td>
+                            <td>Rejected by admin</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                        <tr data-id="60" class="animate-fade">
+                            <td>060</td>
+                            <td>City Footwear</td>
+                            <td>Kevin Adams</td>
+                            <td>kevina@example.com</td>
+                            <td><a href="uploads/permit60.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 19, 2025</td>
+                            <td>Failed background check</td>
+                            <td>
+                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="pagination animate-fade">
+            <button class="pagination-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+            <button class="pagination-btn page-btn active">1</button>
+            <button class="pagination-btn" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Menu toggle functionality
+            const menuBtn = document.querySelector(".menu-btn");
+            const navLinks = document.querySelector(".nav-links");
+            
+            menuBtn?.addEventListener("click", function() {
+                navLinks.classList.toggle("active");
+                menuBtn.innerHTML = navLinks.classList.contains("active") ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+
+            // Clear button functionality
+            const clearBtn = document.getElementById("clearSearch");
+            const searchInput = document.getElementById("shopSearch");
+            
+            clearBtn?.addEventListener("click", function(e) {
+                e.preventDefault();
+                searchInput.value = "";
+                searchInput.focus();
+                showNotification("Search cleared", "success");
+            });
+
+            // Pagination variables and functions
+            let currentPage = 1;
+            const rowsPerPage = 10;
+            const tableBody = document.querySelector("#rejected-shops tbody");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const paginationContainer = document.querySelector(".pagination");
+
+            function setupPagination() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                
+                // Clear existing page buttons (except prev/next)
+                document.querySelectorAll('.page-btn').forEach(btn => btn.remove());
+                
+                // Don't show pagination if only one page
+                if (pageCount <= 1) {
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+                
+                // Create page buttons (show max 5 pages at a time)
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages/2));
+                let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                
+                // Adjust if we're at the start or end
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    if (currentPage < pageCount/2) {
+                        endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                    } else {
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                    }
+                }
+                
+                // Add first page and ellipsis if needed
+                if (startPage > 1) {
+                    createPageButton(1);
+                    if (startPage > 2) {
+                        addEllipsis();
+                    }
+                }
+                
+                // Add visible pages
+                for (let i = startPage; i <= endPage; i++) {
+                    createPageButton(i);
+                }
+                
+                // Add last page and ellipsis if needed
+                if (endPage < pageCount) {
+                    if (endPage < pageCount - 1) {
+                        addEllipsis();
+                    }
+                    createPageButton(pageCount);
+                }
+                
+                updateTableDisplay();
+                updatePaginationButtons();
+            }
+
+            function createPageButton(pageNumber) {
+                const pageBtn = document.createElement("button");
+                pageBtn.className = "pagination-btn page-btn";
+                pageBtn.textContent = pageNumber;
+
+                if (pageNumber === currentPage) {
+                    pageBtn.classList.add("active");
+                }
+
+                pageBtn.addEventListener("click", () => {
+                    currentPage = pageNumber;
+                    setupPagination();
+                });
+
+                paginationContainer.insertBefore(pageBtn, nextBtn);
+            }
+
+            function addEllipsis() {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.className = 'pagination-ellipsis';
+                paginationContainer.insertBefore(ellipsis, nextBtn);
+            }
+
+            function updateTableDisplay() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                if (rows.length === 0) return;
+                
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+                });
+            }
+
+            function updatePaginationButtons() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage >= pageCount || pageCount === 0;
+
+                const pageButtons = paginationContainer.querySelectorAll(".page-btn");
+                pageButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    if (parseInt(btn.textContent) === currentPage) {
+                        btn.classList.add("active");
+                    }
+                });
+            }
+
+            prevBtn?.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    setupPagination();
+                }
+            });
+
+            nextBtn?.addEventListener("click", () => {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    setupPagination();
+                }
+            });
+
+            // Action confirmation dialog
+            let currentAction = null;
+            let currentRow = null;
+
+            function confirmAction(button, actionType) {
+                currentRow = button.closest("tr");
+                if (!currentRow) return;
+                
+                currentAction = actionType;
+
+                const shopName = currentRow.cells[1]?.textContent || '[Unknown Shop]';
+                const dialog = document.getElementById("confirmationDialog");
+                const dialogMessage = document.getElementById("dialogMessage");
+                const overlay = document.getElementById("overlay");
+
+                if (!dialog || !dialogMessage || !overlay) return;
+
+                dialogMessage.textContent = `Are you sure you want to ${actionType} "${shopName}"?`;
+                
+                dialog.classList.add("show");
+                overlay.classList.add("show");
+            }
+
+            // Event delegation for action buttons
+            tableBody?.addEventListener('click', function(event) {
+                const target = event.target.closest('button');
+                if (!target) return;
+                
+                if (target.classList.contains('approve-btn') && target.id !== 'confirmAction') {
+                    confirmAction(target, 'approve');
+                }
+            });
+
+            // Confirmation dialog buttons
+            document.getElementById("confirmAction")?.addEventListener("click", function() {
+                const dialog = document.getElementById("confirmationDialog");
+                const overlay = document.getElementById("overlay");
+
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                if (currentAction === "approve" && currentRow) {
+                    approveShop(currentRow);
+                }
+
+                currentAction = null;
+                currentRow = null;
+            });
+
+            document.getElementById("cancelAction")?.addEventListener("click", function() {
+                const dialog = document.getElementById("confirmationDialog");
+                const overlay = document.getElementById("overlay");
+
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                currentAction = null;
+                currentRow = null;
+            });
+
+            // Shop approval function
+            function approveShop(row) {
+                const shopId = row.getAttribute("data-id");
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
+
+                // Simulate API call
+                setTimeout(() => {
+                    row.remove();
+                    showNotification(`"${shopName}" has been approved`, "success");
+                    
+                    // Recalculate pagination
+                    if (tableBody && tableBody.querySelectorAll("tr").length === 0 && currentPage > 1) {
+                        currentPage--;
+                    }
+                    setupPagination();
+                }, 300);
+            }
+
+            // Notification function
+            function showNotification(message, type) {
+                const notification = document.getElementById("notification");
+                if (!notification) return;
+                
+                notification.textContent = message;
+                notification.className = 'notification';
+                notification.classList.add(type, 'show');
+
+                setTimeout(() => {
+                    notification.classList.remove("show");
+                }, 3000);
+            }
+
+            // Initialize pagination
+            setupPagination();
+
+            // Logout functionality
+            const logoutLink = document.querySelector('a[href="admin_login.html"]');
+            const logoutDialog = document.getElementById('logoutDialog');
+            const cancelLogout = document.getElementById('cancelLogout');
+            const confirmLogout = document.getElementById('confirmLogout');
+
+            logoutLink?.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutDialog.classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            });
+
+            cancelLogout?.addEventListener('click', function() {
+                logoutDialog.classList.remove('show');
+                document.getElementById('overlay').classList.remove('show');
+            });
+
+            confirmLogout?.addEventListener('click', function() {
+                window.location.href = 'admin_login.html';
+            });
+
+            // Close dialogs when clicking overlay
+            document.getElementById('overlay')?.addEventListener('click', function() {
+                document.getElementById('confirmationDialog').classList.remove('show');
+                logoutDialog.classList.remove('show');
+                this.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>

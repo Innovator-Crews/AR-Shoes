@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approved Shops - Admin</title>
+    <link rel="stylesheet" href="css/admin_approvedshops.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+    
+    <!-- Confirmation Dialog -->
+    <div id="confirmationDialog" class="confirmation-dialog">
+        <p id="dialogMessage">Are you sure you want to perform this action?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelAction" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmAction" class="reject-btn"><i class="fas fa-check"></i> Confirm</button>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Dialog -->
+    <div id="logoutDialog" class="confirmation-dialog">
+        <p>Are you sure you want to logout?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelLogout" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmLogout" class="reject-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <nav>
+        <div class="nav-header">
+            <ul class="nav-links">
+                <li><a href="admin_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="admin_pendingshops.html"><i class="fas fa-clock"></i> Pending Shops</a></li>
+                <li><a href="admin_approvedshops.html" class="active"><i class="fas fa-check-circle"></i> Approved Shops</a></li>
+                <li><a href="admin_rejectedshops.html"><i class="fas fa-times-circle"></i> Rejected Shops</a></li>
+                <li><a href="admin_login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="right-menu">
+                <span class="username-display">Admin</span>
+                <div class="menu-btn"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container animate-fade">
+        <h1 class="animate-slide"><i class="fas fa-check-circle"></i> Approved Shops</h1>
+
+        <div class="search-container animate-slide">
+            <input type="text" id="shopSearch" placeholder="Search shops by id, name, owner, or email..." class="search-input">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            <button id="clearSearch" class="clear-btn"><i class="fas fa-eraser"></i> Clear</button>
+        </div>
+
+        <section id="approved-shops" class="animate-fade">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-alt"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-check"></i> Date Approved</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-id="21" class="animate-fade">
+                            <td>021</td>
+                            <td>Sole Connect</td>
+                            <td>James Rodriguez</td>
+                            <td>j.rodriguez@email.com</td>
+                            <td><a href="uploads/permit21.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>April 02, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="22" class="animate-fade">
+                            <td>022</td>
+                            <td>City Steps</td>
+                            <td>Maria Garcia</td>
+                            <td>mariag@outlook.com</td>
+                            <td><a href="uploads/permit22.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>April 01, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="23" class="animate-fade">
+                            <td>023</td>
+                            <td>Ace Footwear</td>
+                            <td>David Smith</td>
+                            <td>dsmith.ace@gmail.com</td>
+                            <td><a href="uploads/permit23.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 30, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="24" class="animate-fade">
+                            <td>024</td>
+                            <td>Top Tier Treads</td>
+                            <td>Linda Chen</td>
+                            <td>linda.chen@email.com</td>
+                            <td><a href="uploads/permit24.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 29, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="25" class="animate-fade">
+                            <td>025</td>
+                            <td>Fresh Kicks Co.</td>
+                            <td>Robert Brown</td>
+                            <td>rbrownkicks@outlook.com</td>
+                            <td><a href="uploads/permit25.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 28, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="26" class="animate-fade">
+                            <td>026</td>
+                            <td>Hype Hub</td>
+                            <td>Patricia Miller</td>
+                            <td>p.miller.hype@gmail.com</td>
+                            <td><a href="uploads/permit26.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 26, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="27" class="animate-fade">
+                            <td>027</td>
+                            <td>Urban Sole</td>
+                            <td>John Davis</td>
+                            <td>jdavis.urban@email.com</td>
+                            <td><a href="uploads/permit27.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 24, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="28" class="animate-fade">
+                            <td>028</td>
+                            <td>Street Sneaks</td>
+                            <td>Jennifer Wilson</td>
+                            <td>jen.wilson.sneaks@outlook.com</td>
+                            <td><a href="uploads/permit28.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 22, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="29" class="animate-fade">
+                            <td>029</td>
+                            <td>Runner's Paradise</td>
+                            <td>Richard Martinez</td>
+                            <td>rmartinez.runner@gmail.com</td>
+                            <td><a href="uploads/permit29.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 19, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="30" class="animate-fade">
+                            <td>030</td>
+                            <td>The Sneaker Spot</td>
+                            <td>Susan Anderson</td>
+                            <td>sue.spot@email.com</td>
+                            <td><a href="uploads/permit30.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 17, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="31" class="animate-fade">
+                            <td>031</td>
+                            <td>Kick Game Strong</td>
+                            <td>Joseph Thomas</td>
+                            <td>jthomas.kgs@outlook.com</td>
+                            <td><a href="uploads/permit31.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 14, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="32" class="animate-fade">
+                            <td>032</td>
+                            <td>Cloud Walkers</td>
+                            <td>Jessica Moore</td>
+                            <td>jess.moore.cw@gmail.com</td>
+                            <td><a href="uploads/permit32.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 11, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="33" class="animate-fade">
+                            <td>033</td>
+                            <td>Fast Lane Footwear</td>
+                            <td>Charles Jackson</td>
+                            <td>cjackson.fast@email.com</td>
+                            <td><a href="uploads/permit33.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 09, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="34" class="animate-fade">
+                            <td>034</td>
+                            <td>Sole Mates</td>
+                            <td>Karen White</td>
+                            <td>karen.w.sole@outlook.com</td>
+                            <td><a href="uploads/permit34.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 06, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="35" class="animate-fade">
+                            <td>035</td>
+                            <td>The Shoe Rack</td>
+                            <td>Daniel Harris</td>
+                            <td>dan.harris.rack@gmail.com</td>
+                            <td><a href="uploads/permit35.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>March 03, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="36" class="animate-fade">
+                            <td>036</td>
+                            <td>Perfect Pair</td>
+                            <td>Nancy Martin</td>
+                            <td>nancy.pair@email.com</td>
+                            <td><a href="uploads/permit36.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 28, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="37" class="animate-fade">
+                            <td>037</td>
+                            <td>Step Up Shoes</td>
+                            <td>Paul Thompson</td>
+                            <td>p.thompson.step@outlook.com</td>
+                            <td><a href="uploads/permit37.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 25, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="38" class="animate-fade">
+                            <td>038</td>
+                            <td>Lace 'Em Up</td>
+                            <td>Lisa Lee</td>
+                            <td>lisa.lace@gmail.com</td>
+                            <td><a href="uploads/permit38.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 22, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="39" class="animate-fade">
+                            <td>039</td>
+                            <td>Gravity Kicks</td>
+                            <td>Mark Perez</td>
+                            <td>mark.p.gravity@email.com</td>
+                            <td><a href="uploads/permit39.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 19, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                        <tr data-id="40" class="animate-fade">
+                            <td>040</td>
+                            <td>Apex Sneakers</td>
+                            <td>Betty Clark</td>
+                            <td>bclark.apex@outlook.com</td>
+                            <td><a href="uploads/permit40.pdf" target="_blank" class="view-link"><i class="fas fa-eye"></i> View Here</a></td>
+                            <td>February 16, 2025</td>
+                            <td>
+                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="pagination animate-fade">
+            <button class="pagination-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+            <button class="pagination-btn page-btn active">1</button>
+            <button class="pagination-btn" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Menu toggle functionality
+            const menuBtn = document.querySelector(".menu-btn");
+            const navLinks = document.querySelector(".nav-links");
+            
+            menuBtn?.addEventListener("click", function() {
+                navLinks.classList.toggle("active");
+                menuBtn.innerHTML = navLinks.classList.contains("active") ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+
+            // Clear button functionality
+            const clearBtn = document.getElementById("clearSearch");
+            const searchInput = document.getElementById("shopSearch");
+            
+            clearBtn?.addEventListener("click", function(e) {
+                e.preventDefault();
+                searchInput.value = "";
+                searchInput.focus();
+                
+                // Show notification
+                showNotification("Search cleared", "success");
+                
+                // In a real application, you might want to reload the data or clear filtered results
+                // For example:
+                // resetTableData();
+            });
+
+            // Pagination variables and functions
+            let currentPage = 1;
+            const rowsPerPage = 10;
+            const tableBody = document.querySelector("#approved-shops tbody");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const paginationContainer = document.querySelector(".pagination");
+
+            function setupPagination() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                
+                // Clear existing page buttons (except prev/next)
+                document.querySelectorAll('.page-btn').forEach(btn => btn.remove());
+                
+                // Don't show pagination if only one page
+                if (pageCount <= 1) {
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+                
+                // Create page buttons (show max 5 pages at a time)
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages/2));
+                let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                
+                // Adjust if we're at the start or end
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    if (currentPage < pageCount/2) {
+                        endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                    } else {
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                    }
+                }
+                
+                // Add first page and ellipsis if needed
+                if (startPage > 1) {
+                    createPageButton(1);
+                    if (startPage > 2) {
+                        addEllipsis();
+                    }
+                }
+                
+                // Add visible pages
+                for (let i = startPage; i <= endPage; i++) {
+                    createPageButton(i);
+                }
+                
+                // Add last page and ellipsis if needed
+                if (endPage < pageCount) {
+                    if (endPage < pageCount - 1) {
+                        addEllipsis();
+                    }
+                    createPageButton(pageCount);
+                }
+                
+                updateTableDisplay();
+                updatePaginationButtons();
+            }
+
+            function createPageButton(pageNumber) {
+                const pageBtn = document.createElement("button");
+                pageBtn.className = "pagination-btn page-btn";
+                pageBtn.textContent = pageNumber;
+
+                if (pageNumber === currentPage) {
+                    pageBtn.classList.add("active");
+                }
+
+                pageBtn.addEventListener("click", () => {
+                    currentPage = pageNumber;
+                    setupPagination();
+                });
+
+                paginationContainer.insertBefore(pageBtn, nextBtn);
+            }
+
+            function addEllipsis() {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.className = 'pagination-ellipsis';
+                paginationContainer.insertBefore(ellipsis, nextBtn);
+            }
+
+            function updateTableDisplay() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                if (rows.length === 0) {
+                    // Optionally show a "no data" message
+                    return;
+                }
+                
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+                });
+            }
+
+            function updatePaginationButtons() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage >= pageCount || pageCount === 0;
+
+                const pageButtons = paginationContainer.querySelectorAll(".page-btn");
+                pageButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    if (parseInt(btn.textContent) === currentPage) {
+                        btn.classList.add("active");
+                    }
+                });
+            }
+
+            prevBtn?.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    setupPagination();
+                }
+            });
+
+            nextBtn?.addEventListener("click", () => {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    setupPagination();
+                }
+            });
+
+            // Action confirmation dialog
+            let currentAction = null;
+            let currentRow = null;
+
+            function confirmAction(button, actionType) {
+                currentRow = button.closest("tr");
+                if (!currentRow) return;
+                
+                currentAction = actionType;
+
+                const shopName = currentRow.cells[1]?.textContent || '[Unknown Shop]';
+                const dialog = document.getElementById("confirmationDialog");
+                const dialogMessage = document.getElementById("dialogMessage");
+                const overlay = document.getElementById("overlay");
+
+                if (!dialog || !dialogMessage || !overlay) return;
+
+                dialogMessage.textContent = `Are you sure you want to ${actionType} "${shopName}"?`;
+                
+                dialog.classList.add("show");
+                overlay.classList.add("show");
+            }
+
+            // Event delegation for action buttons
+            tableBody?.addEventListener('click', function(event) {
+                const target = event.target.closest('button');
+                if (!target) return;
+                
+                if (target.classList.contains('reject-btn') && target.id !== 'confirmAction') {
+                    confirmAction(target, 'reject');
+                }
+            });
+
+            // Confirmation dialog buttons
+            document.getElementById("confirmAction")?.addEventListener("click", function() {
+                const dialog = document.getElementById("confirmationDialog");
+                const overlay = document.getElementById("overlay");
+
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                if (currentAction === "reject" && currentRow) {
+                    rejectShop(currentRow);
+                }
+
+                currentAction = null;
+                currentRow = null;
+            });
+
+            document.getElementById("cancelAction")?.addEventListener("click", function() {
+                const dialog = document.getElementById("confirmationDialog");
+                const overlay = document.getElementById("overlay");
+
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                currentAction = null;
+                currentRow = null;
+            });
+
+            // Shop rejection function
+            function rejectShop(row) {
+                const shopId = row.getAttribute("data-id");
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
+                const reason = prompt(`Please enter the reason for rejecting "${shopName}":`);
+
+                if (reason !== null && reason.trim() !== '') {
+                    // Simulate API call
+                    setTimeout(() => {
+                        row.remove();
+                        showNotification(`"${shopName}" has been rejected. Reason: ${reason}`, "error");
+                        
+                        // Recalculate pagination
+                        if (tableBody && tableBody.querySelectorAll("tr").length === 0 && currentPage > 1) {
+                            currentPage--;
+                        }
+                        setupPagination();
+                    }, 300);
+                } else if (reason !== null) {
+                    alert("Rejection reason cannot be empty.");
+                }
+
+                setTimeout(() => {
+                    row.remove();
+                    showNotification(`"${shopName}" has been rejected. Reason: ${reason}`, "error");
+                    
+                    // Reinitialize pagination after removal
+                    setupPagination();
+                }, 300);
+
+            }
+
+            // Notification function
+            function showNotification(message, type) {
+                const notification = document.getElementById("notification");
+                if (!notification) return;
+                
+                notification.textContent = message;
+                notification.className = 'notification';
+                notification.classList.add(type, 'show');
+
+                setTimeout(() => {
+                    notification.classList.remove("show");
+                }, 3000);
+            }
+
+            // Initialize pagination
+            setupPagination();
+
+            // Logout functionality
+            const logoutLink = document.querySelector('a[href="admin_login.html"]');
+            const logoutDialog = document.getElementById('logoutDialog');
+            const cancelLogout = document.getElementById('cancelLogout');
+            const confirmLogout = document.getElementById('confirmLogout');
+
+            logoutLink?.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutDialog.classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            });
+
+            cancelLogout?.addEventListener('click', function() {
+                logoutDialog.classList.remove('show');
+                document.getElementById('overlay').classList.remove('show');
+            });
+
+            confirmLogout?.addEventListener('click', function() {
+                window.location.href = 'admin_login.html';
+            });
+
+            // Close dialogs when clicking overlay
+            document.getElementById('overlay')?.addEventListener('click', function() {
+                document.getElementById('confirmationDialog').classList.remove('show');
+                logoutDialog.classList.remove('show');
+                this.classList.remove('show');
+            });
+        });
+    </script>
+</body>
+</html>
