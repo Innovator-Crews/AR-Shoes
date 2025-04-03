@@ -295,7 +295,7 @@
             // Shop approval function
             function approveShop(row) {
                 const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[0]?.textContent || '[Unknown Shop]';
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
 
                 // Simulate API call
                 setTimeout(() => {
@@ -308,7 +308,7 @@
             // Shop rejection function
             function rejectShop(row) {
                 const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[0]?.textContent || '[Unknown Shop]';
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
                 const reason = prompt(`Please enter the reason for rejecting "${shopName}":`);
 
                 if (reason !== null && reason.trim() !== '') {
