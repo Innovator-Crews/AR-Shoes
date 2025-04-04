@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shoe Shop Portal</title>
+    <link rel="stylesheet" href="css/user_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="fas fa-shoe-prints"></i> Shoe Shop Portal</h1>
+            <p>Welcome back! Please login to continue</p>
+        </div>
+
+        <div class="login-type-selector">
+            <button class="login-type-btn active" data-type="customer">
+                <i class="fas fa-user"></i> Customer Login
+            </button>
+            <button class="login-type-btn" data-type="shop">
+                <i class="fas fa-store"></i> Shop Login
+            </button>
+        </div>
+
+        <div class="login-form active" id="customer-login">
+            <form id="customerLoginForm">
+                <div class="form-group">
+                    <label for="customer-email">Email</label>
+                    <input type="email" id="customer-email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="customer-password">Password</label>
+                    <input type="password" id="customer-password" name="password" required placeholder="Enter your password">
+                    <div class="forgot-password">
+                        <a href="forgot-password.html">Forgot password?</a>
+                    </div>
+                </div>
+                <!-- <div class="form-group remember-me">
+                    <input type="checkbox" id="customer-remember" name="remember">
+                    <label for="customer-remember">Remember me</label>
+                </div> -->
+                <button type="submit" class="submit-btn">Login as Customer</button>
+            </form>
+            <div class="register-link">
+                Don't have an account? <a href="customer_register.html">Register as Customer</a>
+            </div>
+        </div>
+
+        <div class="login-form" id="shop-login">
+            <form id="shopLoginForm">
+                <div class="form-group">
+                    <label for="shop-username">Username</label>
+                    <input type="text" id="shop-username" name="username" required placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="shop-password">Password</label>
+                    <input type="password" id="shop-password" name="password" required placeholder="Enter your password">
+                    <div class="forgot-password">
+                        <a href="forgot-password.html">Forgot password?</a>
+                    </div>
+                </div>
+                <!-- <div class="form-group remember-me">
+                    <input type="checkbox" id="shop-remember" name="remember">
+                    <label for="shop-remember">Remember me</label>
+                </div> -->
+                <button type="submit" class="submit-btn">Login as Shop</button>
+            </form>
+            <div class="register-link">
+                Don't have a shop account? <a href="shop_register.html">Register your Shop</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="login-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
+            <nav>
+                <a href="devonprocess.html">Privacy Policy</a>
+                <a href="devonprocess.html">Terms of Service</a>
+                <a href="devonprocess.html">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Switch between customer and shop login
+            const loginTypeBtns = document.querySelectorAll('.login-type-btn');
+            const loginForms = document.querySelectorAll('.login-form');
+            
+            loginTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const loginType = this.dataset.type;
+                    
+                    // Update active button
+                    loginTypeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding form with animation
+                    loginForms.forEach(form => {
+                        if (form.classList.contains('active')) {
+                            form.style.animation = 'fadeIn 0.4s ease-out reverse';
+                            setTimeout(() => {
+                                form.classList.remove('active');
+                            }, 300);
+                        }
+                        if (form.id === `${loginType}-login`) {
+                            setTimeout(() => {
+                                form.classList.add('active');
+                                form.style.animation = 'fadeIn 0.6s ease-out';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Form submission
+            document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Add your customer login logic here
+                console.log('Customer login submitted');
+            });
+            
+            document.getElementById('shopLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Add your shop login logic here
+                console.log('Shop login submitted');
+            });
+        });
+    </script>
+</body>
+</html>
