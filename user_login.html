@@ -40,7 +40,7 @@
                     <input type="checkbox" id="customer-remember" name="remember">
                     <label for="customer-remember">Remember me</label>
                 </div> -->
-                <button type="submit" class="submit-btn">Login as Customer</button>
+                <button type="submit" id="loginButton_customer" class="submit-btn">Login as Customer</button>
             </form>
             <div class="register-link">
                 Don't have an account? <a href="customer_register.html">Register as Customer</a>
@@ -50,8 +50,8 @@
         <div class="login-form" id="shop-login">
             <form id="shopLoginForm">
                 <div class="form-group">
-                    <label for="shop-username">Username</label>
-                    <input type="text" id="shop-username" name="username" required placeholder="Enter your username">
+                    <label for="shop-username">Email</label>
+                    <input type="text" id="shop-username" name="username" required placeholder="Enter your email">
                 </div>
                 <div class="form-group">
                     <label for="shop-password">Password</label>
@@ -64,7 +64,7 @@
                     <input type="checkbox" id="shop-remember" name="remember">
                     <label for="shop-remember">Remember me</label>
                 </div> -->
-                <button type="submit" class="submit-btn">Login as Shop</button>
+                <button type="submit" id="loginButton_shop" class="submit-btn">Login as Shop</button>
             </form>
             <div class="register-link">
                 Don't have a shop account? <a href="shop_register.html">Register your Shop</a>
@@ -129,5 +129,6 @@
             });
         });
     </script>
+    <script src="user_login.js" type="module"></script>
 </body>
 </html>
