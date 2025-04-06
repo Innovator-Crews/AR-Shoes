@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js"; // Added get import
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAuPALylh11cTArigeGJZmLwrFwoAsNPSI",
@@ -14,25 +15,30 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
+const db = getDatabase(app); // Initialize database
 
-// pag meron nang html file for landing page, uncomment this
+// Customer Login
 const loginButton_customer = document.getElementById('loginButton_customer');
 loginButton_customer.addEventListener('click', (event) => {
-const emailInput = document.getElementById('customer-email');
-const passwordInput = document.getElementById('customer-password');
-
     event.preventDefault();
-    const email = emailInput.value;
-    const password = passwordInput.value;
+    const email = document.getElementById('customer-email').value;
+    const password = document.getElementById('customer-password').value;
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            var user = userCredential.user;
+            const user = userCredential.user;
             if (user.emailVerified) {
-                alert("Login successful");
-                window.location.href = "customer_dashboard.html";
+                get(ref(db, `AR_shoe_users/customer/${user.uid}`))
+                    .then((snapshot) => {
+                        if (snapshot.exists()) {
+                            alert("Login successful");
+                            window.location.href = "customer_dashboard.html";
+                        } else {
+                            alert("You are not registered as a customer");
+                            auth.signOut();
+                        }
+                    });
             } else {
                 alert("Please verify your email address before logging in.");
             }
@@ -42,22 +48,27 @@ const passwordInput = document.getElementById('customer-password');
         });
 });
 
-
+// Shop Login
 const loginButton_shop = document.getElementById('loginButton_shop');
 loginButton_shop.addEventListener('click', (event) => {
-const emailInput = document.getElementById('shop-username');
-const passwordInput = document.getElementById('shop-password');
-
     event.preventDefault();
-    const email = emailInput.value;
-    const password = passwordInput.value;
+    const email = document.getElementById('shop-username').value;
+    const password = document.getElementById('shop-password').value;
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            var user = userCredential.user;
+            const user = userCredential.user;
             if (user.emailVerified) {
-                alert("Login successful");
-                window.location.href = "shop_dashboard.html";
+                get(ref(db, `AR_shoe_users/shop/${user.uid}`))
+                    .then((snapshot) => {
+                        if (snapshot.exists()) {
+                            alert("Login successful");
+                            window.location.href = "shop_dashboard.html";
+                        } else {
+                            alert("You are not registered as a shop owner");
+                            auth.signOut();
+                        }
+                    });
             } else {
                 alert("Please verify your email address before logging in.");
             }

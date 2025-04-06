@@ -67,7 +67,8 @@ registerButton.addEventListener('click', (event) => {
                         set(ref(db, 'AR_shoe_users/shop/' + user.uid), {
                             username: usernameVal,
                             email: ownerEmailVal,
-                            status: 'active',
+                            status: 'pending',
+                            ownerName: ownerName.value,
                         }).then(() => {
                             console.log("User data added successfully!");
                         }).catch((error) => {
