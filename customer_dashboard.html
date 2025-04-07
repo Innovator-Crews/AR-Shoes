@@ -313,7 +313,8 @@
                 <a href="devonprocess.html" class="nav-item">
                     <i class="fas fa-cog"></i> Settings
                 </a>
-                <a href="user_login.html" class="nav-item">
+                <!-- pinalitan href into id -->
+                <a id="logout_btn" class="nav-item">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
@@ -322,11 +323,13 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="header">
-                <h1>Welcome Back, Alex!</h1>
+                <!-- nilagyan ng span at id -->
+                <h1>Welcome Back, <span id="userName_display1"></span>!</h1>
                 <input type="text" class="search-bar" placeholder="Search orders, products...">
                 <div class="user-profile">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="user-avatar">
-                    <span>Alex Johnson</span>
+                    <!-- nilagyan ng id -->
+                    <span id="userName_display2">Alex Johnson</span>
                 </div>
             </div>
             
@@ -392,5 +395,7 @@
             </table>
         </div>
     </div>
+    <!-- nilagyan ng script -->
+    <script src="customer_dashboard.js" type="module"></script>
 </body>
 </html>
