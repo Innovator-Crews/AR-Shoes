@@ -19,6 +19,52 @@ const auth = getAuth(app);
 const db = getDatabase(app); // Initialize database
 
 
+// magpupuntang customer_dashboard.html or shop_dashboard.html kung nakalogin na
+/*tanggalMuna:{document.body.style.display = 'none';
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        try {
+            // Check both customer and shop collections
+            const [customerSnap, shopSnap] = await Promise.all([
+                get(ref(db, `AR_shoe_users/customer/${user.uid}`)),
+                get(ref(db, `AR_shoe_users/shop/${user.uid}`))
+            ]);
+
+            if (customerSnap.exists()) {
+                // User is a customer
+                if (!window.location.pathname.includes('customer_dashboard')) {
+                    window.location.href = "customer_dashboard.html";
+                } else {
+                    document.body.style.display = '';
+                }
+            } else if (shopSnap.exists()) {
+                // User is a shop owner
+                if (!window.location.pathname.includes('shop_dashboard')) {
+                    window.location.href = "shop_dashboard.html";
+                } else {
+                    document.body.style.display = '';
+                }
+            } else {
+                // User doesn't exist in either collection
+                await auth.signOut();
+                window.location.href = "user_login.html";
+            }
+        } catch (error) {
+            console.error("Error checking user type:", error);
+            await auth.signOut();
+            window.location.href = "user_login.html";
+        }
+    } else {
+        // No user is signed in
+        if (!window.location.pathname.includes('user_login')) {
+            window.location.href = "user_login.html";
+        } else {
+            document.body.style.display = '';
+        }
+    }
+});}*/
+
 // Customer Login
 const loginButton_customer = document.getElementById('loginButton_customer');
 loginButton_customer.addEventListener('click', (event) => {
