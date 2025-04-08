@@ -18,7 +18,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app); // Initialize database
 
-document.body.style.display = 'none';
+
+// magpupuntang customer_dashboard.html or shop_dashboard.html kung nakalogin na
+/*tanggalMuna:{document.body.style.display = 'none';
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -61,7 +63,7 @@ onAuthStateChanged(auth, async (user) => {
             document.body.style.display = '';
         }
     }
-});
+});}*/
 
 // Customer Login
 const loginButton_customer = document.getElementById('loginButton_customer');

@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
 
     <!-- Notification element -->
     <div id="notification" class="notification"></div>
@@ -154,6 +155,325 @@
         </section>
 
     </div>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // --- Menu toggle functionality ---
+            const menuBtn = document.querySelector(".menu-btn");
+            const navLinks = document.querySelector(".nav-links");
+            
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener("click", function() {
+                    navLinks.classList.toggle("active");
+                });
+            }
+
+            // --- Action confirmation dialog ---
+            let currentAction = null; // Stores 'approve' or 'reject'
+            let currentRow = null;    // Stores the table row being acted upon
+            const dialog = document.getElementById("confirmationDialog");
+            const overlay = document.getElementById("overlay");
+
+            function confirmAction(button, actionType) {
+                currentRow = button.closest("tr");
+                if (!currentRow) {
+                    console.error("Could not find table row for action.");
+                    return;
+                }
+                currentAction = actionType;
+
+                const shopName = currentRow.cells[1]?.textContent || '[Unknown Shop]';
+                const dialogMessage = document.getElementById("dialogMessage");
+                const confirmBtn = document.getElementById("confirmAction");
+                const cancelBtn = document.getElementById("cancelAction");
+                const confirmIcon = confirmBtn.querySelector('i');
+                const actionText = confirmBtn.querySelector('.action-text');
+
+                if (!dialog || !dialogMessage || !overlay || !confirmBtn || !cancelBtn) {
+                    console.error("Dialog elements not found.");
+                    return;
+                }
+
+                // Update dialog content
+                dialogMessage.textContent = `Are you sure you want to ${actionType} "${shopName}"?`;
+                
+                // Update button text and icon
+                if (actionType === 'approve') {
+                    confirmIcon.className = 'fas fa-check';
+                    actionText.textContent = 'Approve';
+                    confirmBtn.className = 'approve-btn';
+                } else {
+                    confirmIcon.className = 'fas fa-ban';
+                    actionText.textContent = 'Reject';
+                    confirmBtn.className = 'reject-btn';
+                }
+
+                // Show dialog and overlay
+                dialog.classList.add("show");
+                overlay.classList.add("show");
+            }
+
+            // Handle approve/reject button clicks
+            document.addEventListener('click', function(event) {
+                const target = event.target;
+                if (target.classList.contains('approve-btn')) {
+                    confirmAction(target, 'approve');
+                } else if (target.classList.contains('reject-btn')) {
+                    confirmAction(target, 'reject');
+                }
+            });
+
+            // Confirm action handler
+            document.getElementById("confirmAction")?.addEventListener("click", function() {
+                // Hide dialog
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                if (currentAction && currentRow) {
+                    if (currentAction === "approve") {
+                        approveShop(currentRow);
+                    } else {
+                        rejectShop(currentRow);
+                    }
+                }
+
+                // Reset state
+                currentAction = null;
+                currentRow = null;
+            });
+
+            // Cancel action handler
+            document.getElementById("cancelAction")?.addEventListener("click", function() {
+                // Hide dialog
+                dialog?.classList.remove("show");
+                overlay?.classList.remove("show");
+
+                // Reset state
+                currentAction = null;
+                currentRow = null;
+            });
+
+            // Shop approval function
+            function approveShop(row) {
+                const shopId = row.getAttribute("data-id");
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
+
+                // Simulate API call
+                setTimeout(() => {
+                    row.remove();
+                    showNotification(`"${shopName}" has been approved successfully!`, "success");
+                    updatePaginationAfterAction();
+                }, 300);
+            }
+
+            // Shop rejection function
+            function rejectShop(row) {
+                const shopId = row.getAttribute("data-id");
+                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
+                const reason = prompt(`Please enter the reason for rejecting "${shopName}":`);
+
+                if (reason !== null && reason.trim() !== '') {
+                    // Simulate API call
+                    setTimeout(() => {
+                        row.remove();
+                        showNotification(`"${shopName}" has been rejected. Reason: ${reason}`, "error");
+                        updatePaginationAfterAction();
+                    }, 300);
+                } else if (reason !== null) {
+                    alert("Rejection reason cannot be empty.");
+                }
+            }
+
+            // Update pagination after row removal
+            function updatePaginationAfterAction() {
+                const tableBody = document.querySelector("#pending-shops tbody");
+                if (tableBody && tableBody.querySelectorAll("tr:not([style*='display: none'])").length === 0 && currentPage > 1) {
+                    currentPage--;
+                }
+                setupPagination();
+            }
+
+            // Notification function
+            function showNotification(message, type) {
+                const notification = document.getElementById("notification");
+                if (notification) {
+                    notification.textContent = message;
+                    notification.className = 'notification';
+                    notification.classList.add(type, 'show');
+                    
+                    setTimeout(() => {
+                        notification.classList.remove("show");
+                    }, 3000);
+                }
+            }
+
+            // --- Pagination variables ---
+            let currentPage = 1;
+            const rowsPerPage = 10;
+            const tableBody = document.querySelector("#pending-shops tbody");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const paginationContainer = document.querySelector(".pagination");
+
+            // --- Initialize pagination ---
+            function setupPagination() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                
+                // Clear existing page buttons (except prev/next)
+                document.querySelectorAll('.page-btn').forEach(btn => btn.remove());
+                
+                // Don't show pagination if only one page
+                if (pageCount <= 1) {
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+                
+                // Create page buttons (show max 5 pages at a time)
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages/2));
+                let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                
+                // Adjust if we're at the start or end
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    if (currentPage < pageCount/2) {
+                        endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+                    } else {
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                    }
+                }
+                
+                // Add first page and ellipsis if needed
+                if (startPage > 1) {
+                    createPageButton(1);
+                    if (startPage > 2) {
+                        addEllipsis();
+                    }
+                }
+                
+                // Add visible pages
+                for (let i = startPage; i <= endPage; i++) {
+                    createPageButton(i);
+                }
+                
+                // Add last page and ellipsis if needed
+                if (endPage < pageCount) {
+                    if (endPage < pageCount - 1) {
+                        addEllipsis();
+                    }
+                    createPageButton(pageCount);
+                }
+                
+                updateTableDisplay();
+                updatePaginationButtons();
+            }
+
+            function createPageButton(pageNumber) {
+                const pageBtn = document.createElement("button");
+                pageBtn.className = "pagination-btn page-btn";
+                pageBtn.textContent = pageNumber;
+                pageBtn.classList.toggle("active", pageNumber === currentPage);
+                
+                pageBtn.addEventListener("click", () => {
+                    currentPage = pageNumber;
+                    setupPagination();
+                });
+
+                paginationContainer.insertBefore(pageBtn, nextBtn);
+            }
+
+            function createEllipsis() {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.className = 'pagination-ellipsis';
+                paginationContainer.insertBefore(ellipsis, nextBtn);
+            }
+
+            function updateTableDisplay() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+                });
+            }
+
+            function updatePaginationButtons() {
+                if (!tableBody) return;
+                
+                const rows = tableBody.querySelectorAll("tr");
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === pageCount || pageCount === 0;
+            }
+
+            // Pagination button handlers
+            prevBtn?.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    setupPagination();
+                }
+            });
+
+            nextBtn?.addEventListener("click", () => {
+                const rows = tableBody?.querySelectorAll("tr") || [];
+                const pageCount = Math.ceil(rows.length / rowsPerPage);
+                
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    setupPagination();
+                }
+            });
+
+            // Initialize
+            setupPagination();
+        });
+
+        // Logout functionality
+        const logoutLink = document.querySelector('a[href="admin_login.html"]');
+        const logoutDialog = document.getElementById('logoutDialog');
+        const cancelLogout = document.getElementById('cancelLogout');
+        const confirmLogout = document.getElementById('confirmLogout');
+
+        // Prevent default logout link behavior
+        logoutLink?.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show logout confirmation dialog
+            logoutDialog.classList.add('show');
+            document.getElementById('overlay').classList.add('show');
+        });
+
+        // Cancel logout
+        cancelLogout?.addEventListener('click', function() {
+            logoutDialog.classList.remove('show');
+            document.getElementById('overlay').classList.remove('show');
+        });
+
+        // Confirm logout
+        confirmLogout?.addEventListener('click', function() {
+            // In a real app, you might want to:
+            // 1. Send a logout request to your backend
+            // 2. Clear any session data
+            // 3. Then redirect
+            
+            // For this example, we'll just redirect immediately
+            window.location.href = 'admin_login.html';
+        });
+
+        // Close dialog when clicking overlay
+        document.getElementById('overlay')?.addEventListener('click', function() {
+            logoutDialog.classList.remove('show');
+            this.classList.remove('show');
+        });
+    </script>
     <script src="admin_dashboard.js" type="module"></script>
 </body>
 

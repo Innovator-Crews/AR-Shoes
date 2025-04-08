@@ -16,6 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+
 // Initialize Firebase Authentication and Database
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -25,13 +26,30 @@ const lastnameInput = document.getElementById('lastName');
 const emailInput = document.getElementById('email');
 const phoneInput = document.getElementById('phone');
 const birthDateInput = document.getElementById('birthDate');
+const addressInput = document.getElementById('address');
+const cityInput = document.getElementById('city');
+const stateInput = document.getElementById('state');
+const zipInput = document.getElementById('zip');
+const countryInput = document.getElementById('country');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirmPassword');
 
+const dateAccountCreated = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+}).replace(/\//g, '-').replace(/,/g, '');
+
 const registerButton = document.getElementById('registerButton');
 registerButton.addEventListener('click', (event) => {
     event.preventDefault();
+    
+    const selectedGender = getSelectedGender();
     const email = emailInput.value;
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
@@ -61,6 +79,17 @@ registerButton.addEventListener('click', (event) => {
                             username: username,
                             email: email,
                             status: 'active',
+                            dateAccountCreated: dateAccountCreated,
+                            firstName: firstnameInput.value,
+                            lastName: lastnameInput.value,
+                            phone: phoneInput.value,
+                            gender: selectedGender,
+                            birthday: birthDateInput.value,
+                            address: addressInput.value,
+                            city: cityInput.value,
+                            state: stateInput.value,
+                            zip: zipInput.value,
+                            country: countryInput.value,
                         }).then(() => {
                             console.log("User data added successfully!");
                         }).catch((error) => {
@@ -75,3 +104,9 @@ registerButton.addEventListener('click', (event) => {
             });
     }
 });
+
+// Get the selected value
+function getSelectedGender() {
+    const selected = document.querySelector('input[name="gender"]:checked');
+    return selected ? selected.value : null;
+  }

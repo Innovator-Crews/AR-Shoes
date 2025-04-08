@@ -32,9 +32,19 @@ const shopCity = document.getElementById('shopCity');
 const shopState = document.getElementById('shopState');
 const shopZip = document.getElementById('shopZip');
 const shopCountry = document.getElementById('shopCountry');
-const username = document.getElementById('username');
+const usernamee = document.getElementById('username');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirmPassword');
+
+const dateProcessed = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+}).replace(/\//g, '-').replace(/,/g, '');
 
 const registerButton = document.getElementById('registerButton');
 registerButton.addEventListener('click', (event) => {
@@ -69,6 +79,20 @@ registerButton.addEventListener('click', (event) => {
                             email: ownerEmailVal,
                             status: 'pending',
                             ownerName: ownerName.value,
+                            shopName: shopName.value,
+                            shopCategory: shopCategory.value,
+                            shopDescription: shopDescription.value,
+                            yearsInBusiness: yearsInBusiness.value,
+                            ownerPhone: ownerPhone.value,
+                            shopAddress: shopAddress.value,
+                            shopCity: shopCity.value,
+                            shopState: shopState.value,
+                            shopZip: shopZip.value,
+                            shopCountry: shopCountry.value,
+                            dateProcessed: dateProcessed,
+                            userName: usernamee,
+                            dateApproved: '',
+                            dateRejected: '',
                         }).then(() => {
                             console.log("User data added successfully!");
                         }).catch((error) => {

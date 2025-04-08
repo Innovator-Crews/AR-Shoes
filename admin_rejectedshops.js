@@ -167,7 +167,7 @@ function createShopRow(shopId, shop, status) {
         <td>${shop.ownerName || 'N/A'}</td>
         <td>${shop.email || 'N/A'}</td>
         <td><a href="#" class="view-link"><i class="fas fa-eye"></i> View</a></td>
-        <td>${shop.dateProcessed || 'Pending'}</td>
+        <td>${shop.dateApproved || 'Pending'}</td>
         ${status === 'rejected' ? `<td></td>` : ''}
         <td>
             ${status === 'pending' ? 
@@ -188,8 +188,5 @@ function createShopRow(shopId, shop, status) {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    loadShops('pending', 'pendingShopsTableBody');
-    loadShops('approved', 'approvedShopsTableBody');
     loadShops('rejected', 'rejectedShopsTableBody');
 });
-
