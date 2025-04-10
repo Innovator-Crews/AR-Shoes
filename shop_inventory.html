@@ -92,196 +92,198 @@
 
     <script>
         
-        document.addEventListener("DOMContentLoaded", () => {
-            // Role-based access control
-            const userRole = localStorage.getItem('userRole');
-            if (userRole === "employee") {
-                document.querySelectorAll(".manager, .shopowner").forEach(el => el.style.display = "none");
-            } else if (userRole === "manager") {
-                document.querySelectorAll(".shopowner").forEach(el => el.style.display = "none");
-            }
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     // Role-based access control
+        //     const userRole = localStorage.getItem('userRole');
+        //     if (userRole === "employee") {
+        //         document.querySelectorAll(".manager, .shopowner").forEach(el => el.style.display = "none");
+        //     } else if (userRole === "manager") {
+        //         document.querySelectorAll(".shopowner").forEach(el => el.style.display = "none");
+        //     }
 
-            loadInventory();
+        //     loadInventory();
 
-            // Check if we need to show a specific shoe
-            const viewingShoeId = localStorage.getItem('viewingShoeId');
-            if (viewingShoeId) {
-                showShoeDetails(viewingShoeId);
-                localStorage.removeItem('viewingShoeId');
-            }
+        //     // Check if we need to show a specific shoe
+        //     const viewingShoeId = localStorage.getItem('viewingShoeId');
+        //     if (viewingShoeId) {
+        //         showShoeDetails(viewingShoeId);
+        //         localStorage.removeItem('viewingShoeId');
+        //     }
 
-            // Search functionality
-            document.getElementById('searchInventory').addEventListener('input', (e) => {
-                filterInventory(e.target.value);
-            });
-        });
+        //     // Search functionality
+        //     document.getElementById('searchInventory').addEventListener('input', (e) => {
+        //         filterInventory(e.target.value);
+        //     });
+        // });
 
-        function loadInventory() {
-            const shoes = JSON.parse(localStorage.getItem('shoes')) || [];
-            const shopId = localStorage.getItem('shopId');
-            const inventoryTableBody = document.getElementById('inventoryTableBody');
+        // function loadInventory() {
+        //     const shoes = JSON.parse(localStorage.getItem('shoes')) || [];
+        //     const shopId = localStorage.getItem('shopId');
+        //     const inventoryTableBody = document.getElementById('inventoryTableBody');
 
-            const shopShoes = shoes.filter(shoe => shoe.shopId === shopId);
+        //     const shopShoes = shoes.filter(shoe => shoe.shopId === shopId);
 
-            if (shopShoes.length === 0) {
-                inventoryTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No shoes in inventory</td></tr>';
-                return;
-            }
+        //     if (shopShoes.length === 0) {
+        //         inventoryTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No shoes in inventory</td></tr>';
+        //         return;
+        //     }
 
-            let html = '';
-            shopShoes.forEach(shoe => {
-                const totalStock = shoe.variants.reduce((sum, variant) => {
-                    return sum + variant.sizes.reduce((sizeSum, size) => sizeSum + (size.stock || 0), 0);
-                }, 0);
+        //     let html = '';
+        //     shopShoes.forEach(shoe => {
+        //         const totalStock = shoe.variants.reduce((sum, variant) => {
+        //             return sum + variant.sizes.reduce((sizeSum, size) => sizeSum + (size.stock || 0), 0);
+        //         }, 0);
 
-                const minPrice = Math.min(...shoe.variants.map(v => v.price));
+        //         const minPrice = Math.min(...shoe.variants.map(v => v.price));
 
-                html += `
-                <tr>
-                    <td>
-                        ${shoe.image ? `<img src="uploads/${shoe.image}" alt="${shoe.code}" style="width:50px; height:auto;">` : 'No Image'}
-                    </td>
-                    <td>${shoe.name}</td>
-                    <td>${shoe.code}</td>
-                    <td>$${minPrice.toFixed(2)}${shoe.variants.length > 1 ? '+' : ''}</td>
-                    <td>${totalStock}</td>
-                    <td>${new Date(shoe.dateAdded).toLocaleDateString()}</td>
-                    <td>
-                        <button class="btn btn-view" onclick="showShoeDetails('${shoe.id}')">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                        <button class="btn btn-edit" onclick="editShoe('${shoe.id}')">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="btn btn-danger" onclick="promptDelete('${shoe.id}')">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </td>
-                </tr>
-                `;
-            });
+        //         html += `
+        //         <tr>
+        //             <td>
+        //                 ${shoe.image ? `<img src="uploads/${shoe.image}" alt="${shoe.code}" style="width:50px; height:auto;">` : 'No Image'}
+        //             </td>
+        //             <td>${shoe.name}</td>
+        //             <td>${shoe.code}</td>
+        //             <td>$${minPrice.toFixed(2)}${shoe.variants.length > 1 ? '+' : ''}</td>
+        //             <td>${totalStock}</td>
+        //             <td>${new Date(shoe.dateAdded).toLocaleDateString()}</td>
+        //             <td>
+        //                 <button class="btn btn-view" onclick="showShoeDetails('${shoe.id}')">
+        //                     <i class="fas fa-eye"></i> View
+        //                 </button>
+        //                 <button class="btn btn-edit" onclick="editShoe('${shoe.id}')">
+        //                     <i class="fas fa-edit"></i> Edit
+        //                 </button>
+        //                 <button class="btn btn-danger" onclick="promptDelete('${shoe.id}')">
+        //                     <i class="fas fa-trash"></i> Delete
+        //                 </button>
+        //             </td>
+        //         </tr>
+        //         `;
+        //     });
 
-            inventoryTableBody.innerHTML = html;
-        }
+        //     inventoryTableBody.innerHTML = html;
+        // }
 
-        // Store the shoe ID to be deleted
-        let shoeToDelete = null;
+        // // Store the shoe ID to be deleted
+        // let shoeToDelete = null;
 
-        function showShoeDetails(shoeId) {
-            const shoes = JSON.parse(localStorage.getItem('shoes')) || [];
-            const shoe = shoes.find(s => s.id === shoeId);
+        // // function showShoeDetails(shoeId) {
+        // //     const shoes = JSON.parse(localStorage.getItem('shoes')) || [];
+        // //     const shoe = shoes.find(s => s.id === shoeId);
 
-            if (!shoe) {
-                alert('Shoe not found');
-                return;
-            }
+        // //     if (!shoe) {
+        // //         alert('Shoe not found');
+        // //         return;
+        // //     }
 
-            let variantsHtml = '';
-            shoe.variants.forEach(variant => {
-                const sizesList = variant.sizes.map(size => `${size.size} (${size.stock})`).join(', ');
+        // //     let variantsHtml = '';
+        // //     shoe.variants.forEach(variant => {
+        // //         const sizesList = variant.sizes.map(size => `${size.size} (${size.stock})`).join(', ');
 
-                variantsHtml += `
-                <div class="variant-detail">
-                    <h4>${variant.variantName} (${variant.color})</h4>
-                    <p><strong>Price:</strong> $${variant.price.toFixed(2)}</p>
-                    <p><strong>Sizes Available:</strong> ${sizesList}</p>
-                    ${variant.image ? `<img src="uploads/${variant.image}" alt="${variant.variantName}" style="max-width:100px; margin:0.5rem 0;">` : ''}
-                </div>
-                <hr style="margin-top: 1rem; margin-bottom: 1rem;">
-                `;
-            });
+        // //         variantsHtml += `
+        // //         <div class="variant-detail">
+        // //             <h4>${variant.variantName} (${variant.color})</h4>
+        // //             <p><strong>Price:</strong> $${variant.price.toFixed(2)}</p>
+        // //             <p><strong>Sizes Available:</strong> ${sizesList}</p>
+        // //             ${variant.image ? `<img src="uploads/${variant.image}" alt="${variant.variantName}" style="max-width:100px; margin:0.5rem 0;">` : ''}
+        // //         </div>
+        // //         <hr style="margin-top: 1rem; margin-bottom: 1rem;">
+        // //         `;
+        // //     });
 
-            const modalContent = `
-            <div class="modal-header">
-                <h2>Shoe Name: ${shoe.name}</h2>
-                <h3>Shoe Code: ${shoe.code}</h3>
-            </div>
-            <div class="modal-body">
-                <p><strong>Description:</strong> ${shoe.description}</p>
-                ${shoe.image ? `<img src="uploads/${shoe.image}" alt="${shoe.code}" style="max-width:100%; margin:1rem 0; border-radius:8px;">` : ''}
-                <h3 style="margin-top:1.5rem;">Variants</h3>
-                ${variantsHtml}
-            </div>
-            `;
+        // //     const modalContent = `
+        // //     <div class="modal-header">
+        // //         <h2>Shoe Name: ${shoe.name}</h2>
+        // //         <h3>Shoe Code: ${shoe.code}</h3>
+        // //     </div>
+        // //     <div class="modal-body">
+        // //         <p><strong>Description:</strong> ${shoe.description}</p>
+        // //         ${shoe.image ? `<img src="uploads/${shoe.image}" alt="${shoe.code}" style="max-width:100%; margin:1rem 0; border-radius:8px;">` : ''}
+        // //         <h3 style="margin-top:1.5rem;">Variants</h3>
+        // //         ${variantsHtml}
+        // //     </div>
+        // //     `;
 
-            document.getElementById('shoeDetailsContent').innerHTML = modalContent;
-            document.getElementById('shoeDetailsModal').classList.add('show');
-            document.body.classList.add('modal-open');
-        }
-
-
-        function closeModal() {
-            document.getElementById('shoeDetailsModal').classList.remove('show');
-            document.body.classList.remove('modal-open');
-        }
-
-        function promptDelete(shoeId) {
-            shoeToDelete = shoeId;
-            document.getElementById('confirmationModal').classList.add('show');
-            document.body.classList.add('modal-open');
-        }
+        // //     document.getElementById('shoeDetailsContent').innerHTML = modalContent;
+        // //     document.getElementById('shoeDetailsModal').classList.add('show');
+        // //     document.body.classList.add('modal-open');
+        // // }
 
 
-        function cancelDelete() {
-            shoeToDelete = null;
-            document.getElementById('confirmationModal').classList.remove('show');
-            document.body.classList.remove('modal-open');
-        }
+        // function closeModal() {
+        //     document.getElementById('shoeDetailsModal').classList.remove('show');
+        //     document.body.classList.remove('modal-open');
+        // }
+
+        // function promptDelete(shoeId) {
+        //     shoeToDelete = shoeId;
+        //     document.getElementById('confirmationModal').classList.add('show');
+        //     document.body.classList.add('modal-open');
+        // }
 
 
-        function confirmDelete() {
-            if (!shoeToDelete) {
-                cancelDelete();
-                return;
-            }
+        // function cancelDelete() {
+        //     shoeToDelete = null;
+        //     document.getElementById('confirmationModal').classList.remove('show');
+        //     document.body.classList.remove('modal-open');
+        // }
 
-            let shoes = JSON.parse(localStorage.getItem('shoes')) || [];
-            shoes = shoes.filter(shoe => shoe.id !== shoeToDelete);
-            localStorage.setItem('shoes', JSON.stringify(shoes));
 
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders = orders.filter(order => order.shoeId !== shoeToDelete);
-            localStorage.setItem('orders', JSON.stringify(orders));
+        // function confirmDelete() {
+        //     if (!shoeToDelete) {
+        //         cancelDelete();
+        //         return;
+        //     }
 
-            cancelDelete();
-            loadInventory();
+        //     let shoes = JSON.parse(localStorage.getItem('shoes')) || [];
+        //     shoes = shoes.filter(shoe => shoe.id !== shoeToDelete);
+        //     localStorage.setItem('shoes', JSON.stringify(shoes));
 
-            alert('Shoe has been deleted successfully');
-        }
+        //     let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        //     orders = orders.filter(order => order.shoeId !== shoeToDelete);
+        //     localStorage.setItem('orders', JSON.stringify(orders));
 
-        // Close modals when clicking outside or pressing Escape
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('modal')) {
-                closeModal();
-                cancelDelete();
-            }
-        });
+        //     cancelDelete();
+        //     loadInventory();
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closeModal();
-                cancelDelete();
-            }
-        });
+        //     alert('Shoe has been deleted successfully');
+        // }
 
-        // Optional placeholder for edit functionality
-        function editShoe(shoeId) {
-            // Save shoe ID to localStorage and redirect to edit page
-            localStorage.setItem('editingShoeId', shoeId);
-            window.location.href = 'shopowner_addshoe.html';
-        }
+        // // Close modals when clicking outside or pressing Escape
+        // document.addEventListener('click', function (e) {
+        //     if (e.target.classList.contains('modal')) {
+        //         closeModal();
+        //         cancelDelete();
+        //     }
+        // });
 
-        // Optional: search filter function
-        function filterInventory(searchTerm) {
-            const term = searchTerm.toLowerCase();
-            const rows = document.querySelectorAll('#inventoryTable tbody tr');
-            rows.forEach(row => {
-                const name = row.children[1]?.textContent.toLowerCase() || '';
-                const code = row.children[2]?.textContent.toLowerCase() || '';
-                row.style.display = (name.includes(term) || code.includes(term)) ? '' : 'none';
-            });
-        }
+        // document.addEventListener('keydown', function (e) {
+        //     if (e.key === 'Escape') {
+        //         closeModal();
+        //         cancelDelete();
+        //     }
+        // });
+
+        // // Optional placeholder for edit functionality
+        // function editShoe(shoeId) {
+        //     // Save shoe ID to localStorage and redirect to edit page
+        //     localStorage.setItem('editingShoeId', shoeId);
+        //     window.location.href = 'shopowner_addshoe.html';
+        // }
+
+        // // Optional: search filter function
+        // function filterInventory(searchTerm) {
+        //     const term = searchTerm.toLowerCase();
+        //     const rows = document.querySelectorAll('#inventoryTable tbody tr');
+        //     rows.forEach(row => {
+        //         const name = row.children[1]?.textContent.toLowerCase() || '';
+        //         const code = row.children[2]?.textContent.toLowerCase() || '';
+        //         row.style.display = (name.includes(term) || code.includes(term)) ? '' : 'none';
+        //     });
+        // }
 
     </script>
+
+    <script src="shop_inventory.js" type="module"></script>
 </body>
 </html>

@@ -19,6 +19,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
 
+const userIsApproved = document.getElementById("status-message-approved").style.display; // Set this based on your logic
+const userIsRejected = document.getElementById("status-message-reject").style.display; // Set this based on your logic
+const userIsPending = document.getElementById("status-message-pending").style.display; // Set this based on your logic
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -30,8 +33,25 @@ onAuthStateChanged(auth, (user) => {
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
-                    // document.getElementById('userName_display1').textContent = userData.username;
-                    // document.getElementById('userName_display2').textContent = userData.username;
+                    if (userData.status === "approved") {
+                        document.getElementById("status-message-approved").style.display = "block";
+                        document.getElementById("status-message-reject").style.display = "none";
+                        document.getElementById("status-message-pending").style.display = "none";
+                    }else if (userData.status === "rejected") {
+                        document.getElementById("status-message-approved").style.display = "none";
+                        document.getElementById("status-message-reject").style.display = "block";
+                        document.getElementById("status-message-pending").style.display = "none";
+                    }
+                    else if (userData.status === "pending") {
+                        document.getElementById("status-message-approved").style.display = "none";
+                        document.getElementById("status-message-reject").style.display = "none";
+                        document.getElementById("status-message-pending").style.display = "block";
+                    } else {
+                        document.getElementById("status-message-approved").style.display = "none";
+                        document.getElementById("status-message-reject").style.display = "none";
+                        document.getElementById("status-message-pending").style.display = "none";
+                    }
+                    
                     document.body.style.display = '';
                 } else {
                     alert("Account does not exist");

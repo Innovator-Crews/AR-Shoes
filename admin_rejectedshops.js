@@ -333,7 +333,7 @@ function performSearch(searchTerm) {
         tbody.innerHTML = '<tr><td colspan="7">No matching shops found</td></tr>';
     } else {
         filteredShops.forEach(shop => {
-            const row = createShopRow(shop.id, shop, 'approved'); // Changed status to 'approved'
+            const row = createShopRow(shop.id, shop, 'rejected'); // Changed status to 'approved'
             tbody.appendChild(row);
         });
     }
