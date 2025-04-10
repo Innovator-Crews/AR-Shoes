@@ -20,7 +20,6 @@ const auth = getAuth();
 const db = getDatabase(app);
 
 
-document.body.style.display = 'none';
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in
@@ -55,5 +54,38 @@ document.getElementById('logout_btn').addEventListener('click', () => {
         // di na need ng window.location.href kasi kay onAuthStateChanged else na yung window.location.href = "user_login.html";
     }).catch((error) => {
         console.error("Error signing out: ", error);
+        alert("Error loading data. Please refresh the page."); // add lang ako ng message for user
     });
 });
+
+const statusContainer = document.getElementById("status-message");
+
+// Sample condition (replace with actual logic)
+    // const shopStatus = "rejected"; // or "approved"
+    // const rejectionReasons = [
+    //   "Invalid or incomplete business permit.",
+    //   "Shop description is too vague."
+    // ];
+
+    // if (shopStatus === "approved") {
+    //   statusContainer.classList.add("approved");
+    //   statusContainer.innerHTML = `
+    //     <div>
+    //         <strong>Congratulations!</strong> Your shop has been <strong>approved</strong>.
+    //         You can now access all dashboard features including adding products and employees.
+    //     </div>
+    //   `;
+    // } else if (shopStatus === "rejected") {
+    //   statusContainer.classList.add("rejected");
+    //   statusContainer.innerHTML = `
+    //     <div>
+    //         <strong>We're sorry.</strong> Your shop registration has been <strong>rejected</strong> due to the following reasons:
+    //         <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+    //             ${rejectionReasons.map(reason => `<li>${reason}</li>`).join("")}
+    //         </ul>
+    //         <p style="margin-top: 0.5rem;">Please review and update your details, then re-apply.</p>
+    //     </div>
+    //     <button class="reapply-btn">Reapply</button>
+    //   `;
+    // }
+
