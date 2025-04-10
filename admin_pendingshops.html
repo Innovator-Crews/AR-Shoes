@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
+
 <body>
 
     <!-- Notification element -->
     <div id="notification" class="notification"></div>
-    
+
     <!-- Confirmation Dialog -->
+    <!-- binago ko to -->
     <div id="confirmationDialog" class="confirmation-dialog">
         <p id="dialogMessage">Are you sure you want to perform this action?</p>
+        <div id="rejectionReasonContainer" style="display: none; margin: 10px 0;">
+            <textarea id="rejectionReason" placeholder="Enter rejection reason..." cols="50" rows="5"></textarea>
+        </div>
         <div class="confirmation-buttons">
             <button id="cancelAction" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
-            <button id="confirmAction" class="approve-btn">
-                <i class="fas fa-check"></i> <span class="action-text">Confirm</span>
-            </button>
+            <button id="confirmAction" class="reject-btn"><i class="fas fa-check"></i> <span class="action-text">Confirm</span></button>
         </div>
     </div>
 
@@ -32,7 +36,7 @@
             <button id="confirmLogout" class="reject-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </div>
-    
+
     <!-- Overlay -->
     <div id="overlay" class="overlay"></div>
 
@@ -51,12 +55,13 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container animate-fade">
         <h1 class="animate-slide">Pending Shop Approvals</h1>
 
         <div class="search-container animate-slide">
-            <input type="text" id="shopSearch" placeholder="Search shops by id, name, owner, or email..." class="search-input">
+            <input type="text" id="shopSearch" placeholder="Search shops by id, name, owner, or email..."
+                class="search-input">
             <button id="searchBtn" class="search-btn">Search</button>
             <button id="clearSearch" class="clear-btn">Clear</button>
         </div>
@@ -330,372 +335,8 @@
             <button class="pagination-btn" id="nextBtn">Next</button>
         </div>
     </div>
-    <script>
-   
-   document.addEventListener("DOMContentLoaded", function () {
-            // Menu toggle functionality
-            const menuBtn = document.querySelector(".menu-btn");
-            const navLinks = document.querySelector(".nav-links");
-            
-            menuBtn?.addEventListener("click", function() {
-                navLinks.classList.toggle("active");
-                menuBtn.innerHTML = navLinks.classList.contains("active") ? 
-                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
-
-            // --- Pagination variables ---
-            let currentPage = 1;
-            const rowsPerPage = 10; // Show 10 rows per page
-            const tableBody = document.querySelector("#pending-shops tbody");
-            const prevBtn = document.getElementById("prevBtn");
-            const nextBtn = document.getElementById("nextBtn");
-            const paginationContainer = document.querySelector(".pagination"); // Container for page number buttons
-
-            // --- Initialize pagination ---
-            function setupPagination() {
-                // Ensure tableBody exists before proceeding
-                if (!tableBody) {
-                    console.error("Table body not found for pagination setup.");
-                    return;
-                }
-                const rows = tableBody.querySelectorAll("tr");
-                const pageCount = Math.ceil(rows.length / rowsPerPage);
-
-                // Clear existing page number buttons (excluding prev/next)
-                const existingPageButtons = paginationContainer.querySelectorAll(".page-btn");
-                existingPageButtons.forEach(btn => btn.remove());
-
-                // Add page number buttons
-                // Show limited page numbers (e.g., first, last, current +/- 2) for many pages
-                const maxPageButtonsToShow = 5; // Adjust as needed
-                let startPage = Math.max(1, currentPage - Math.floor(maxPageButtonsToShow / 2));
-                let endPage = Math.min(pageCount, startPage + maxPageButtonsToShow - 1);
-
-                // Adjust startPage if endPage hits the limit early
-                startPage = Math.max(1, endPage - maxPageButtonsToShow + 1);
-
-                // Add 'First' button if needed
-                if (startPage > 1) {
-                    createPageButton(1);
-                    if (startPage > 2) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.textContent = '...';
-                        ellipsis.className = 'pagination-ellipsis';
-                        paginationContainer.insertBefore(ellipsis, nextBtn);
-                    }
-                }
-
-                // Add page number buttons in the calculated range
-                for (let i = startPage; i <= endPage; i++) {
-                    createPageButton(i);
-                }
-
-                // Add 'Last' button if needed
-                if (endPage < pageCount) {
-                    if (endPage < pageCount - 1) {
-                        const ellipsis = document.createElement('span');
-                        ellipsis.textContent = '...';
-                        ellipsis.className = 'pagination-ellipsis';
-                        paginationContainer.insertBefore(ellipsis, nextBtn);
-                    }
-                    createPageButton(pageCount);
-                }
-
-
-                updateTableDisplay(); // Show the correct rows for the current page
-                updatePaginationButtons(); // Enable/disable prev/next and highlight active page
-            }
-
-            // Helper function to create a page number button
-            function createPageButton(pageNumber) {
-                const pageBtn = document.createElement("button");
-                pageBtn.className = "pagination-btn page-btn";
-                pageBtn.textContent = pageNumber;
-
-                if (pageNumber === currentPage) {
-                    pageBtn.classList.add("active");
-                }
-
-                pageBtn.addEventListener("click", () => {
-                    currentPage = pageNumber;
-                    setupPagination(); // Re-setup to update active states and potentially shown numbers
-                });
-
-                // Insert the button before the 'Next' button
-                paginationContainer.insertBefore(pageBtn, nextBtn);
-            }
-
-
-            // --- Update table display for current page ---
-            function updateTableDisplay() {
-                if (!tableBody) return; // Guard clause
-                const rows = tableBody.querySelectorAll("tr");
-                const startIndex = (currentPage - 1) * rowsPerPage;
-                const endIndex = startIndex + rowsPerPage;
-
-                rows.forEach((row, index) => {
-                    // Hide row by default
-                    row.classList.remove("show");
-                    row.style.display = 'none'; // Use style.display for hiding/showing
-
-                    // Show row if it's within the current page range
-                    if (index >= startIndex && index < endIndex) {
-                        row.classList.add("show");
-                        row.style.display = ''; // Reset to default display (table-row)
-                    }
-                });
-            }
-
-            // --- Update pagination button states (Prev/Next and Active page) ---
-            function updatePaginationButtons() {
-                if (!tableBody) return; // Guard clause
-                const rows = tableBody.querySelectorAll("tr");
-                const pageCount = Math.ceil(rows.length / rowsPerPage);
-                const pageButtons = paginationContainer.querySelectorAll(".page-btn");
-
-                // Update active state for number buttons
-                pageButtons.forEach(btn => {
-                    btn.classList.remove("active");
-                    if (parseInt(btn.textContent) === currentPage) {
-                        btn.classList.add("active");
-                    }
-                });
-
-                // Update Previous/Next button disabled states
-                prevBtn.disabled = currentPage === 1;
-                nextBtn.disabled = currentPage === pageCount || pageCount === 0; // Also disable if no pages
-            }
-
-            // --- Navigation button handlers ---
-            prevBtn?.addEventListener("click", () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    setupPagination(); // Re-setup to update everything
-                }
-            });
-
-            nextBtn?.addEventListener("click", () => {
-                if (!tableBody) return; // Guard clause
-                const rows = tableBody.querySelectorAll("tr");
-                const pageCount = Math.ceil(rows.length / rowsPerPage);
-
-                if (currentPage < pageCount) {
-                    currentPage++;
-                    setupPagination(); // Re-setup to update everything
-                }
-            });
-
-            // --- Action confirmation dialog ---
-            let currentAction = null; // Stores 'approve' or 'reject'
-            let currentRow = null;    // Stores the table row being acted upon
-            const dialog = document.getElementById("confirmationDialog");
-            const overlay = document.getElementById("overlay");
-
-            function confirmAction(button, actionType) {
-                currentRow = button.closest("tr");
-                if (!currentRow) {
-                    console.error("Could not find table row for action.");
-                    return;
-                }
-                currentAction = actionType;
-
-                const shopName = currentRow.cells[1]?.textContent || '[Unknown Shop]';
-                const dialogMessage = document.getElementById("dialogMessage");
-                const confirmBtn = document.getElementById("confirmAction");
-                const cancelBtn = document.getElementById("cancelAction");
-                const confirmIcon = confirmBtn.querySelector('i');
-                const actionText = confirmBtn.querySelector('.action-text');
-
-                if (!dialog || !dialogMessage || !overlay || !confirmBtn || !cancelBtn) {
-                    console.error("Dialog elements not found.");
-                    return;
-                }
-
-                // Update dialog content
-                dialogMessage.textContent = `Are you sure you want to ${actionType} "${shopName}"?`;
-                
-                // Update button text and icon
-                if (actionType === 'approve') {
-                    confirmIcon.className = 'fas fa-check';
-                    actionText.textContent = 'Approve';
-                    confirmBtn.className = 'approve-btn';
-                } else {
-                    confirmIcon.className = 'fas fa-ban';
-                    actionText.textContent = 'Reject';
-                    confirmBtn.className = 'reject-btn';
-                }
-
-                // Show dialog and overlay
-                dialog.classList.add("show");
-                overlay.classList.add("show");
-            }
-
-            // --- Setup action buttons in the table ---
-            // Use event delegation on the table body for potentially dynamic rows
-            tableBody?.addEventListener('click', function(event) {
-                const target = event.target;
-                if (target.classList.contains('approve-btn') && target.id !== 'confirmAction') {
-                    confirmAction(target, 'approve');
-                } else if (target.classList.contains('reject-btn') && target.id !== 'cancelAction') {
-                    confirmAction(target, 'reject');
-                }
-            });
-
-
-            // --- Confirmation dialog buttons ---
-            document.getElementById("confirmAction")?.addEventListener("click", function() {
-                const dialog = document.getElementById("confirmationDialog");
-                const overlay = document.getElementById("overlay");
-
-                // Hide dialog
-                dialog?.classList.remove("show");
-                overlay?.classList.remove("show");
-
-                // Perform the stored action
-                if (currentAction === "approve" && currentRow) {
-                    approveShop(currentRow);
-                } else if (currentAction === "reject" && currentRow) {
-                    rejectShop(currentRow);
-                }
-
-                // Reset state
-                currentAction = null;
-                currentRow = null;
-            });
-
-            document.getElementById("cancelAction")?.addEventListener("click", function() {
-                const dialog = document.getElementById("confirmationDialog");
-                const overlay = document.getElementById("overlay");
-
-                // Hide dialog
-                dialog?.classList.remove("show");
-                overlay?.classList.remove("show");
-
-                // Reset state
-                currentAction = null;
-                currentRow = null;
-            });
-
-            // --- Shop approval/rejection functions ---
-            function approveShop(row) {
-                const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
-
-                console.log(`Approving shop ID: ${shopId}, Name: ${shopName}`); // Log action
-
-                // In a real app, you would send an API request here
-                // Example: fetch(`/api/shops/${shopId}/approve`, { method: 'POST' }) ...
-
-                // Simulate success after a short delay
-                setTimeout(() => {
-                    row.remove(); // Remove the row from the table
-                    showNotification(`"${shopName}" has been approved successfully!`, "success");
-                    // Recalculate pagination as a row was removed
-                    // Adjust current page if it becomes empty
-                    if (tableBody && tableBody.querySelectorAll("tr:not([style*='display: none'])").length === 0 && currentPage > 1) {
-                        currentPage--;
-                    }
-                    setupPagination();
-                }, 300); // Simulate network delay
-            }
-
-            function rejectShop(row) {
-                const shopId = row.getAttribute("data-id");
-                const shopName = row.cells[1]?.textContent || '[Unknown Shop]';
-
-                // Use prompt to get the reason
-                const reason = prompt(`Please enter the reason for rejecting "${shopName}":`);
-
-                // Only proceed if a reason was provided (prompt not cancelled or left empty)
-                if (reason !== null && reason.trim() !== '') {
-                    console.log(`Rejecting shop ID: ${shopId}, Name: ${shopName}, Reason: ${reason}`); // Log action
-
-                    // In a real app, you would send an API request here, including the reason
-                    // Example: fetch(`/api/shops/${shopId}/reject`, { method: 'POST', body: JSON.stringify({ reason: reason }) ... })
-
-                    // Simulate success after a short delay
-                    setTimeout(() => {
-                        row.remove(); // Remove the row from the table
-                        showNotification(`"${shopName}" has been rejected. Reason: ${reason}`, "error");
-                        // Recalculate pagination as a row was removed
-                        // Adjust current page if it becomes empty
-                        if (tableBody && tableBody.querySelectorAll("tr:not([style*='display: none'])").length === 0 && currentPage > 1) {
-                            currentPage--;
-                        }
-                        setupPagination();
-                    }, 300); // Simulate network delay
-                } else if (reason !== null) {
-                    // User provided an empty reason
-                    alert("Rejection reason cannot be empty.");
-                }
-                // If reason is null, the prompt was cancelled, do nothing.
-            }
-
-            // --- Notification function ---
-            function showNotification(message, type) {
-                const notification = document.getElementById("notification");
-                if (!notification) {
-                    console.error("Notification element not found.");
-                    return;
-                }
-                notification.textContent = message;
-                // Reset classes first
-                notification.className = 'notification';
-                // Add specific type and show class
-                notification.classList.add(type, 'show');
-
-
-                // Hide the notification after 3 seconds
-                setTimeout(() => {
-                    notification.classList.remove("show");
-                }, 3000);
-            }
-
-            // --- Initialize everything on load ---
-            setupPagination();
-
-        }); // End of DOMContentLoaded listener
-
-        // Logout functionality
-        const logoutLink = document.querySelector('a[href="admin_login.html"]');
-        const logoutDialog = document.getElementById('logoutDialog');
-        const cancelLogout = document.getElementById('cancelLogout');
-        const confirmLogout = document.getElementById('confirmLogout');
-
-        // Prevent default logout link behavior
-        logoutLink?.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Show logout confirmation dialog
-            logoutDialog.classList.add('show');
-            document.getElementById('overlay').classList.add('show');
-        });
-
-        // Cancel logout
-        cancelLogout?.addEventListener('click', function() {
-            logoutDialog.classList.remove('show');
-            document.getElementById('overlay').classList.remove('show');
-        });
-
-        // Confirm logout
-        confirmLogout?.addEventListener('click', function() {
-            // In a real app, you might want to:
-            // 1. Send a logout request to your backend
-            // 2. Clear any session data
-            // 3. Then redirect
-            
-            // For this example, we'll just redirect immediately
-            window.location.href = 'admin_login.html';
-        });
-
-        // Close dialog when clicking overlay
-        document.getElementById('overlay')?.addEventListener('click', function() {
-            logoutDialog.classList.remove('show');
-            this.classList.remove('show');
-        });
-
-    </script>
-<!-- nagadd ng js -->
+    <!-- nagadd ng js -->
     <script src="admin_pendingshops.js" type="module"></script>
 </body>
+
 </html>
