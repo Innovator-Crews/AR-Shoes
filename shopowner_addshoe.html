@@ -25,6 +25,9 @@
                 <a href="shop_inventory.html" class="nav-item">
                     <i class="fas fa-box"></i> Inventory
                 </a>
+                <a href="shop_manage.html" class="nav-item manager">
+                    <i class="fas fa-users-cog"></i> Manage Employees
+                </a>
                 <a href="devonprocess.html" class="nav-item">
                     <i class="fas fa-shopping-cart"></i> Orders
                 </a>
@@ -42,49 +45,51 @@
         </div>
         
         <!-- Main Content -->
-        <div class="form-container">
-            <h1><i class="fas fa-shoe-prints"></i> Add New Shoe</h1>
-            <form id="addShoeForm">
-                <div class="form-group">
-                    <label for="shoeName">General Shoe Name</label>
-                    <input type="text" id="shoeName" required placeholder="e.g., Curry 3, Jordan 1">
-                </div>
+        <div class="main-content">
+            <div class="form-container">
+                <h1><i class="fas fa-shoe-prints"></i> Add New Shoe</h1>
+                <form id="addShoeForm">
+                    <div class="form-group">
+                        <label for="shoeName">General Shoe Name</label>
+                        <input type="text" id="shoeName" required placeholder="e.g., Curry 3, Jordan 1">
+                    </div>
 
-                <div class="form-group">
-                    <label for="shoeCode">Shoe Code (Numbers Only)</label>
-                    <input type="text" id="shoeCode" pattern="[0-9]+" required placeholder="e.g., 003, 101">
-                </div>
+                    <div class="form-group">
+                        <label for="shoeCode">Shoe Code (Numbers Only)</label>
+                        <input type="text" id="shoeCode" pattern="[0-9]+" required placeholder="e.g., 003, 101">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shoeDescription">General Description</label>
+                        <textarea id="shoeDescription" rows="4" required></textarea>
+                    </div>
                 
-                <div class="form-group">
-                    <label for="shoeDescription">General Description</label>
-                    <textarea id="shoeDescription" rows="4" required></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="shoeImage">Default Shoe Image</label>
+                        <input type="file" id="shoeImage" accept="image/*">
+                    </div>
             
-                <div class="form-group">
-                    <label for="shoeImage">Default Shoe Image</label>
-                    <input type="file" id="shoeImage" accept="image/*">
-                </div>
-        
-                <hr>
-            
-                <h3>Color Variants</h3>
-                <div id="colorVariants"></div>
-            
-                <button type="button" class="btn-secondary" onclick="addColorVariant()">
-                    <i class="fas fa-plus"></i> Add Color Variant
-                </button>
-            
-                <br><br>
+                    <hr>
                 
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-plus"></i> Add Shoe
-                </button>
-            </form>
-            
-            <div class="navigation">
-                <a href="shop_dashboard.html" class="btn-secondary">
-                    <i class="fas fa-tachometer-alt"></i> Back to Dashboard
-                </a>
+                    <h3>Color Variants</h3>
+                    <div id="colorVariants"></div>
+                
+                    <button type="button" class="btn btn-secondary" onclick="addColorVariant()">
+                        <i class="fas fa-plus"></i> Add Color Variant
+                    </button>
+                
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Shoe
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="navigation">
+                    <a href="shop_dashboard.html" class="btn btn-secondary">
+                        <i class="fas fa-tachometer-alt"></i> Back to Dashboard
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -155,7 +160,7 @@
                     <div class="size-stock-container" id="sizeStockContainer_${variantCount}">
                         <!-- Size inputs will be added here -->
                     </div>
-                    <button type="button" class="btn-secondary btn-add-size" onclick="addSizeInput(${variantCount})">
+                    <button type="button" class="btn btn-secondary btn-add-size" onclick="addSizeInput(${variantCount})">
                         <i class="fas fa-plus"></i> Add Size
                     </button>
                 </div>
@@ -163,7 +168,6 @@
                 <button type="button" class="btn-remove" onclick="removeVariant(this)">
                     <i class="fas fa-trash"></i> Remove Variant
                 </button>
-                
             `;
             
             container.appendChild(variant);
@@ -295,11 +299,9 @@
                 alert('You must have at least one color variant');
             }
         }
-
     </script>
       
     <!-- nagadd ng script -->
-     
     <script src="shop_dashboard.js" type="module"></script>
 </body>
 </html>

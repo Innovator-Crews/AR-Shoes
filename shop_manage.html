@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Employees</title>
+    <link rel="stylesheet" href="css/shop_manage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar (consistent with other pages) -->
+        <div class="sidebar">
+            <div class="logo">SHOP DASHBOARD</div>
+            <div class="nav-items">
+                <a href="shop_dashboard.html" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="shopowner_addshoe.html" class="nav-item">
+                    <i class="fas fa-shoe-prints"></i> Add Shoe
+                </a>
+                <a href="shopowner_addemployee.html" class="nav-item shopowner">
+                    <i class="fas fa-users"></i> Add Employee
+                </a>
+                <a href="shop_inventory.html" class="nav-item">
+                    <i class="fas fa-box"></i> Inventory
+                </a>
+                <a href="shop_manage.html" class="nav-item manager active">
+                    <i class="fas fa-users-cog"></i> Manage Employees
+                </a>
+                <a href="devonprocess.html" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i> Orders
+                </a>
+                <a href="devonprocess.html" class="nav-item manager">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                <a id="logout_btn" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-users-cog"></i> Employee Management</h1>
+                <div class="search-bar-container">
+                    <input type="text" class="search-bar" placeholder="Search employees..." id="searchEmployees">
+                    <button class="btn btn-primary" onclick="location.href='shopowner_addemployee.html'">
+                        <i class="fas fa-user-plus"></i> Add New Employee
+                    </button>
+                </div>
+            </div>
+
+            <!-- Employee Table -->
+            <h2 class="section-title">All Employees</h2>
+            <table class="order-table" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Date Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <!-- Confirmation Modal -->
+            <div id="confirmationModal" class="modal">
+                <div class="modal-content">
+                    <h3>Confirm Action</h3>
+                    <p id="modalMessage">Are you sure you want to delete this employee?</p>
+                    <div class="modal-actions">
+                        <button class="btn btn-danger" id="confirmAction">Confirm</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store the employee ID for actions
+        let currentEmployeeId = null;
+        let currentAction = null;
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            // Role-based access control
+            const userRole = localStorage.getItem('userRole');
+            if (userRole === "employee") {
+                document.querySelectorAll(".manager, .shopowner").forEach(el => el.style.display = "none");
+            } else if (userRole === "manager") {
+                document.querySelectorAll(".shopowner").forEach(el => el.style.display = "none");
+            }
+
+            loadEmployees();
+            
+            // Search functionality
+            document.getElementById('searchEmployees').addEventListener('input', (e) => {
+                filterEmployees(e.target.value);
+            });
+        });
+
+        function loadEmployees() {
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            const shopId = localStorage.getItem('shopId');
+            const employeeTableBody = document.getElementById('employeeTableBody');
+            
+            const shopEmployees = employees.filter(emp => emp.shopId === shopId);
+            
+            if (shopEmployees.length === 0) {
+                employeeTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No employees found</td></tr>';
+                return;
+            }
+
+            let html = '';
+            shopEmployees.forEach(employee => {
+                html += `
+                <tr>
+                    <td>
+                        <img src="uploads/${employee.photo || 'default-user.jpg'}" alt="${employee.name}" class="employee-avatar">
+                    </td>
+                    <td>${employee.name}</td>
+                    <td>${employee.email}</td>
+                    <td>
+                        <span class="status ${employee.role === 'manager' ? 'shipped' : 'pending'}">
+                            ${employee.role === 'manager' ? 'Manager' : 'Staff'}
+                        </span>
+                    </td>
+                    <td>${new Date(employee.dateAdded).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editEmployee('${employee.id}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-danger" onclick="promptDelete('${employee.id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+                `;
+            });
+            
+            employeeTableBody.innerHTML = html;
+        }
+
+        function filterEmployees(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            const rows = document.querySelectorAll('#employeeTable tbody tr');
+            
+            rows.forEach(row => {
+                const name = row.children[1].textContent.toLowerCase();
+                const email = row.children[2].textContent.toLowerCase();
+                row.style.display = (name.includes(term) || email.includes(term)) ? '' : 'none';
+            });
+        }
+
+        function promptDelete(employeeId) {
+            currentEmployeeId = employeeId;
+            currentAction = 'delete';
+            document.getElementById('modalMessage').textContent = 'Are you sure you want to delete this employee?';
+            document.getElementById('confirmAction').textContent = 'Delete';
+            document.getElementById('confirmAction').className = 'btn btn-danger';
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function editEmployee(employeeId) {
+            localStorage.setItem('editingEmployeeId', employeeId);
+            window.location.href = 'shopowner_addemployee.html';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            currentEmployeeId = null;
+            currentAction = null;
+        }
+
+        document.getElementById('confirmAction').addEventListener('click', function() {
+            if (currentAction === 'delete' && currentEmployeeId) {
+                let employees = JSON.parse(localStorage.getItem('employees')) || [];
+                employees = employees.filter(emp => emp.id !== currentEmployeeId);
+                localStorage.setItem('employees', JSON.stringify(employees));
+                loadEmployees();
+            }
+            closeModal();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('confirmationModal')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,42 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Add Employee</title>
-  <link rel="stylesheet" href="css/shopowner_addemployee.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="css/shopowner_addemployee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="form-container">
-    <h1><i class="fas fa-users"></i> Add Employee</h1>
-    <form id="addEmployeeForm">
-      <div class="form-group">
-        <label for="employeeName">Full Name</label>
-        <input type="text" id="employeeName" required>
-      </div>
+    <div class="dashboard">
+        <!-- Sidebar (same as dashboard) -->
+        <div class="sidebar">
+            <div class="logo">SHOP DASHBOARD</div>
+            <div class="nav-items">
+              <a href="shop_dashboard.html" class="nav-item">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <a href="shopowner_addshoe.html" class="nav-item">
+                  <i class="fas fa-shoe-prints"></i> Add Shoe
+              </a>
+              <a href="shopowner_addemployee.html" class="nav-item shopowner active">
+                  <i class="fas fa-users"></i> Add Employee
+              </a>
+              <a href="shop_inventory.html" class="nav-item">
+                  <i class="fas fa-box"></i> Inventory
+              </a>
+              <a href="shop_manage.html" class="nav-item manager">
+                  <i class="fas fa-users-cog"></i> Manage Employees
+              </a>
+              <a href="devonprocess.html" class="nav-item">
+                  <i class="fas fa-shopping-cart"></i> Orders
+              </a>
+              <a href="devonprocess.html" class="nav-item manager">
+                  <i class="fas fa-chart-line"></i> Analytics
+              </a>
+              <a href="devonprocess.html" class="nav-item">
+                  <i class="fas fa-cog"></i> Settings
+              </a>
+              <!-- pinalitan yung href ng id -->
+              <a id="logout_btn" class="nav-item">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-users"></i> Add New Employee</h1>
+            </div>
 
-      <div class="form-group">
-        <label for="employeeEmail">Email</label>
-        <input type="email" id="employeeEmail" required>
-      </div>
+            <div class="form-container">
+                <form id="addEmployeeForm">
+                    <div class="form-group">
+                        <label for="employeeName">Full Name</label>
+                        <input type="text" id="employeeName" required placeholder="e.g., Juan Dela Cruz">
+                    </div>
 
-      <div class="form-group">
-        <label for="employeeRole">Role</label>
-        <select id="employeeRole" required>
-          <option value="">Select Role</option>
-          <option value="cashier">Cashier</option>
-          <option value="inventory">Inventory Manager</option>
-          <option value="sales">Sales Associate</option>
-        </select>
-      </div>
+                    <div class="form-group">
+                        <label for="employeeEmail">Email Address</label>
+                        <input type="email" id="employeeEmail" required placeholder="employee@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="employeePhone">Phone Number</label>
+                        <input type="tel" id="employeePhone" placeholder="09123456789">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="employeeRole">Role</label>
+                        <select id="employeeRole" required>
+                            <option value="">Select Role</option>
+                            <option value="employee">Sales Staff</option>
+                            <option value="manager">Shop Manager</option>
+                        </select>
+                    </div>
 
-      <div class="form-group">
-        <label for="employeePhone">Phone Number</label>
-        <input type="tel" id="employeePhone">
-      </div>
+                    <div class="form-group">
+                        <label for="employeePassword">Temporary Password</label>
+                        <input type="password" id="employeePassword" required>
+                    </div>
 
-      <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Add Employee</button>
-    </form>
-  </div>
+                    <div class="form-group">
+                        <label for="employeePhoto">Employee Photo</label>
+                        <input type="file" id="employeePhoto" accept="image/*">
+                    </div>
+            
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Add Employee
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <i class="fas fa-trash"></i> Clear Form
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="navigation">
+                    <a href="shop_dashboard.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Role-based access control
+            const userRole = localStorage.getItem('userRole');
+            if (userRole === "employee") {
+                document.querySelectorAll(".manager, .shopowner").forEach(el => el.style.display = "none");
+            } else if (userRole === "manager") {
+                document.querySelectorAll(".shopowner").forEach(el => el.style.display = "none");
+            }
+
+            // Check edit mode more reliably
+            const isEditMode = localStorage.getItem('editingEmployeeId') !== null;
+            
+            if (isEditMode) {
+                initEditMode();
+            }
+
+            // Form submission
+            document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                isEditMode ? updateEmployee() : handleFormSubmit();
+            });
+        });
+
+        function initEditMode() {
+            const employeeId = localStorage.getItem('editingEmployeeId');
+            const employees = JSON.parse(localStorage.getItem('employees')) || [];
+            const employee = employees.find(emp => emp.id === employeeId);
+            
+            if (!employee) {
+                localStorage.removeItem('editingEmployeeId');
+                alert('Employee not found! Returning to add mode.');
+                return;
+            }
+
+            // Update UI for edit mode
+            document.querySelector('.header h1').innerHTML = '<i class="fas fa-user-edit"></i> Edit Employee';
+            document.querySelector('.btn-primary').innerHTML = '<i class="fas fa-save"></i> Save Changes';
+            
+            // Pre-fill form
+            document.getElementById('employeeName').value = employee.name || '';
+            document.getElementById('employeeEmail').value = employee.email || '';
+            document.getElementById('employeePhone').value = employee.phone || '';
+            document.getElementById('employeeRole').value = employee.role || '';
+            
+            // Setup photo preview if exists
+            if (employee.photo && employee.photo !== 'default-user.jpg') {
+                // You would need to implement a photo preview function
+                // previewEmployeePhoto(employee.photo);
+            }
+        }
+
+        function updateEmployee() {
+            const employeeId = localStorage.getItem('editingEmployeeId');
+            if (!employeeId) {
+                alert('Error: No employee selected for editing');
+                return;
+            }
+
+            // Validate form
+            const employeeName = document.getElementById('employeeName').value.trim();
+            const employeeEmail = document.getElementById('employeeEmail').value.trim();
+            const employeeRole = document.getElementById('employeeRole').value;
+            
+            if (!employeeName || !employeeEmail || !employeeRole) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            let employees = JSON.parse(localStorage.getItem('employees')) || [];
+            const employeeIndex = employees.findIndex(emp => emp.id === employeeId);
+            
+            if (employeeIndex === -1) {
+                alert('Employee not found in database');
+                return;
+            }
+
+            // Get the photo file if selected, otherwise keep existing
+            const photoInput = document.getElementById('employeePhoto');
+            const newPhoto = photoInput.files[0] ? photoInput.files[0].name : employees[employeeIndex].photo;
+
+            // Update employee
+            employees[employeeIndex] = {
+                ...employees[employeeIndex],
+                name: employeeName,
+                email: employeeEmail,
+                phone: document.getElementById('employeePhone').value.trim(),
+                role: employeeRole,
+                photo: newPhoto,
+                lastUpdated: new Date().toISOString() // Add update timestamp
+            };
+            
+            localStorage.setItem('employees', JSON.stringify(employees));
+            alert('Employee updated successfully!');
+            
+            // Clean up and redirect
+            localStorage.removeItem('editingEmployeeId');
+            window.location.href = 'shop_manage.html';
+        }
+
+        function handleFormSubmit() {
+            // Validate form
+            const employeeName = document.getElementById('employeeName').value.trim();
+            const employeeEmail = document.getElementById('employeeEmail').value.trim();
+            const employeeRole = document.getElementById('employeeRole').value;
+            
+            if (!employeeName || !employeeEmail || !employeeRole) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            // Create employee object
+            const employeeData = {
+                id: Date.now().toString(),
+                name: employeeName,
+                email: employeeEmail,
+                phone: document.getElementById('employeePhone').value.trim(),
+                role: employeeRole,
+                photo: document.getElementById('employeePhoto').files[0]?.name || 'default-user.jpg',
+                dateAdded: new Date().toISOString(),
+                shopId: localStorage.getItem('shopId')
+            };
+
+            // Save to localStorage
+            let employees = JSON.parse(localStorage.getItem('employees')) || [];
+            employees.push(employeeData);
+            localStorage.setItem('employees', JSON.stringify(employees));
+
+            // Show success message
+            alert('Employee added successfully!');
+            
+            // Reset form
+            document.getElementById('addEmployeeForm').reset();
+        }
+
+        function clearForm() {
+          if (confirm('Are you sure you want to clear the form?')) {
+              document.getElementById('addEmployeeForm').reset();
+              // If in edit mode, clear the edit state
+              if (localStorage.getItem('editingEmployeeId')) {
+                  localStorage.removeItem('editingEmployeeId');
+                  // Reset UI to add mode
+                  document.querySelector('.header h1').innerHTML = '<i class="fas fa-users"></i> Add New Employee';
+                  document.querySelector('.btn-primary').innerHTML = '<i class="fas fa-user-plus"></i> Add Employee';
+              }
+          }
+      }
+    </script>
 </body>
 </html>

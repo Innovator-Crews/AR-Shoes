@@ -280,6 +280,90 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+/* Employee Specific Styles */
+.employee-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+}
+
+/* Search Bar Container */
+.search-bar-container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.search-bar {
+    flex-grow: 1;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray);
+    transition: var(--transition);
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: var(--warning);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-edit:hover {
+    background-color: #e67e22;
+}
+
+.btn-danger {
+    background-color: var(--accent);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--error);
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .dashboard {
@@ -424,348 +508,11 @@ body {
     font-weight: bold;
 }
 
-/* Modal Styles Fix */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1050;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.modal-open {
-    overflow: hidden;
-}
-
-.modal.show {
-    display: block;
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 700px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    transform: translateY(-50px);
-    transition: transform 0.3s ease;
-}
-
-.modal.show .modal-content {
-    transform: translateY(0);
-}
-
-.close-btn {
-    position: absolute;
-    right: 1.5rem;
-    top: 1rem;
-    font-size: 1.75rem;
-    font-weight: 300;
-    color: var(--gray-dark);
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    line-height: 1;
-}
-
-.close-btn:hover {
-    color: var(--accent);
-}
-
-/* Modal Content Styling */
-.modal-header {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--gray-light);
-}
-
-.modal-header h2 {
-    color: var(--secondary);
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.modal-body {
-    padding: 1rem 0;
-}
-
-/* Enhanced Variant Details */
-.variant-detail {
-    background: var(--gray-light);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease;
-}
-
-.variant-detail:hover {
-    transform: translateX(5px);
-}
-
-.variant-detail h4 {
-    color: var(--secondary);
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-}
-
-.variant-detail h4::before {
-    content: "•";
-    color: var(--primary);
-    font-size: 2rem;
-    margin-right: 0.75rem;
-    line-height: 0;
-}
-
-.variant-detail p {
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-}
-
-.variant-detail p strong {
-    min-width: 100px;
-    display: inline-block;
-    color: var(--gray-dark);
-}
-
-.variant-detail img {
-    margin-top: 1rem;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--gray);
-}
-
-/* Search Bar Container */
-.search-bar-container {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-    max-width: 600px;
-}
-
-.search-bar {
-    flex-grow: 1;
-    padding: 0.8rem 1rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray);
-    transition: var(--transition);
-}
-
-.search-bar:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-}
-
-/* Edit Button */
-.btn-edit {
-    background-color: var(--warning);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-sm);
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-edit:hover {
-    background-color: #e67e22;
-}
-
- /* Confirmation Modal Fix */
-.confirmation-modal {
-    display: none;
-    position: fixed;
-    z-index: 1060;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.confirmation-modal.show {
-    display: block;
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.confirmation-content {
-    background-color: white;
-    margin: 20vh auto;
-    padding: 2rem;
-    border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 450px;
-    box-shadow: var(--shadow-lg);
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-    position: relative;
-}
-
-.confirmation-modal.show .confirmation-content {
-    transform: scale(1);
-}
-
-.confirmation-content h3 {
-    color: var(--secondary);
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--gray-light);
-}
-
-.confirmation-content p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-.confirmation-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.confirmation-buttons .btn {
-    min-width: 120px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: var(--radius-md);
-}
-
-/* Button Styles for Modals */
-.modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.confirmation-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.btn {
-    padding: 0.6rem 1.2rem;
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    border: none;
-    margin-left: 0.5rem;
-}
-
-.btn-primary {
-    background-color: var(--primary);
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-}
-
-.btn-secondary {
-    background-color: var(--gray-light);
-    color: var(--text-primary);
-}
-
-.btn-secondary:hover {
-    background-color: var(--gray);
-}
-
-.btn-danger {
-    background-color: var(--accent);
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: var(--error);
-}
-
-
-/* Animation Keyframes */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateY(-20px); }
-    to { transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-    from { transform: scale(0.9); }
-    to { transform: scale(1); }
-}
-
-
-/* Responsive Adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .modal-content, .confirmation-content {
-        width: 95%;
-        padding: 1.5rem;
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-    
-    .modal-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .confirmation-content h3 {
-        font-size: 1.3rem;
-    }
-    
-    .confirmation-buttons {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .confirmation-buttons .btn {
-        width: 100%;
-    }
-}
-
-/* Additional Utility Classes */
-.modal-scroll-lock {
-    overflow: hidden;
-}
-
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
 }
 
 @media (max-width: 480px) {
