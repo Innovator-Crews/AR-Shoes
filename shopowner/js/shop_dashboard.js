@@ -449,6 +449,28 @@ function initializeEventListeners() {
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
+    const shopId = localStorage.getItem('shopId');
+    const shopRef = ref(db, `AR_shoe_users/shop/${shopId}`);
+
+    onValue(shopRef, (snapshot) => {
+        if (snapshot.exists()) {
+            const shop = snapshot.val();
+            if (shop.status === 'rejected') {
+                window.location.href = '/shopowner/html/shop_rejected.html';
+                return;
+            }
+            
+            // Continue with normal dashboard loading
+            if (shop.status === 'pending') {
+                document.getElementById('status-message-approved').style.display = 'none';
+                document.getElementById('status-message-reject').style.display = 'none';
+            } else if (shop.status === 'approved') {
+                document.getElementById('status-message-pending').style.display = 'none';
+                document.getElementById('status-message-reject').style.display = 'none';
+            }
+        }
+    });
+    
     initializeEventListeners();
     loadShops('pending', 'pendingShopsTableBody');
     loadShops('approved', 'approvedShopsTableBody');

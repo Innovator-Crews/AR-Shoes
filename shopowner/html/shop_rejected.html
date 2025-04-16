@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Registration Rejected</title>
+    <link rel="stylesheet" href="/shopowner/css/shop_rejected.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="rejection-container">
+        <div class="rejection-content">
+            <div class="rejection-icon">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h1>Shop Registration Rejected</h1>
+            <div class="rejection-reasons">
+                <p>Your shop registration has been rejected due to the following reasons:</p>
+                <ul id="rejectionReasonsList">
+                    <!-- Reasons will be populated by JavaScript -->
+                </ul>
+            </div>
+            <div class="rejection-actions">
+                <p>Please review and update your details, then you may reapply.</p>
+                <button id="reapplyBtn" class="btn btn-primary">
+                    <i class="fas fa-redo"></i> Reapply Now
+                </button>
+                <button id="logoutBtn" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/shopowner/js/shop_rejected.js" type="module"></script>
+</body>
+</html>

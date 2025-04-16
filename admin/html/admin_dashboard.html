@@ -7,10 +7,6 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/admin/css/admin_dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <style>
-        
-    </style>
 </head>
 
 <body>
@@ -22,17 +18,18 @@
     <!-- Modal Dialog -->
     <!-- Gawa ko -->
     <!-- Modal Dialog -->
-<div id="ModalDialog" class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="modalName">Registration Details</h2>
-            <button id="closeModal" class="close-modal">&times;</button>
-        </div>
-        <div id="modalContent" class="modal-body">
-            <!-- Dynamic content will go here -->
+    <div id="ModalDialog" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalName">Registration Details</h2>
+                <button id="closeModal" class="close-modal">&times;</button>
+            </div>
+            <div id="modalContent" class="modal-body">
+                <!-- Dynamic content will go here -->
+            </div>
+            
         </div>
     </div>
-</div>
 
     <!-- Confirmation Dialog -->
     <div id="confirmationDialog" class="confirmation-dialog">
@@ -98,32 +95,7 @@
                         </tr>
                     </thead>
                     <tbody id="pendingShopsTableBody">
-                        <tr data-id="1" class="animate-fade">
-                            <td>001</td>
-                            <td>Sneaker Haven</td>
-                            <td>John Doe</td>
-                            <td>johndoe@gmail.com</td>
-                            <td><a href="uploads/permit1.pdf" target="_blank" class="view-link"><i
-                                        class="fas fa-eye"></i> View Here</a></td>
-                            <td>June 1, 2025</td>
-                            <td>
-                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
-                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
-                            </td>
-                        </tr>
-                        <tr data-id="2" class="animate-fade">
-                            <td>002</td>
-                            <td>Kicks & Co.</td>
-                            <td>Jane Smith</td>
-                            <td>janesmith@gmail.com</td>
-                            <td><a href="uploads/permit2.pdf" target="_blank" class="view-link"><i
-                                        class="fas fa-eye"></i> View Here</a></td>
-                            <td>March 30, 2025</td>
-                            <td>
-                                <button class="approve-btn"><i class="fas fa-check"></i> Approve</button>
-                                <button class="reject-btn"><i class="fas fa-ban"></i> Reject</button>
-                            </td>
-                        </tr>
+                        <!-- data galing db -->
                     </tbody>
                 </table>
             </div>
@@ -146,7 +118,7 @@
                         </tr>
                     </thead>
                     <tbody id="approvedShopsTableBody">
-
+                        <!-- data galing db -->
                     </tbody>
                 </table>
             </div>
@@ -159,18 +131,18 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Shop ID</th>
-                            <th>Shop Name</th>
-                            <th>Owner</th>
-                            <th>Email</th>
-                            <th>Business Permit</th>
-                            <th>Date Submitted</th>
-                            <th>Reason</th>
-                            <th>Actions</th>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user-tie"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-certificate"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-check"></i> Date Submitted</th>
+                            <th><i class="fas fa-comment-dots"></i> Reason</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
                         </tr>
                     </thead>
                     <tbody id="rejectedShopsTableBody">
-
+                        <!-- data galing db -->
                     </tbody>
                 </table>
             </div>
