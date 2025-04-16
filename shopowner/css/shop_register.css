@@ -1,0 +1,839 @@
+:root {
+    /* Primary Colors */
+    --black: #121212;       /* For Title text */
+    --blue: #6e8efb;        /* For bg color */
+    --violet: #a777e3;      /* For bg color */
+    --white: #FFFFFF;       /* For text */
+    --gold: #FFE082;        /* For Paragraph text */
+    --lightgray: #333;      /* For buttons */
+    --darkgray: #222;       /* For hover buttons */
+    /* text-shadow: 0 10px 25px rgba(0,0,0,0.35); */
+    --red: #FF5252;         /* For errors/warnings */
+    --gray: #E8EDED;        /* For Containers */
+
+    --blueish: #6e8efb;     /* For White bg */
+    --royalviolet: #6A0572;
+
+    --primary: #6e8efb;
+    --primary-dark: #5a7df0;
+    --secondary: #a777e3;
+    --accent: #FFE082;
+    --dark: #121212;
+    --light: #FFFFFF;
+    --gray-light: #f5f7fa;
+    --gray-medium: #e4e8eb;
+    --gray-dark: #333;
+    --success: #4CAF50;
+    --warning: #FFC107;
+    --error: #f44336;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}   
+
+/* General Styles */
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    background-color: var(--gray-light);
+}
+
+/* Header Styles */
+.register-header {
+    background: var(--black);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.register-header .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.register-header h1 {
+    color: var(--gold);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.register-header p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Navigation Links */
+.navigation-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.navigation-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.back-link {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.back-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.customer-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--gold);
+}
+
+.customer-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navigation-links span {
+    color: white;
+    opacity: 0.7;
+}
+
+/* Main Container */
+.registration-container {
+    display: flex;
+    /* max-width: 1200px; */
+    margin: 2rem auto;
+    padding: 2% 10%;
+    gap: 2rem;
+}
+
+.registration-form {
+    flex: 2;
+    background: var(--light);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 3.5rem;
+    transition: var(--transition);
+}
+
+.registration-form:hover {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+.form-section h2 {
+    color: var(--dark);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.form-section h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+.form-section h2 i {
+    color: var(--primary);
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.75rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+    width: 95%;
+    padding: 0.9rem 0 0.9rem 1rem;
+    border: 1px solid var(--gray-medium);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background-color: var(--gray-light);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+    background-color: var(--light);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input[type="file"] {
+    padding: 0.5rem;
+    border: 1px dashed var(--gray-medium);
+    background: var(--gray-light);
+    border-radius: 8px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Phone Input Styling */
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+}
+
+.country-code {
+    padding: 0 0.8rem;
+    color: #555;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.phone-input-container input {
+    border: none;
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 0;
+    font-size: 1rem;
+}
+
+.phone-input-container input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Form Rows for side-by-side fields */
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* File Upload Container */
+.file-upload-container {
+    margin-top: 0.5rem;
+}
+
+/* Consistent upload label styling */
+.upload-label {
+    display: block;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* File Upload Preview Container */
+.upload-preview {
+    position: relative;
+    width: 100%;
+    max-width: 300px;  /* Maximum width */
+    height: 200px;     /* Fixed height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    border: 2px dashed var(--gray-medium);
+    border-radius: 8px;
+    background-color: var(--gray-light);
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* Image Preview Constraints */
+.upload-preview.has-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background: white;
+}
+
+/* PDF Preview Style */
+.upload-preview.has-preview .fa-file-pdf {
+    font-size: 3rem;
+    color: #e74c3c;
+    margin-bottom: 0.5rem;
+}
+
+/* File Name Text */
+.upload-preview .file-name {
+    font-size: 0.8rem;
+    text-align: center;
+    word-break: break-word;
+    padding: 0 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+/* Remove Button */
+.remove-preview {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--error);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 2;
+}
+
+.upload-preview:hover .remove-preview {
+    opacity: 1;
+}
+
+/* ID Upload Styles */
+.id-upload-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.id-upload-section {
+    flex: 1;
+    text-align: center;
+}
+
+.upload-label {
+    display: block;
+    padding: 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 0.5rem;
+}
+
+.upload-label:hover {
+    border-color: #6e8efb;
+    background-color: #f8f9ff;
+}
+
+.upload-label i {
+    font-size: 2rem;
+    color: #6e8efb;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.upload-label span {
+    font-weight: 600;
+    color: #444;
+}
+
+.instruction {
+    display: block;
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.file-requirements {
+    display: block;
+    color: #777;
+    font-size: 0.8rem;
+}
+
+/* Hide default file input */
+.id-upload-section input[type="file"] {
+    display: none;
+}
+
+/* Checkbox Groups */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.checkbox-group input {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+    position: relative;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.checkbox-group label::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--gray-medium);
+    border-radius: 4px;
+    background: var(--light);
+    transition: var(--transition);
+}
+
+.checkbox-group input:checked + label::before {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkbox-group input:checked + label::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: -1.575rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light);
+    font-size: 0.7rem;
+}
+
+.checkbox-group a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.checkbox-group a:hover {
+    text-decoration: underline;
+}
+
+/* Password Strength */
+.password-strength {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.strength-bar {
+    height: 6px;
+    width: 20%;
+    background: var(--gray-medium);
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+.strength-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Form Actions */
+.form-actions {
+    margin-top: 2.5rem;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--light);
+    border: none;
+    padding: 1.1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.submit-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.submit-btn:hover::after {
+    opacity: 1;
+}
+
+.submit-btn:hover {
+    color: #ddd;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.form-note {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Benefits Section */
+.registration-benefits {
+    background: var(--light);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 2rem;
+    align-self: flex-start;
+    position: sticky;
+    top: 2rem;
+}
+
+.registration-benefits h2 {
+    color: var(--dark);
+    font-size: 1.25rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.registration-benefits h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border-radius: 3px;
+}
+
+.benefit-card {
+    background: var(--gray-light);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary);
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.benefit-card i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.benefit-card h3 {
+    margin: 0 0 0.75rem 0;
+    color: var(--dark);
+    font-size: 1.1rem;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.already-member {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-medium);
+}
+
+.already-member p {
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.login-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.login-link:hover {
+    text-decoration: none;
+    background-color: rgba(110, 142, 251, 0.1);
+}
+
+/* Footer */
+.register-footer {
+    background: var(--dark);
+    color: var(--light);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.register-footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-footer nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.register-footer a {
+    color: var(--light);
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.register-footer a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* Overlay Styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.overlay.active .overlay-content {
+    transform: translateY(0);
+}
+
+.success-icon, .error-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.success-icon {
+    color: var(--success);
+}
+
+.error-icon {
+    color: var(--error);
+}
+
+.overlay h2 {
+    color: var(--dark);
+    margin-bottom: 1rem;
+}
+
+.overlay p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.overlay-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.overlay-btn:hover {
+    background: var(--primary-dark);
+}
+
+#errorMessages {
+    text-align: left;
+    margin: 1.5rem 0;
+    color: var(--error);
+}
+
+/* Error Highlighting */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--error);
+    background-color: rgba(244, 67, 54, 0.05);
+}
+
+.form-group.error .error-message {
+    color: var(--error);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.form-group.error label {
+    color: var(--error);
+}
+
+/* Improved Responsive Styles */
+@media (max-width: 1200px) {
+    .registration-container {
+        padding: 2% 5%;
+    }
+    
+    .registration-form {
+        padding: 2.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .registration-container {
+        flex-direction: column;
+    }
+    
+    .registration-benefits {
+        width: 92%;
+        margin-top: 2rem;
+        position: static;
+    }
+    
+    .benefit-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .benefit-card i {
+        margin-bottom: 0;
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .registration-form {
+        padding: 1.5rem;
+    }
+    
+    .id-upload-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .benefit-card {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .benefit-card i {
+        font-size: 1.5rem;
+    }
+    
+    .form-section h2 {
+        font-size: 1.2rem;
+    }
+}

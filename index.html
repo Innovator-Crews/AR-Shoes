@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shoe Shop Portal</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -38,7 +38,7 @@
                         <li>Gain visibility and attract more customers</li>
                         <li>Manage your shop profile and update offerings</li>
                     </ul>
-                    <a href="shop_register.html" class="useroptionbtn">Register Your Shop</a>
+                    <a href="shopowner/html/shop_register.html" class="useroptionbtn">Register Your Shop</a>
                 </div>
                 <div class="option-image">
                     <img src="images/shopowner.jpg" alt="Shop Owner">
@@ -52,7 +52,7 @@
                         <li>Discover trending and featured shoes</li>
                         <li>Connect with shop owners easily</li>
                     </ul>
-                    <a href="customer_register.html" class="useroptionbtn">Register as a Customer</a>
+                    <a href="customer/html/customer_register.html" class="useroptionbtn">Register as a Customer</a>
                 </div>
                 <div class="option-image">
                     <img src="images/customers.jpg" alt="Shop Owner">
@@ -84,7 +84,7 @@
         <section class="featured-shoes">
             <div class="section-header">
                 <h2>New Arrivals</h2>
-                <a href="devonprocess.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                <a href="extras/devonprocess.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="carousel">
                 <div class="carousel-container">
@@ -269,7 +269,7 @@
     <div class="cta">
         <div class="cta-content">
             <h3>Ready to showcase your products?</h3>
-            <a href="register.html" class="cta-button">Register Your Shop Now</a>
+            <a href="shopowner/html/shop_register.html" class="cta-button">Register Your Shop Now</a>
         </div>
     </div>
 
@@ -296,15 +296,15 @@
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-x"></i></a>
+                    <a href="devonprocess.html"><i class="fab fa-facebook"></i></a>
+                    <a href="devonprocess.html"><i class="fab fa-instagram"></i></a>
+                    <a href="devonprocess.html"><i class="fab fa-x"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
-            <a href="admin_login.html">Are you an admin? Login here</a>
+            <a href="admin/html/admin_login.html">Are you an admin? Login here</a>
         </div>
     </footer>
 
@@ -314,29 +314,27 @@
         <img class="modal-content" id="modalImage">
     </div>
 
-    
-
     <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const carouselContainer = document.querySelector(".carousel-container");
-        
-        // Clone the items for a smooth loop
-        const items = carouselContainer.innerHTML;
-        carouselContainer.innerHTML += items; // Duplicate items
+        document.addEventListener("DOMContentLoaded", function () {
+            const carouselContainer = document.querySelector(".carousel-container");
+            
+            // Clone the items for a smooth loop
+            const items = carouselContainer.innerHTML;
+            carouselContainer.innerHTML += items; // Duplicate items
 
-        // Set up animation reset when halfway through
-        let scrollSpeed = 0.85; // Adjust for smooth speed
-        function moveCarousel() {
-            carouselContainer.style.transform = `translateX(-${scrollSpeed}px)`;
-            scrollSpeed += 1;
-            if (scrollSpeed >= carouselContainer.scrollWidth / 2) {
-                scrollSpeed = 0; // Reset to create an infinite loop effect
+            // Set up animation reset when halfway through
+            let scrollSpeed = 0.85; // Adjust for smooth speed
+            function moveCarousel() {
+                carouselContainer.style.transform = `translateX(-${scrollSpeed}px)`;
+                scrollSpeed += 1;
+                if (scrollSpeed >= carouselContainer.scrollWidth / 2) {
+                    scrollSpeed = 0; // Reset to create an infinite loop effect
+                }
+                requestAnimationFrame(moveCarousel);
             }
-            requestAnimationFrame(moveCarousel);
-        }
-        moveCarousel();
-    });
+            moveCarousel();
+        });
 
         function openModal(imageSrc) {
             document.getElementById('modalImage').src = imageSrc;

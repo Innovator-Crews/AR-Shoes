@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Shop Owner</title>
+    <link rel="stylesheet" href="/shopowner/css/shop_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">SHOP DASHBOARD</div>
+            <div class="nav-items">
+                <a href="/shopowner/html/shop_dashboard.html" class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="/shopowner/html/shopowner_addshoe.html" class="nav-item">
+                    <i class="fas fa-shoe-prints"></i> Add Shoe
+                </a>
+                <a href="/shopowner/html/shopowner_addemployee.html" class="nav-item shopowner">
+                    <i class="fas fa-users"></i> Add Employee
+                </a>
+                <a href="/shopowner/html/shop_inventory.html" class="nav-item">
+                    <i class="fas fa-box"></i> Inventory
+                </a>
+                <a href="/extras/devonprocess.html" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i> Orders
+                </a>
+                <a href="/extras/devonprocess.html" class="nav-item manager">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </a>
+                <a href="/extras/devonprocess.html" class="nav-item">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <!-- pinalitan yung href ng id -->
+                <a id="logout_btn" class="nav-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Shop Overview</h1>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            </div>
+
+            <!-- Status Message Container -->
+            <div id="status-message" class="status-message">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+
+                <!-- Pending -->
+                <div id="status-message-pending" class="status-message pending">
+                    <span><strong>Thank you for registering!</strong>⏳ Your application is still under review. You will be notified once a decision has been made.</span>
+                </div>
+
+                <!-- Approved -->
+                <div id="status-message-approved" class="status-message approved">
+                    <div>
+                        <strong>Congratulations!</strong> Your shop has been <strong>approved</strong>.
+                        You can now access all dashboard features including adding products and employees.
+                    </div>
+                </div>
+
+                <!-- Rejected -->
+                <div id="status-message-reject" class="status-message rejected">
+                    <div>
+                        <strong>We're sorry.</strong> Your shop registration has been <strong>rejected</strong> due to the following reasons:
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Invalid or incomplete business permit.</li>
+                            <li>Shop description is too vague.</li>
+                        </ul>
+                        <p style="margin-top: 0.5rem;">Please review and update your details, then re-apply.</p>
+                    </div>
+                    <button class="reapply-btn">Reapply</button>
+                </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Sales</h3>
+                    <div class="value">$4,250</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Orders</h3>
+                    <div class="value">42</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Products</h3>
+                    <div class="value">28</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Visitors</h3>
+                    <div class="value">1,240</div>
+                </div>
+            </div>
+            
+            <!-- Recent Orders -->
+            <h2 class="section-title">Recent Orders</h2>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#ORD-1001</td>
+                        <td>Alex Johnson</td>
+                        <td>Jun 12, 2023</td>
+                        <td>$129.99</td>
+                        <td><span class="status shipped">Completed</span></td>
+                        <td><button class="btn btn-view"><i class="fas fa-eye"></i> View</button></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-1002</td>
+                        <td>Sarah Miller</td>
+                        <td>Jun 11, 2023</td>
+                        <td>$89.99</td>
+                        <td><span class="status pending">Processing</span></td>
+                        <td><button class="btn btn-view"><i class="fas fa-eye"></i> View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- Top Products -->
+            <h2 class="section-title">Top Products</h2>
+            <div class="product-list">
+                <div class="product-card">
+                    <div class="product-image">
+                        [Product Image]
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Running Sneakers</div>
+                        <div class="product-price">$89.99</div>
+                        <button class="btn btn-view" style="margin-top: 0.5rem;">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        [Product Image]
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">Casual Loafers</div>
+                        <div class="product-price">$59.99</div>
+                        <button class="btn btn-view" style="margin-top: 0.5rem;">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Recently Added</h2>
+            <div class="recent-added" id="recentAdded">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Example: get the user role from localStorage or backend
+        const userRole = localStorage.getItem('userRole'); // "employee", "manager", "owner"
+      
+        document.addEventListener("DOMContentLoaded", () => {
+          if (userRole === "employee") {
+            document.querySelectorAll(".manager, .shopowner").forEach(el => el.style.display = "none");
+          } else if (userRole === "manager") {
+            document.querySelectorAll(".shopowner").forEach(el => el.style.display = "none");
+          }
+          // owner sees everything, so no need to hide
+        });
+
+        // Add this to your shop_dashboard.js or in a script tag
+        document.addEventListener("DOMContentLoaded", () => {
+            // ... your existing code ...
+            
+            displayRecentAddedShoes();
+        });
+
+        function displayRecentAddedShoes() {
+            const recentAddedContainer = document.getElementById('recentAdded');
+            const shoes = JSON.parse(localStorage.getItem('shoes')) || [];
+            
+            // Filter shoes for this shop only
+            const shopId = localStorage.getItem('shopId');
+            const shopShoes = shoes.filter(shoe => shoe.shopId === shopId)
+                                .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
+                                .slice(0, 4); // Get 4 most recent
+            
+            if (shopShoes.length === 0) {
+                recentAddedContainer.innerHTML = '<p>No shoes added yet</p>';
+                return;
+            }
+            
+            let html = '<div class="product-list">';
+            shopShoes.forEach(shoe => {
+                // Get the first variant for display purposes
+                const firstVariant = shoe.variants && shoe.variants.length > 0 ? shoe.variants[0] : null;
+                
+                html += `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${shoe.image ? `<img src="uploads/${shoe.image}" alt="${shoe.name}" style="max-width:100%; height:auto;">` : '[Product Image]'}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${shoe.name}</div>
+                        <div class="product-code">Code: ${shoe.code}</div>
+                        <div class="product-price">$${(firstVariant ? firstVariant.price : 0).toFixed(2)}</div>
+                        <div class="product-color">${firstVariant ? `Color: ${firstVariant.color}` : ''}</div>
+                        <button class="btn btn-view" onclick="viewShoeDetails('${shoe.id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                </div>
+                `;
+            });
+            html += '</div>';
+            
+            recentAddedContainer.innerHTML = html;
+        }
+
+        function viewShoeDetails(shoeId) {
+            // Store the shoe ID to view details on inventory page
+            localStorage.setItem('viewingShoeId', shoeId);
+            window.location.href = 'shop_inventory.html';
+        }
+    </script>
+      
+    <!-- nagadd ng script -->
+    <script src="/shopowner/js/shop_dashboard.js" type="module"></script>
+</body>
+</html>
