@@ -52,12 +52,25 @@ const dateProcessed = new Date().toLocaleDateString('en-US', {
     second: '2-digit',
     hour12: false
 }).replace(/\//g, '-').replace(/,/g, '');
-
-// ... (keep all your existing imports and Firebase config)
-
+// ------------pwede to tanggalin pag gusto mo -----------------------
 const registerButton = document.getElementById('registerButton');
+function setButtonDisable() {
+    registerButton.style.background = "linear-gradient(135deg, #43579d, #694c8d)";
+    registerButton.style.color = "#838383";
+    registerButton.disabled = true;
+}
+function setButtonAble() {
+    registerButton.style.background = "linear-gradient(135deg, var(--primary), var(--secondary))";
+    registerButton.style.color = "var(--light)";
+    registerButton.disabled = false;
+}
+
+// ... (keep all your existing imports and Firebase config)+
+
 registerButton.addEventListener('click', (event) => {
+    setButtonDisable();
     event.preventDefault();
+    setButtonDisable();
     const usernameVal = username.value;
     const passwordVal = password.value;
     const confirmPasswordVal = confirmPassword.value;
@@ -65,6 +78,7 @@ registerButton.addEventListener('click', (event) => {
 
     if (passwordVal !== confirmPasswordVal) {
         alert('Passwords do not match');
+        setButtonAble();
         return;
     }
 
@@ -73,21 +87,23 @@ registerButton.addEventListener('click', (event) => {
     const licensePreviewfile = document.getElementById("businessLicense").files[0];
     const frontSidefile = document.getElementById("ownerIdFront").files[0];
     const backSidefile = document.getElementById("ownerIdBack").files[0];
-    
+
     if (!permitDocumentfile || !licensePreviewfile) {
         alert("Please select both files.");
+        setButtonAble();
         return;
     }
+
 
     // Create a new user with email and password
     createUserWithEmailAndPassword(auth, ownerEmailVal, passwordVal)
         .then((userCredential) => {
             const user = userCredential.user;
             userIDCredential = user.uid;
-            
+
             // Update the user's profile
             return updateProfile(user, {
-                displayName: usernameVal, 
+                displayName: usernameVal,
                 appName: "AR Shoes"
             }).then(() => {
                 // Save user data to database
@@ -110,6 +126,16 @@ registerButton.addEventListener('click', (event) => {
                     // userName: usernamee.value,
                     dateApproved: '',
                     dateRejected: '',
+                }).then(() => {
+                    // Send email verification
+                    sendEmailVerification(auth.currentUser)
+                        .then(() => {
+                            // eto kahit di na alert kumbaga para nalang syang yung notif na lalabas sa upper right kapag nagreject ka sa admin dashboard yung 3secs lang lalabas then mawawala na
+                            alert("Email Verification sent to your email address. Please verify your email address to login.");
+                            // window.location.href = "user_login.html";
+                        }).catch((error) => {
+                            alert("Error sending email verification: " + error.message);
+                        });
                 });
             }).then(() => {
                 console.log("User data added successfully!");
@@ -123,6 +149,7 @@ registerButton.addEventListener('click', (event) => {
         })
         .catch((error) => {
             alert("Error: " + error.message);
+            setButtonAble();
         });
 });
 
@@ -140,7 +167,7 @@ function uploadBothFiles(userId, permitFile, licenseFile, frontSideFile, backSid
     const uploadBackTask = uploadBytesResumable(backPicIDRef, backSideFile);
 
     // Track progress for both uploads
-    uploadPermitTask.on('state_changed', 
+    uploadPermitTask.on('state_changed',
         (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log(`Permit upload: ${progress.toFixed(2)}%`);
@@ -150,7 +177,7 @@ function uploadBothFiles(userId, permitFile, licenseFile, frontSideFile, backSid
         }
     );
 
-    uploadLicenseTask.on('state_changed', 
+    uploadLicenseTask.on('state_changed',
         (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log(`License upload: ${progress.toFixed(2)}%`);
@@ -159,7 +186,7 @@ function uploadBothFiles(userId, permitFile, licenseFile, frontSideFile, backSid
             console.error("License upload failed:", error);
         }
     );
-    uploadFrontTask.on('state_changed', 
+    uploadFrontTask.on('state_changed',
         (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log(`Front Picture Side upload: ${progress.toFixed(2)}%`);
@@ -169,7 +196,7 @@ function uploadBothFiles(userId, permitFile, licenseFile, frontSideFile, backSid
         }
     );
 
-    uploadBackTask.on('state_changed', 
+    uploadBackTask.on('state_changed',
         (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log(`Back Picture Side upload: ${progress.toFixed(2)}%`);
