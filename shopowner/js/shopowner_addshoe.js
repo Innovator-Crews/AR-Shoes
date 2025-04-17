@@ -29,7 +29,7 @@ onAuthStateChanged(auth, (user) => {
         shopID = user.uid;
         console.log("shopID: ", shopID);
     } else {
-        window.location.href = "user_login.html";
+        window.location.href = "/user_login.html";
     }
 });
 
@@ -79,7 +79,7 @@ onAuthStateChanged(auth, (user) => {
         }).then(() => {
             console.log("Shoe data added successfully!");
             alert("Shoe added successfully!");
-            window.location.href = "shopowner_addshoe.html";
+            window.location.href = "/shopowner/html/shopowner_addshoe.html";
         }).catch((error) => {
             console.error("Error adding shoe data: ", error);
             alert("Error adding shoe data: " + error.message);

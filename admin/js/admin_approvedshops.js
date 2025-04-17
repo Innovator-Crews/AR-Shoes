@@ -648,7 +648,7 @@ document.getElementById("confirmAction")?.addEventListener("click", function() {
     setupPagination();
 
     // Logout functionality
-    const logoutLink = document.querySelector('a[href="admin_login.html"]');
+    const logoutLink = document.querySelector('a[href="/admin/html/admin_login.html"]');
     const logoutDialog = document.getElementById('logoutDialog');
     const cancelLogout = document.getElementById('cancelLogout');
     const confirmLogout = document.getElementById('confirmLogout');
@@ -665,7 +665,7 @@ document.getElementById("confirmAction")?.addEventListener("click", function() {
     });
 
     confirmLogout?.addEventListener('click', function() {
-        window.location.href = 'admin_login.html';
+        window.location.href = '/admin/html/admin_login.html';
     });
 
     // Close dialogs when clicking overlay

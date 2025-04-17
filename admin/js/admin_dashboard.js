@@ -27,7 +27,7 @@ const overlay = document.getElementById("overlay");
 const logoutDialog = document.getElementById('logoutDialog');
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
-const logoutLink = document.querySelector('a[href="admin_login.html"]');
+const logoutLink = document.querySelector('a[href="/admin/html/admin_login.html"]');
 const cancelLogout = document.getElementById('cancelLogout');
 const confirmLogout = document.getElementById('confirmLogout');
 const modal = document.getElementById("ModalDialog");
@@ -402,7 +402,7 @@ function initializeEventListeners() {
     });
 
     confirmLogout?.addEventListener('click', function () {
-        window.location.href = 'admin_login.html';
+        window.location.href = '/admin/html/admin_login.html';
     });
 
     overlay?.addEventListener('click', function () {

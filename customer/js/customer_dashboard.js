@@ -42,7 +42,7 @@ onAuthStateChanged(auth, (user) => {
     } else {
         // User is signed out
         console.log("Auth state: User is logged out");
-        window.location.href = "user_login.html";
+        window.location.href = "/user_login.html";
         // Redirect to login page
     }
 });

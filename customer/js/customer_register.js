@@ -71,7 +71,7 @@ registerButton.addEventListener('click', (event) => {
                     sendEmailVerification(auth.currentUser)
                         .then(() => {
                             alert("Email Verification sent to your email address. Please verify your email address to login.");
-                            window.location.href = "user_login.html";
+                            window.location.href = "/user_login.html";
                         }).catch((error) => {
                             alert("Error sending email verification: " + error.message);
                         });

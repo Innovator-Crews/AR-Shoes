@@ -700,7 +700,7 @@ document.getElementById("confirmAction")?.addEventListener("click", function () 
 }); // End of DOMContentLoaded listener
 
 // Logout functionality
-const logoutLink = document.querySelector('a[href="admin_login.html"]');
+const logoutLink = document.querySelector('a[href="/admin/html/admin_login.html"]');
 const logoutDialog = document.getElementById('logoutDialog');
 const cancelLogout = document.getElementById('cancelLogout');
 const confirmLogout = document.getElementById('confirmLogout');
@@ -723,7 +723,7 @@ cancelLogout?.addEventListener('click', function () {
 // Confirm logout
 confirmLogout?.addEventListener('click', function () {
    
-    window.location.href = 'admin_login.html';
+    window.location.href = '/admin/html/admin_login.html';
 });
 
 // Close dialog when clicking overlay

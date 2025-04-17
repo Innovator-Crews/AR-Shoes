@@ -30,7 +30,7 @@ onAuthStateChanged(auth, (user) => {
         shopLoggedin = user.uid;
         loadShops('inventoryTableBody'); // Load shops after authentication
     } else {
-        window.location.href = "user_login.html";
+        window.location.href = "/admin/html/admin_login.html";
     }
 });
 
@@ -170,7 +170,7 @@ function deleteShoe(shoeId) {
 
 // Edit function
 function editShoe(shoeId) {
-    window.location.href = `shopowner_addshoe.html?edit=${shoeId}`;
+    window.location.href = `/shopowner/shopowner_addshoe.html?edit=${shoeId}`;
 }
 
 // Initialize when DOM is loaded

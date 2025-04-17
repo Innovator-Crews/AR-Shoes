@@ -31,7 +31,7 @@ const passwordInput = document.getElementById('password');
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
                 alert("Login successful");
-                window.location.href = "admin_dashboard.html"; 
+                window.location.href = "/admin/html/admin_dashboard.html"; 
         })
         .catch((error) => {
             alert("Error logging in: " + error.message);
