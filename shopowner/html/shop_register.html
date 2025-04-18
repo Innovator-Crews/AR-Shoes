@@ -9,6 +9,15 @@
 </head>
 <body style="padding: 0;">
 
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="spinner"></div>
+            <h2>Processing Registration...</h2>
+            <p>Please wait while we submit your application</p>
+        </div>
+    </div>
+
     <!-- Success Overlay -->
     <div id="successOverlay" class="overlay">
         <div class="overlay-content">
@@ -16,10 +25,23 @@
                 <i class="fas fa-check-circle"></i>
             </div>
             <h2>Registration Successful!</h2>
+            <h4>We've sent a verification email to your email account. Kindly check it to proceed!</h4>
             <p>Your shop registration has been submitted successfully. Our team will review your application and contact you shortly.</p>
             <button id="closeOverlay" class="overlay-btn">Continue</button>
         </div>
     </div>
+
+    <!-- Error Overlay -->
+    <!-- <div id="errorOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Registration Issues</h2>
+            <div id="errorMessages"></div>
+            <button id="closeErrorOverlay" class="overlay-btn">Back to Form</button>
+        </div>
+    </div> -->
 
     <!-- Error Overlay -->
     <div id="errorOverlay" class="overlay">
@@ -28,7 +50,11 @@
                 <i class="fas fa-exclamation-circle"></i>
             </div>
             <h2>Registration Issues</h2>
-            <div id="errorMessages"></div>
+            <div class="error-container">
+                <div id="errorMessages" class="error-list">
+                    <!-- Errors will be inserted here -->
+                </div>
+            </div>
             <button id="closeErrorOverlay" class="overlay-btn">Back to Form</button>
         </div>
     </div>
@@ -239,7 +265,7 @@
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" id="registerButton" class="submit-btn">Submit Application</button>
+                    <button id="registerButton" class="submit-btn">Submit Application</button>
                     <p class="form-note">* Required fields. Your application will be reviewed within 3-5 business days.</p>
                 </div>
             </form>

@@ -24,14 +24,41 @@ const dialog = document.getElementById("confirmationDialog");
 const overlay = document.getElementById("overlay");
 
 // Confirm action handler
-document.getElementById("confirmAction")?.addEventListener("click", function() {
-    if (!currentAction || !currentShopId) return;
-    
-    const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
-    const updateData = {
-        status: currentAction === "approve" ? "approved" : "rejected",
-        // dateProcessed: new Date().toISOString()
-    };
+    // Update the confirm action handler
+    document.getElementById("confirmAction")?.addEventListener("click", function() {
+        if (!currentAction || !currentShopId) return;
+        
+        const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
+        const updateData = {
+            status: currentAction === "approve" ? "approved" : "rejected",
+            dateProcessed: new Date().toISOString(),  // Update existing dateProcessed
+            ...(currentAction === "reject" && { dateRejected: new Date().toISOString() }),
+            ...(reason && { rejectionReason: reason })
+        };
+
+
+    document.getElementById("cancelAction")?.addEventListener("click", function() {
+        const dialog = document.getElementById("confirmationDialog");
+        const overlay = document.getElementById("overlay");
+
+        dialog?.classList.remove("show");
+        overlay?.classList.remove("show");
+
+        currentAction = null;
+        currentRow = null;
+    });
+    // Add rejection reason if this is a rejection
+    if (currentAction === 'reject') {
+        const reasonInput = document.getElementById("rejectionReason");
+        const rejectionReason = reasonInput.value.trim();
+        
+        if (!rejectionReason) {
+            showNotification("Please enter a rejection reason", "error");
+            return;
+        }
+        
+        updateData.rejectionReason = rejectionReason;
+    }
 
     update(shopRef, updateData)
         .then(() => {
@@ -147,8 +174,8 @@ function createShopRow(shopId, shop, status) {
         <td>${shop.shopName || 'N/A'}</td>
         <td>${shop.ownerName || 'N/A'}</td>
         <td>${shop.email || 'N/A'}</td>
-        <td><a href="#" class="view-link"><i class="fas fa-eye"></i> View</a></td>
-        <td>${shop.dateProcessed || 'Pending'}</td>
+        <td><a href="#" class="view-link" data-id="${shopId}"><i class="fas fa-eye"></i> View</a></td>        
+        <td>${shop.dateApproved ? formatDisplayDate(shop.dateProcessed) : 'Pending'}</td>
         ${status === 'rejected' ? `<td></td>` : ''}
         <td>
             ${status === 'pending' ? 
@@ -161,6 +188,10 @@ function createShopRow(shopId, shop, status) {
     `;
 
     // Add event listeners
+    row.querySelector('.view-link')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showShopModal(e);
+    });
     row.querySelector('.approve-btn')?.addEventListener('click', (e) => showConfirmationDialog(e, 'approve'));
     row.querySelector('.reject-btn')?.addEventListener('click', (e) => showConfirmationDialog(e, 'reject'));
 
@@ -395,9 +426,209 @@ function setupPagination() {
 document.addEventListener('DOMContentLoaded', () => {
     loadShops('approved', 'approvedShopsTableBody');
     setupSearchListeners(); // Add this line to initialize search listeners
+
+    // Proper event delegation for view links
+    document.getElementById('approvedShopsTableBody')?.addEventListener('click', (e) => {
+        const viewLink = e.target.closest('.view-link');
+        if (viewLink) {
+            e.preventDefault();
+            showShopModal(e);
+        }
+    });
+
 });
 
 //  ------------------------- CODE NI MACMAC ------------------------------------------------------
+
+// Show shop details modal
+function showShopModal(e) {
+    e.preventDefault();
+    currentShopId = e.currentTarget.getAttribute('data-id');
+    const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
+
+    onValue(shopRef, (snapshot) => {
+        if (snapshot.exists()) {
+            const shop = snapshot.val();
+            // Add deep fallbacks
+            const safeShop = {
+                ...shop,
+                uploads: shop.uploads || {
+                    frontSideID: { url: '' },
+                    backSideID: { url: '' },
+                    licensePreview: { url: '' },
+                    permitDocument: { url: '' }
+                },
+                shopCategory: shop.shopCategory || 'N/A',
+                shopAddress: shop.shopAddress || 'N/A',
+                ownerPhone: shop.ownerPhone || '',
+                shopCity: shop.shopCity || '',
+                shopState: shop.shopState || '',
+                shopCountry: shop.shopCountry || '',
+                shopZip: shop.shopZip || ''
+            };
+            updateShopModalContent(safeShop);
+            document.getElementById('shopDetailsModal').classList.add('show');
+            document.getElementById('overlay').classList.add('show');
+        } else {
+            showNotification("Shop data not found", "error");
+        }
+    }, { onlyOnce: true });
+}
+
+// Update modal content
+function updateShopModalContent(shop) {
+    const modalContent = document.getElementById('modalShopContent');
+    const getDocUrl = (doc) => shop.uploads[doc]?.url || 'no-document.png';
+
+    modalContent.innerHTML = `
+        <div class="modal-section">
+            <h3>Basic Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Shop ID: </span>
+                    <span class="info-value">${currentShopId}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Shop Name: </span>
+                    <span class="info-value">${shop.shopName || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Category: </span>
+                    <span class="info-value">${shop.shopCategory || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Description: </span>
+                    <span class="info-value">${shop.shopDescription || 'N/A'}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Owner Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Name: </span>
+                    <span class="info-value">${shop.ownerName || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email: </span>
+                    <span class="info-value">${shop.email || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone: </span>
+                    <span class="info-value">${shop.ownerPhone ? '+63 ' + shop.ownerPhone : 'N/A'}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Location Details</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Address: </span>
+                    <span class="info-value">${[
+                        shop.shopAddress,
+                        shop.shopCity,
+                        shop.shopState,
+                        shop.shopCountry
+                    ].filter(Boolean).join(', ') || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ZIP Code: </span>
+                    <span class="info-value">${shop.shopZip || 'N/A'}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Business Documents</h3>
+            <div class="document-grid">
+                ${renderDocumentItem(getDocUrl('frontSideID'), 'Front ID')}
+                ${renderDocumentItem(getDocUrl('backSideID'), 'Back ID')}
+                ${renderDocumentItem(getDocUrl('licensePreview'), 'Business License')}
+                ${renderDocumentItem(getDocUrl('permitDocument'), 'Permit')}
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Timestamps</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Registration Date: </span>
+                    <span class="info-value">${formatDisplayDate(shop.dateProcessed) || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    ${shop.status === 'approved' ? `
+                        <span class="info-label">Approval Date: </span>
+                        <span class="info-value">${formatDisplayDate(shop.dateApproved)}</span>
+                    ` : ''}
+                    
+                    ${shop.status === 'rejected' ? `
+                        <span class="info-label">Rejection Date: </span>
+                        <span class="info-value">${formatDisplayDate(shop.dateRejected)}</span>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// format ng date and time
+function formatDisplayDate(isoString) {
+    if (!isoString) return 'N/A';
+    
+    const date = new Date(isoString);
+    if (isNaN(date)) return 'Invalid Date';
+
+    // Format time (1:19 AM)
+    const timeString = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // Format date (April 19, 2025)
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return `${timeString} ${month} ${day}, ${year}`;
+}
+
+// Add helper function
+function renderDocumentItem(url, title) {
+    return `
+    <div class="document-item">
+        <div class="document-title">${title}</div>
+        <a href="${url}" target="_blank" class="document-preview">
+            <img src="${url}" alt="${title}" 
+                 onerror="this.onerror=null;this.src='no-document.png'">
+        </a>
+    </div>`;
+}
+
+function renderDocumentPreview(url, title) {
+    if (!url) return '<div class="document-item">Document not available</div>';
+    
+    return `
+        <div class="document-item">
+            <div class="document-title">${title}</div>
+            <a href="${url}" target="_blank" class="document-preview">
+                <img src="${url}" alt="${title}">
+            </a>
+        </div>
+    `;
+}
+
+// Add event listeners for modal
+document.getElementById('closeShopModal')?.addEventListener('click', () => {
+    document.getElementById('shopDetailsModal').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show');
+});
+
+document.getElementById('overlay')?.addEventListener('click', () => {
+    document.getElementById('shopDetailsModal').classList.remove('show');
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     // Menu toggle functionality
@@ -548,54 +779,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Update the confirm action handler
-document.getElementById("confirmAction")?.addEventListener("click", function() {
-    if (!currentAction || !currentShopId) return;
-    
-    const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
-    const updateData = {
-        status: currentAction === "approve" ? "approved" : "rejected",
-        // dateProcessed: new Date().toISOString()
-    };
-
-
-    document.getElementById("cancelAction")?.addEventListener("click", function() {
-        const dialog = document.getElementById("confirmationDialog");
-        const overlay = document.getElementById("overlay");
-
-        dialog?.classList.remove("show");
-        overlay?.classList.remove("show");
-
-        currentAction = null;
-        currentRow = null;
-    });
-    // Add rejection reason if this is a rejection
-    if (currentAction === 'reject') {
-        const reasonInput = document.getElementById("rejectionReason");
-        const rejectionReason = reasonInput.value.trim();
-        
-        if (!rejectionReason) {
-            showNotification("Please enter a rejection reason", "error");
-            return;
+    // Add to your existing event listeners:
+    tableBody?.addEventListener('click', (e) => {
+        const viewLink = e.target.closest('.view-link');
+        if (viewLink) {
+            e.preventDefault();
+            showShopModal(e);
         }
-        
-        updateData.rejectionReason = rejectionReason;
-    }
+    });
 
-    update(shopRef, updateData)
-        .then(() => {
-            showNotification(`Shop ${currentAction}ed successfully!`, "success");
-            currentRow?.remove();
-            checkEmptyTable();
-        })
-        .catch((error) => {
-            showNotification(`Failed to ${currentAction} shop: ${error.message}`, "error");
-        })
-        .finally(() => {
-            hideDialog();
-        });
-});
-
+    // Add this event listener for view links
+    document.getElementById('approvedShopsTableBody')?.addEventListener('click', (e) => {
+        const viewLink = e.target.closest('.view-link');
+        if (viewLink) {
+            e.preventDefault();
+            showShopModal(e);
+        }
+    });
 
 
     // Shop rejection function

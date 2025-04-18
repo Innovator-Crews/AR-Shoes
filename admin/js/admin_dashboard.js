@@ -104,6 +104,7 @@ function showModalfunc() {
 }
 
 function hideDialog() {
+    document.getElementById('shopDetailsModal')?.classList.remove('show');
     dialog?.classList.remove("show");
     overlay?.classList.remove("show");
     modal?.classList.remove("show");
@@ -112,139 +113,176 @@ function hideDialog() {
     currentShopId = null;
 }
 
-function showModal(e) {
+// Show shop details modal
+function showShopModal(e) {
     e.preventDefault();
-    currentShopId = e.currentTarget.getAttribute('data-id');
-    currentRow = e.currentTarget.closest("tr");
+    
+    // Get the closest view-link element (in case user clicked the icon)
+    const viewLink = e.target.closest('.view-link');
+    if (!viewLink) return;
 
+    currentShopId = viewLink.getAttribute('data-id');  // Get ID from the link
     const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
 
     onValue(shopRef, (snapshot) => {
         if (snapshot.exists()) {
             const shop = snapshot.val();
-            updateModalContent(shop, currentShopId);
-            showModalfunc();
+            // Add deep fallbacks
+            const safeShop = {
+                ...shop,
+                uploads: shop.uploads || {
+                    frontSideID: { url: '' },
+                    backSideID: { url: '' },
+                    licensePreview: { url: '' },
+                    permitDocument: { url: '' }
+                },
+                shopCategory: shop.shopCategory || 'N/A',
+                shopAddress: shop.shopAddress || 'N/A',
+                ownerPhone: shop.ownerPhone || '',
+                shopCity: shop.shopCity || '',
+                shopState: shop.shopState || '',
+                shopCountry: shop.shopCountry || '',
+                shopZip: shop.shopZip || ''
+            };
+            updateShopModalContent(safeShop);
+            document.getElementById('shopDetailsModal').classList.add('show');
+            document.getElementById('overlay').classList.add('show');
         } else {
             showNotification("Shop data not found", "error");
         }
-    });
+    }, { onlyOnce: true });
 }
 
-function updateModalContent(shop, currentShopId) {
-    const modalContent = document.getElementById("modalContent");
-    const modalName = document.getElementById("modalName");
-    
+// Update modal content
+function updateShopModalContent(shop) {
+    const modalContent = document.getElementById('modalShopContent');
+    const getDocUrl = (doc) => shop.uploads[doc]?.url || 'no-document.png';
+
     modalContent.innerHTML = `
-        <div class="modal-body">
-            <div class="info-group">
-                <span class="info-label">Shop Name: </span>
-                <span class="info-value">${shop.shopName || 'Unknown Shop'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Shop Category: </span>
-                <span class="info-value">${shop.shopCategory || 'Unknown Category'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Shop Description: </span>
-                <span class="info-value">${shop.shopDescription || 'Unknown Description'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Years in Business: </span>
-                <span class="info-value">${shop.yearsInBusiness || 'Unknown Years in Business'}</span>
-            </div>
-            
-            <h3 style="margin: 20px 0 10px; color: var(--secondary-color);">Owner Information</h3>
-            <div class="info-group">
-                <span class="info-label">Owner Name: </span>
-                <span class="info-value">${shop.ownerName || 'Unknown Owner'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Email: </span>
-                <span class="info-value">${shop.email || 'Unknown Email'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Phone Number: </span>
-                <span class="info-value">+63 ${shop.ownerPhone || 'Unknown Phone'}</span>
-            </div>
-            
-            <h3 style="margin: 20px 0 10px; color: var(--secondary-color);">Location Information</h3>
-            <div class="info-group">
-                <span class="info-label">Address: </span>
-                <span class="info-value">${shop.shopAddress || 'Unknown Barangay'}, ${shop.shopCity || 'Unknown City'}, ${shop.shopState || 'Unknown Province'}, ${shop.shopCountry || 'Unknown Country'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">City: </span>
-                <span class="info-value">${shop.shopCity || 'Unknown City'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">State/Province: </span>
-                <span class="info-value">${shop.shopState || 'Unknown Province'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">ZIP Code: </span>
-                <span class="info-value">${shop.shopZip || 'Unknown ZIP Code'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Country: </span>
-                <span class="info-value">${shop.shopCountry || 'Unknown Country'}</span>
-            </div>
-            
-            <h3 style="margin: 20px 0 10px; color: var(--secondary-color);">Business Documentation</h3>
-            <div class="info-group">
-                <span class="info-label">Tax Identification Number: </span>
-                <span class="info-value">${shop.identificationTax || 'Unknown Identification Tax'}</span>
-            </div>
-            <div class="info-group">
-                <span class="info-label">Documents: </span>
-                <div class="document-preview">
-                    <div class="document-thumbnail">
-                        <a href="${shop.uploads.frontSideID.url || 'no image available'}" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                            <img src="${shop.uploads.frontSideID.url || 'no image available'}" 
-                                width="100px" height="100px" alt="Front Side ID Url">
-                        </a>
-                    </div>
-                    <div class="document-thumbnail">
-                        <a href="${shop.uploads.backSideID.url || 'no image available'}" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                            <img src="${shop.uploads.backSideID.url || 'no image available'}" 
-                                width="100px" height="100px" alt="Back Side ID Url">
-                        </a>
-                    </div>
-                    <div class="document-thumbnail">
-                        <a href="${shop.uploads.licensePreview.url || 'no image available'}" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                            <img src="${shop.uploads.licensePreview.url || 'no image available'}" 
-                                width="100px" height="100px" alt="License Preview Url">
-                        </a>
-                    </div>
-                    <div class="document-thumbnail">
-                        <a href="${shop.uploads.permitDocument.url || 'no image available'}" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                            <img src="${shop.uploads.permitDocument.url || 'no image available'}" 
-                                width="100px" height="100px" alt="Permit Document Url">
-                        </a>
-                    </div>
+        <div class="modal-section">
+            <h3>Basic Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Shop ID: </span>
+                    <span class="info-value">${currentShopId}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Shop Name: </span>
+                    <span class="info-value">${shop.shopName || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Category: </span>
+                    <span class="info-value">${shop.shopCategory || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Description: </span>
+                    <span class="info-value">${shop.shopDescription || 'N/A'}</span>
                 </div>
             </div>
-            
-            <h3 style="margin: 20px 0 10px; color: var(--secondary-color);">Account Information</h3>
-            <div class="info-group">
-                <span class="info-label">Username: </span>
-                <span class="info-value">${shop.username || 'Unknown username'}</span>
+        </div>
+
+        <div class="modal-section">
+            <h3>Owner Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Name: </span>
+                    <span class="info-value">${shop.ownerName || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email: </span>
+                    <span class="info-value">${shop.email || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone: </span>
+                    <span class="info-value">${shop.ownerPhone ? '+63 ' + shop.ownerPhone : 'N/A'}</span>
+                </div>
             </div>
-            <div class="info-group">
-                <span class="info-label">Registration Date: </span>
-                <span class="info-value">${shop.dateProcessed || 'Unknown Identification Tax'}</span>
+        </div>
+
+        <div class="modal-section">
+            <h3>Location Details</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Address: </span>
+                    <span class="info-value">${[
+                        shop.shopAddress,
+                        shop.shopCity,
+                        shop.shopState,
+                        shop.shopCountry
+                    ].filter(Boolean).join(', ') || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">ZIP Code: </span>
+                    <span class="info-value">${shop.shopZip || 'N/A'}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Business Documents</h3>
+            <div class="document-grid">
+                ${renderDocumentItem(getDocUrl('frontSideID'), 'Front ID')}
+                ${renderDocumentItem(getDocUrl('backSideID'), 'Back ID')}
+                ${renderDocumentItem(getDocUrl('licensePreview'), 'Business License')}
+                ${renderDocumentItem(getDocUrl('permitDocument'), 'Permit')}
+            </div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Timestamps</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Registration Date: </span>
+                    <span class="info-value">${formatDisplayDate(shop.dateProcessed) || 'N/A'}</span>
+                </div>
+                <div class="info-item">
+                    ${shop.status === 'approved' ? `
+                        <span class="info-label">Approval Date: </span>
+                        <span class="info-value">${formatDisplayDate(shop.dateApproved)}</span>
+                    ` : ''}
+                    
+                    ${shop.status === 'rejected' ? `
+                        <span class="info-label">Rejection Date: </span>
+                        <span class="info-value">${formatDisplayDate(shop.dateRejected)}</span>
+                    ` : ''}
+                </div>
             </div>
         </div>
     `;
 }
 
+// format ng date and time
+function formatDisplayDate(isoString) {
+    if (!isoString) return 'N/A';
+    
+    const date = new Date(isoString);
+    if (isNaN(date)) return 'Invalid Date';
+
+    // Format time (1:19 AM)
+    const timeString = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // Format date (April 19, 2025)
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return `${timeString} ${month} ${day}, ${year}`;
+}
+
+function renderDocumentItem(url, title) {
+    return `
+    <div class="document-item">
+        <div class="document-title">${title}</div>
+        <a href="${url}" target="_blank" class="document-preview">
+            <img src="${url}" alt="${title}" 
+                 onerror="this.onerror=null;this.src='/images/no-document.png'">
+        </a>
+    </div>`;
+}
 
 // --- Shop Management Functions ---
 function showConfirmationDialog(e, actionType) {
@@ -311,7 +349,7 @@ function createShopRow(shopId, shop, status) {
         <td>${shop.ownerName || 'N/A'}</td>
         <td>${shop.email || 'N/A'}</td>
         <td><a href="#" data-id="${shopId}" class="view-link"><i class="fas fa-eye"></i> View</a></td>
-        <td>${shop.dateProcessed || 'Pending'}</td>
+        <td>${shop.dateProcessed ? formatDisplayDate(shop.dateProcessed) : 'Pending'}</td>
         ${status === 'rejected' ? `<td title="${shortenedText}">${shortenedText || 'No reason'}</td>` : ''}
         <td>
             ${status === 'pending' ?
@@ -325,17 +363,17 @@ function createShopRow(shopId, shop, status) {
 
     row.querySelector('.approve-btn')?.addEventListener('click', (e) => showConfirmationDialog(e, 'approve'));
     row.querySelector('.reject-btn')?.addEventListener('click', (e) => showConfirmationDialog(e, 'reject'));
-    row.querySelector('.view-link')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showModal(e);
-    });
+    row.querySelector('.view-link')?.addEventListener('click', (e) => e.preventDefault());
 
     return row;
 }
 
 // --- Event Listeners ---
 function initializeEventListeners() {
-    document.getElementById("closeModal")?.addEventListener("click", hideDialog);
+    document.getElementById('closeShopModal')?.addEventListener('click', function() {
+        document.getElementById('shopDetailsModal').classList.remove('show');
+        document.getElementById('overlay').classList.remove('show');
+    });
     
     // Menu toggle
     menuBtn?.addEventListener("click", function () {
@@ -370,6 +408,9 @@ function initializeEventListeners() {
         const shopRef = ref(db, `AR_shoe_users/shop/${currentShopId}`);
         const updateData = {
             status: currentAction === "approve" ? "approved" : "rejected",
+            dateProcessed: new Date().toISOString(),  // Update existing dateProcessed
+            ...(currentAction === "approve" && { dateApproved: new Date().toISOString() }),
+            ...(currentAction === "reject" && { dateRejected: new Date().toISOString() }),
             ...(reason && { rejectionReason: reason })
         };
     
@@ -406,10 +447,17 @@ function initializeEventListeners() {
     });
 
     overlay?.addEventListener('click', function () {
-        logoutDialog?.classList.remove('show');
-        dialog?.classList.remove('show');
-        modal?.classList.remove('show');
+        // Close all modals
+        document.querySelectorAll('.modal-dialog').forEach(modal => {
+            modal.classList.remove('show');
+        });
         this.classList.remove('show');
+    });
+
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('.view-link')) {
+            showShopModal(e);
+        }
     });
 }
 
