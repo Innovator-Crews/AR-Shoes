@@ -111,7 +111,7 @@ loginButton_shop.addEventListener('click', (event) => {
                     .then((snapshot) => {
                         if (snapshot.exists()) {
                             alert("Login successful");
-                            window.location.href = "shop_dashboard.html";
+                            window.location.href = "/shopowner/html/shop_dashboard.html";
                         } else {
                             alert("Account does not exist");
                             auth.signOut();

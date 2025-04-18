@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration - Shoe Shop Portal</title>
+    <link rel="stylesheet" href="/customer/css/customer_register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="padding: 0;">
+
+    <!-- Success Overlay -->
+    <div id="successOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Registration Successful!</h2>
+            <p>Your customer account has been created successfully. You can now log in and start shopping.</p>
+            <button id="closeOverlay" class="overlay-btn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Error Overlay -->
+    <div id="errorOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Registration Issues</h2>
+            <div id="errorMessages"></div>
+            <button id="closeErrorOverlay" class="overlay-btn">Back to Form</button>
+        </div>
+    </div>
+
+    <header class="register-header">
+        <div class="header-content">
+            <h1>Create Your Customer Account</h1>
+            <p>Join thousands of happy customers and discover the perfect shoes for you</p>
+            <div class="navigation-links">
+                <a href="/index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Landing Page</a>
+                <span>or</span>
+                <a href="/shopowner/html/shop_register.html" class="shop-link">Register as a Shop Instead</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="registration-container">
+        <div class="registration-form">
+            <form id="customerRegistrationForm">
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name*</label>
+                            <input type="text" id="firstName" name="firstName" required placeholder="Your first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name*</label>
+                            <input type="text" id="lastName" name="lastName" required placeholder="Your last name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number*</label>
+                        <div class="phone-input-container">
+                            <span class="country-code">+63</span>
+                            <input type="tel" id="phone" name="phone" required placeholder="9123456789" maxlength="10">
+                        </div>
+                        <small>Enter your 10-digit Philippine mobile number (without +63)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthDate">Date of Birth*</label>
+                        <input type="date" id="birthDate" name="birthDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="male">
+                                <span class="radio-custom"></span>
+                                Male
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="female">
+                                <span class="radio-custom"></span>
+                                Female
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="other">
+                                <span class="radio-custom"></span>
+                                Other
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="prefer-not-to-say">
+                                <span class="radio-custom"></span>
+                                Prefer not to say
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-map-marker-alt"></i> Address Information</h2>
+                    <div class="form-group">
+                        <label for="address">Street Address*</label>
+                        <input type="text" id="address" name="address" required placeholder="House number and street name">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City*</label>
+                            <input type="text" id="city" name="city" required placeholder="City">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="state">State/Province*</label>
+                            <input type="text" id="state" name="state" required placeholder="State">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zip">ZIP/Postal Code*</label>
+                            <input type="text" id="zip" name="zip" required placeholder="ZIP code">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country">Country*</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select country</option>
+                                <option value="Ph" selected>Philippines</option>
+                                <!-- Add more countries as needed -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-lock"></i> Account Security</h2>
+                    <div class="form-group">
+                        <label for="username">Username*</label>
+                        <input type="text" id="username" name="username" required placeholder="Choose a username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password*</label>
+                        <input type="password" id="password" name="password" required placeholder="Create a password">
+                        <div class="password-strength">
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-text">Password strength: Weak</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password*</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profilePhoto">Profile Photo</label>
+                        <div class="file-upload-container">
+                            <label for="profilePhoto" class="upload-label">
+                                <div class="upload-preview" id="profilePreview">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span>Upload Photo</span>
+                                </div>
+                            </label>
+                            <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*">
+                        </div>
+                        <small class="file-requirements">(JPEG or PNG - Max 2MB)</small>
+                    </div>
+                </div>
+
+                <div class="form-section terms-section">
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>*</label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="receiveUpdates" name="receiveUpdates" checked>
+                        <label for="receiveUpdates">I want to receive updates and promotional offers</label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe">Remember me for faster checkout</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <!-- this is button -->
+                    <button type="submit" id="registerButton" class="submit-btn">Create Account</button>
+                    <p class="form-note">* Required fields. By creating an account, you agree to our terms and conditions.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="registration-benefits">
+            <h2>Why Register With Us?</h2>
+            <div class="benefit-card">
+                <i class="fas fa-tags"></i>
+                <h3>Exclusive Deals</h3>
+                <p>Get access to special discounts and early sales notifications.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-heart"></i>
+                <h3>Wishlist</h3>
+                <p>Save your favorite items and get notified when prices drop.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-shipping-fast"></i>
+                <h3>Faster Checkout</h3>
+                <p>Save your shipping details for quicker purchases.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-history"></i>
+                <h3>Order History</h3>
+                <p>Track all your purchases and easily reorder favorites.</p>
+            </div>
+            
+            <div class="already-member">
+                <p>Already have an account?</p>
+                <a href="/user_login.html" class="login-link">Login to your account</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="register-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
+            <nav>
+                <a href="/extras/devonprocess.html">Privacy Policy</a>
+                <a href="/extras/devonprocess.html">Terms of Service</a>
+                <a href="/extras/devonprocess.html">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize file previews
+            setupFilePreview('profilePhoto', 'profilePreview', 'Profile Photo');
+
+            // Password strength indicator
+            const passwordInput = document.getElementById('password');
+            const strengthBars = document.querySelectorAll('.strength-bar');
+            const strengthText = document.querySelector('.strength-text');
+            
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                // Check length
+                if (password.length >= 8) strength++;
+                if (password.length >= 12) strength++;
+                
+                // Check for mixed case
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+                
+                // Check for numbers and special chars
+                if (/\d/.test(password)) strength++;
+                if (/[^a-zA-Z0-9]/.test(password)) strength++;
+                
+                // Update UI
+                strengthBars.forEach((bar, index) => {
+                    bar.style.backgroundColor = index < strength ? '#4CAF50' : '#e0e0e0';
+                });
+                
+                // Update text
+                if (strength <= 2) {
+                    strengthText.textContent = 'Password strength: Weak';
+                    strengthText.style.color = '#f44336';
+                } else if (strength <= 4) {
+                    strengthText.textContent = 'Password strength: Good';
+                    strengthText.style.color = '#FFC107';
+                } else {
+                    strengthText.textContent = 'Password strength: Strong';
+                    strengthText.style.color = '#4CAF50';
+                }
+            });
+
+            // Phone number validation
+            const phoneInput = document.getElementById('phone');
+            
+            phoneInput.addEventListener('input', function() {
+                // Remove any non-digit characters
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Validate length (10 digits for PH numbers without country code)
+                if (this.value.length > 10) {
+                    this.value = this.value.slice(0, 10);
+                }
+            });
+            
+            // Date of birth validation (must be at least 13 years old)
+            const birthDateInput = document.getElementById('birthDate');
+            const today = new Date();
+            const minDate = new Date();
+            minDate.setFullYear(today.getFullYear() - 120); // Max age 120 years
+            const maxDate = new Date();
+            maxDate.setFullYear(today.getFullYear() - 13); // Min age 13 years
+            
+            birthDateInput.max = maxDate.toISOString().split('T')[0];
+            birthDateInput.min = minDate.toISOString().split('T')[0];
+            
+            // Success overlay
+            function showSuccessOverlay() {
+                document.getElementById('successOverlay').classList.add('active');
+            }
+
+            function showErrorOverlay(errors) {
+                const errorContainer = document.getElementById('errorMessages');
+                errorContainer.innerHTML = '';
+                
+                errors.forEach(error => {
+                    const errorElement = document.createElement('p');
+                    errorElement.textContent = error;
+                    errorContainer.appendChild(errorElement);
+                });
+                
+                document.getElementById('errorOverlay').classList.add('active');
+            }
+
+            function closeOverlays() {
+                document.getElementById('successOverlay').classList.remove('active');
+                document.getElementById('errorOverlay').classList.remove('active');
+            }
+
+            // Add event listeners for overlay buttons
+            document.getElementById('closeOverlay').addEventListener('click', closeOverlays);
+            document.getElementById('closeErrorOverlay').addEventListener('click', closeOverlays);
+
+            // File preview setup
+            function setupFilePreview(inputId, previewId, defaultText) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                
+                input.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (!file) return;
+                    
+                    // Check file size (2MB max for profile photos)
+                    const maxSize = inputId === 'profilePhoto' ? 2 : 5;
+                    if (file.size > maxSize * 1024 * 1024) {
+                        alert(`File size exceeds ${maxSize}MB limit`);
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Check file type
+                    const validTypes = ['image/jpeg', 'image/png'];
+                    if (!validTypes.includes(file.type)) {
+                        alert('Only JPEG or PNG files are allowed');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // For image files
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button class="remove-preview" type="button">&times;</button>
+                        `;
+                        preview.classList.add('has-preview');
+                    }
+                    reader.readAsDataURL(file);
+                });
+                
+                // Handle click on preview container to remove file
+                preview.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-preview')) {
+                        e.stopPropagation();
+                        input.value = '';
+                        preview.innerHTML = `
+                            <i class="fas ${inputId === 'profilePhoto' ? 'fa-user-circle' : 'fa-file-upload'}"></i>
+                            <span>${defaultText}</span>
+                        `;
+                        preview.classList.remove('has-preview');
+                    }
+                });
+            }
+
+            // Form validation
+            document.getElementById('customerRegistrationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Clear previous errors
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('error');
+                    const errorMessage = group.querySelector('.error-message');
+                    if (errorMessage) errorMessage.remove();
+                });
+                
+                const errors = [];
+                
+                // Validate required fields
+                const requiredFields = [
+                    { id: 'firstName', name: 'First Name' },
+                    { id: 'lastName', name: 'Last Name' },
+                    { id: 'email', name: 'Email' },
+                    { id: 'phone', name: 'Phone Number' },
+                    { id: 'birthDate', name: 'Date of Birth' },
+                    { id: 'address', name: 'Street Address' },
+                    { id: 'city', name: 'City' },
+                    { id: 'state', name: 'State/Province' },
+                    { id: 'zip', name: 'ZIP/Postal Code' },
+                    { id: 'country', name: 'Country' },
+                    { id: 'username', name: 'Username' },
+                    { id: 'password', name: 'Password' },
+                    { id: 'confirmPassword', name: 'Confirm Password' }
+                ];
+                
+                requiredFields.forEach(field => {
+                    const element = document.getElementById(field.id);
+                    if (!element.value.trim()) {
+                        const formGroup = element.closest('.form-group');
+                        formGroup.classList.add('error');
+                        
+                        const errorElement = document.createElement('span');
+                        errorElement.className = 'error-message';
+                        errorElement.textContent = `${field.name} is required`;
+                        formGroup.appendChild(errorElement);
+                        
+                        errors.push(`${field.name} is required`);
+                    }
+                });
+                
+                // Validate email format
+                const email = document.getElementById('email').value;
+                if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    const formGroup = document.getElementById('email').closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = 'Please enter a valid email address';
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push('Please enter a valid email address');
+                }
+                
+                // Validate phone number
+                const phoneNumber = document.getElementById('phone').value;
+                if (phoneNumber && phoneNumber.length !== 10) {
+                    const formGroup = document.getElementById('phone').closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = 'Please enter a valid 10-digit Philippine mobile number';
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push('Please enter a valid 10-digit Philippine mobile number');
+                }
+                
+                // Validate password match
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                if (password && confirmPassword && password !== confirmPassword) {
+                    const formGroup = document.getElementById('confirmPassword').closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = 'Passwords do not match';
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push('Passwords do not match');
+                }
+                
+                // Validate password strength
+                if (password && password.length < 8) {
+                    const formGroup = document.getElementById('password').closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = 'Password must be at least 8 characters long';
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push('Password must be at least 8 characters long');
+                }
+                
+                // Validate terms agreement
+                if (!document.getElementById('agreeTerms').checked) {
+                    const formGroup = document.getElementById('agreeTerms').closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = 'You must agree to the Terms of Service and Privacy Policy';
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push('You must agree to the Terms of Service and Privacy Policy');
+                }
+                
+                // Show appropriate overlay
+                if (errors.length > 0) {
+                    showErrorOverlay(errors);
+                    // Scroll to first error
+                    document.querySelector('.form-group.error')?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                } else {
+                    // In a real app, you would submit to server here
+                    showSuccessOverlay();
+                    this.reset();
+                    
+                    // Reset file previews
+                    document.querySelectorAll('.upload-preview').forEach(preview => {
+                        preview.classList.remove('has-preview');
+                        const iconClass = preview.id === 'profilePreview' ? 'fa-user-circle' : 'fa-file-upload';
+                        preview.innerHTML = `<i class="fas ${iconClass}"></i><span>${preview.id === 'profilePreview' ? 'Profile Photo' : 'Upload File'}</span>`;
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="/customer/js/customer_register.js" type="module"></script>
+</body>
+</html>

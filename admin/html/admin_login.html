@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin_login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form action="#" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" required>
+                <button type="button" id="togglePassword">Show</button>
+            </div>
+            
+            <button type="submit" id="loginButton_customer">Login</button>
+            <!-- <a href="admin_dashboard.html">See dashboard here</a> -->
+            <br>
+            <a href="/index.html">See landing page here</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                this.textContent = 'Show';
+            }
+        });
+    </script>
+    <script src="/admin/js/admin_login.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Registration - Shoe Shop Portal</title>
+    <link rel="stylesheet" href="/shopowner/css/shop_register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="padding: 0;">
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="spinner"></div>
+            <h2>Processing Registration...</h2>
+            <p>Please wait while we submit your application</p>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="successOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Registration Successful!</h2>
+            <h4>We've sent a verification email to your email account. Kindly check it to proceed!</h4>
+            <p>Your shop registration has been submitted successfully. Our team will review your application and contact you shortly.</p>
+            <button id="closeOverlay" class="overlay-btn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Error Overlay -->
+    <!-- <div id="errorOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Registration Issues</h2>
+            <div id="errorMessages"></div>
+            <button id="closeErrorOverlay" class="overlay-btn">Back to Form</button>
+        </div>
+    </div> -->
+
+    <!-- Error Overlay -->
+    <div id="errorOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Registration Issues</h2>
+            <div class="error-container">
+                <div id="errorMessages" class="error-list">
+                    <!-- Errors will be inserted here -->
+                </div>
+            </div>
+            <button id="closeErrorOverlay" class="overlay-btn">Back to Form</button>
+        </div>
+    </div>
+
+    <header class="register-header">
+        <div class="header-content">
+            <h1>Register Your Shop</h1>
+            <p>Join our platform and showcase your products to thousands of customers</p>
+            <div class="navigation-links">
+                <a href="/index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Landing Page</a>
+                <span>or</span>
+                <a href="/customer/html/customer_register.html" class="customer-link">Be a Customer Instead</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="registration-container">
+        <div class="registration-form">
+            <form id="shopRegistrationForm">
+                <div class="form-section">
+                    <h2><i class="fas fa-store"></i> Shop Information</h2>
+                    <div class="form-group">
+                        <label for="shopName">Shop Name*</label>
+                        <input type="text" id="shopName" name="shopName" required placeholder="e.g. Urban Sneakers">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shopCategory">Shop Category*</label>
+                        <select id="shopCategory" name="shopCategory" required>
+                            <option value="">Select category</option>
+                            <option value="sneakers">Sneakers</option>
+                            <option value="formal">Formal Shoes</option>
+                            <option value="boots">Boots</option>
+                            <option value="sports">Sports Shoes</option>
+                            <option value="sandals">Sandals</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="shopDescription">Shop Description*</label>
+                        <textarea id="shopDescription" name="shopDescription" required placeholder="Tell us about your shop (50-200 words)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="yearsInBusiness">Years in Business</label>
+                        <input type="number" id="yearsInBusiness" name="yearsInBusiness" min="0" placeholder="e.g. 5">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Owner Information</h2>
+                    <div class="form-group">
+                        <label for="ownerName">Full Name*</label>
+                        <input type="text" id="ownerName" name="ownerName" required placeholder="Your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ownerEmail">Email*</label>
+                        <input type="email" id="ownerEmail" name="ownerEmail" required placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ownerPhone">Phone Number*</label>
+                        <div class="phone-input-container">
+                            <span class="country-code">+63</span>
+                            <input type="tel" id="ownerPhone" name="ownerPhone" required placeholder="9123456789" maxlength="10">
+                        </div>
+                        <small>Enter your 10-digit Philippine mobile number (without +63)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Government ID Verification*</label>
+                        <small class="instruction">Please upload clear photos/scans of both sides of your valid government-issued ID</small>
+                        
+                        <div class="id-upload-container">
+                            <div class="id-upload-section">
+                                <label for="ownerIdFront" class="upload-label">
+                                    <div class="upload-preview" id="frontPreview">
+                                        <i class="fas fa-id-card"></i>
+                                        <span>Front Side</span>
+                                    </div>
+                                </label>
+                                <input type="file" id="ownerIdFront" name="ownerIdFront" accept="image/*,.pdf" required>
+                                <small class="file-requirements">(JPEG, PNG, or PDF - Max 5MB)</small>
+                            </div>
+                            
+                            <div class="id-upload-section">
+                                <label for="ownerIdBack" class="upload-label">
+                                    <div class="upload-preview" id="backPreview">
+                                        <i class="fas fa-id-card"></i>
+                                        <span>Back Side</span>
+                                    </div>
+                                </label>
+                                <input type="file" id="ownerIdBack" name="ownerIdBack" accept="image/*,.pdf" required>
+                                <small class="file-requirements">(JPEG, PNG, or PDF - Max 5MB)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-map-marker-alt"></i> Location Information</h2>
+                    <div class="form-group">
+                        <label for="shopAddress">Shop Address*</label>
+                        <input type="text" id="shopAddress" name="shopAddress" required placeholder="Street address">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="shopCity">City*</label>
+                            <input type="text" id="shopCity" name="shopCity" required placeholder="City">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shopState">State/Province*</label>
+                            <input type="text" id="shopState" name="shopState" required placeholder="State">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="shopZip">ZIP/Postal Code*</label>
+                            <input type="text" id="shopZip" name="shopZip" required placeholder="ZIP code">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shopCountry">Country*</label>
+                            <select id="shopCountry" name="shopCountry" required>
+                                <option value="">Select country</option>
+                                <option value="Philippines">Philippines</option>
+                                <!-- Add more countries as needed -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-file-alt"></i> Business Documentation</h2>
+                    <div class="form-group">
+                        <label for="businessLicense">Mayor's Permit / Business License*</label>
+                        <div class="file-upload-container">
+                            <label for="businessLicense" class="upload-label">
+                                <div class="upload-preview" id="licensePreview">
+                                    <i class="fas fa-file-upload"></i>
+                                    <span>Upload File</span>
+                                </div>
+                            </label>
+                            <input type="file" id="businessLicense" name="businessLicense" accept="image/*,.pdf" required>
+                        </div>
+                        <small class="file-requirements">(JPEG, PNG, or PDF - Max 5MB)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taxId">Tax Identification Number*</label>
+                        <input type="text" id="taxId" name="taxId" required placeholder="Tax ID or EIN">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="permitDocument">Business Permit*</label>
+                        <div class="file-upload-container">
+                            <label for="permitDocument" class="upload-label">
+                                <div class="upload-preview" id="permitPreview">
+                                    <i class="fas fa-file-upload"></i>
+                                    <span>Upload File</span>
+                                </div>
+                            </label>
+                            <input type="file" id="permitDocument" name="permitDocument" accept="image/*,.pdf" required>
+                        </div>
+                        <small class="file-requirements">(JPEG, PNG, or PDF - Max 5MB)</small>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-lock"></i> Account Setup</h2>
+                    <div class="form-group">
+                        <label for="username">Username*</label>
+                        <input type="text" id="username" name="username" required placeholder="Choose a username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password*</label>
+                        <input type="password" id="password" name="password" required placeholder="Create a password">
+                        <div class="password-strength">
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-bar"></span>
+                            <span class="strength-text">Password strength: Weak</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password*</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                    </div>
+                </div>
+
+                <div class="form-section terms-section">
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>*</label>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="receiveUpdates" name="receiveUpdates">
+                        <label for="receiveUpdates">I want to receive updates and promotional offers</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="registerButton" class="submit-btn">Submit Application</button>
+                    <p class="form-note">* Required fields. Your application will be reviewed within 3-5 business days.</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="registration-benefits">
+            <h2>Why Register With Us?</h2>
+            <div class="benefit-card">
+                <i class="fas fa-users"></i>
+                <h3>Access to Customers</h3>
+                <p>Reach thousands of shoe enthusiasts looking for their next pair.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Boost Your Sales</h3>
+                <p>Increase your shop's visibility and grow your business.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-tools"></i>
+                <h3>Powerful Tools</h3>
+                <p>Manage inventory, track orders, and analyze sales with our dashboard.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <i class="fas fa-headset"></i>
+                <h3>Dedicated Support</h3>
+                <p>Our team is here to help you succeed on our platform.</p>
+            </div>
+            
+            <div class="already-member">
+                <p>Already have an account?</p>
+                <a href="/user_login.html" class="login-link">Login to your shop account</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="register-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Shoe Shop Portal. All rights reserved.</p>
+            <nav>
+                <a href="/extras/devonprocess.html">Privacy Policy</a>
+                <a href="/extras/devonprocess.html">Terms of Service</a>
+                <a href="/extras/devonprocess.html">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // Password strength indicator
+        const passwordInput = document.getElementById('password');
+        const strengthBars = document.querySelectorAll('.strength-bar');
+        const strengthText = document.querySelector('.strength-text');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            // Check length
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            
+            // Check for mixed case
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            
+            // Check for numbers and special chars
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            // Update UI
+            strengthBars.forEach((bar, index) => {
+                bar.style.backgroundColor = index < strength ? '#4CAF50' : '#e0e0e0';
+            });
+            
+            // Update text
+            if (strength <= 2) {
+                strengthText.textContent = 'Password strength: Weak';
+                strengthText.style.color = '#f44336';
+            } else if (strength <= 4) {
+                strengthText.textContent = 'Password strength: Good';
+                strengthText.style.color = '#FFC107';
+            } else {
+                strengthText.textContent = 'Password strength: Strong';
+                strengthText.style.color = '#4CAF50';
+            }
+        });
+
+        // Phone number validation
+        const phoneInput = document.getElementById('ownerPhone');
+        
+        phoneInput.addEventListener('input', function() {
+            // Remove any non-digit characters
+            this.value = this.value.replace(/\D/g, '');
+            
+            // Validate length (10 digits for PH numbers without country code)
+            if (this.value.length > 10) {
+                this.value = this.value.slice(0, 10);
+            }
+        });
+        
+        // Success overlay
+        function showSuccessOverlay() {
+            document.getElementById('successOverlay').classList.add('active');
+        }
+
+        function showErrorOverlay(errors) {
+            const errorContainer = document.getElementById('errorMessages');
+            errorContainer.innerHTML = '';
+            
+            errors.forEach(error => {
+                const errorElement = document.createElement('p');
+                errorElement.textContent = error;
+                errorContainer.appendChild(errorElement);
+            });
+            
+            document.getElementById('errorOverlay').classList.add('active');
+        }
+
+        function closeOverlays() {
+            document.getElementById('successOverlay').classList.remove('active');
+            document.getElementById('errorOverlay').classList.remove('active');
+        }
+
+        // Add event listeners for overlay buttons
+        document.getElementById('closeOverlay').addEventListener('click', closeOverlays);
+        document.getElementById('closeErrorOverlay').addEventListener('click', closeOverlays);
+
+        // Initialize all file upload previews
+        function initializeAllFilePreviews() {
+            // ID Uploads
+            setupFilePreview('ownerIdFront', 'frontPreview', 'Front Side');
+            setupFilePreview('ownerIdBack', 'backPreview', 'Back Side');
+            
+            // Business Documentation
+            setupFilePreview('businessLicense', 'licensePreview', 'Business License');
+            setupFilePreview('permitDocument', 'permitPreview', 'Business Permit');
+        }
+
+        // Enhanced file preview function
+        function setupFilePreview(inputId, previewId, defaultText) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            
+            input.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+                
+                // Check file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size exceeds 5MB limit');
+                    this.value = '';
+                    return;
+                }
+                
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Only JPEG, PNG, or PDF files are allowed');
+                    this.value = '';
+                    return;
+                }
+                
+                // For PDF files
+                if (file.type === 'application/pdf') {
+                    preview.innerHTML = `
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="file-name">${file.name}</span>
+                        <button class="remove-preview" type="button">&times;</button>
+                    `;
+                    preview.classList.add('has-preview');
+                    return;
+                }
+                
+                // For image files
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button class="remove-preview" type="button">&times;</button>
+                    `;
+                    preview.classList.add('has-preview');
+                }
+                reader.readAsDataURL(file);
+            });
+            
+            // Handle click on preview container to remove file
+            preview.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-preview')) {
+                    e.stopPropagation();
+                    input.value = '';
+                    preview.innerHTML = `
+                        <i class="fas ${inputId.includes('Id') ? 'fa-id-card' : 'fa-file-upload'}"></i>
+                        <span>${defaultText}</span>
+                    `;
+                    preview.classList.remove('has-preview');
+                }
+            });
+        }
+
+        // Initialize all previews when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAllFilePreviews();
+        });
+
+        // Initialize previews for both ID uploads
+        setupFilePreview('ownerIdFront', 'frontPreview');
+        setupFilePreview('ownerIdBack', 'backPreview');
+
+        // Form validation
+        document.getElementById('shopRegistrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+                const errorMessage = group.querySelector('.error-message');
+                if (errorMessage) errorMessage.remove();
+            });
+            
+            const errors = [];
+            
+            // Validate required fields
+            const requiredFields = [
+                { id: 'shopName', name: 'Shop Name' },
+                { id: 'shopCategory', name: 'Shop Category' },
+                { id: 'shopDescription', name: 'Shop Description' },
+                { id: 'ownerName', name: 'Owner Name' },
+                { id: 'ownerEmail', name: 'Email' },
+                { id: 'ownerPhone', name: 'Phone Number' },
+                { id: 'ownerIdFront', name: 'ID Front' },
+                { id: 'ownerIdBack', name: 'ID Back' },
+                { id: 'shopAddress', name: 'Shop Address' },
+                { id: 'shopCity', name: 'City' },
+                { id: 'shopState', name: 'State/Province' },
+                { id: 'shopZip', name: 'ZIP/Postal Code' },
+                { id: 'shopCountry', name: 'Country' },
+                { id: 'businessLicense', name: 'Business License' },
+                { id: 'taxId', name: 'Tax ID' },
+                { id: 'permitDocument', name: 'Business Permit' },
+                { id: 'username', name: 'Username' },
+                { id: 'password', name: 'Password' },
+                { id: 'confirmPassword', name: 'Confirm Password' }
+            ];
+            
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    const formGroup = element.closest('.form-group');
+                    formGroup.classList.add('error');
+                    
+                    const errorElement = document.createElement('span');
+                    errorElement.className = 'error-message';
+                    errorElement.textContent = `${field.name} is required`;
+                    formGroup.appendChild(errorElement);
+                    
+                    errors.push(`${field.name} is required`);
+                }
+            });
+            
+            // Validate password match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                const formGroup = document.getElementById('confirmPassword').closest('.form-group');
+                formGroup.classList.add('error');
+                
+                const errorElement = document.createElement('span');
+                errorElement.className = 'error-message';
+                errorElement.textContent = 'Passwords do not match';
+                formGroup.appendChild(errorElement);
+                
+                errors.push('Passwords do not match');
+            }
+            
+            // Validate phone number
+            const phoneNumber = document.getElementById('ownerPhone').value;
+            if (phoneNumber.length !== 10) {
+                const formGroup = document.getElementById('ownerPhone').closest('.form-group');
+                formGroup.classList.add('error');
+                
+                const errorElement = document.createElement('span');
+                errorElement.className = 'error-message';
+                errorElement.textContent = 'Please enter a valid 10-digit Philippine mobile number';
+                formGroup.appendChild(errorElement);
+                
+                errors.push('Please enter a valid 10-digit Philippine mobile number');
+            }
+            
+            // Validate terms agreement
+            if (!document.getElementById('agreeTerms').checked) {
+                const formGroup = document.getElementById('agreeTerms').closest('.form-group');
+                formGroup.classList.add('error');
+                
+                const errorElement = document.createElement('span');
+                errorElement.className = 'error-message';
+                errorElement.textContent = 'You must agree to the Terms of Service and Privacy Policy';
+                formGroup.appendChild(errorElement);
+                
+                errors.push('You must agree to the Terms of Service and Privacy Policy');
+            }
+            
+            // Show appropriate overlay
+            if (errors.length > 0) {
+                showErrorOverlay(errors);
+                // Scroll to first error
+                document.querySelector('.form-group.error')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } else {
+                // In a real app, you would submit to server here
+                showSuccessOverlay();
+                this.reset();
+            }
+        });
+    </script>
+    <script src="/shopowner/js/shop_register.js" type="module"></script>
+</body>
+</html>

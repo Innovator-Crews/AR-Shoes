@@ -1,0 +1,80 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.rejection-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    text-align: center;
+}
+
+.rejection-icon {
+    font-size: 5rem;
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+
+.rejection-reasons {
+    background-color: #fff8f8;
+    border-left: 4px solid #dc3545;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.rejection-reasons ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+.rejection-reasons li {
+    margin-bottom: 8px;
+}
+
+.rejection-actions {
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

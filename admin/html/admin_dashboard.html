@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/admin/css/admin_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+
+<body>
+
+
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Modal Dialog -->
+    <div id="shopDetailsModal" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalShopName">Shop Details</h2>
+                <button id="closeShopModal" class="close-modal">&times;</button>
+            </div>
+            <div id="modalShopContent" class="modal-body">
+                <!-- Dynamic content will load here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmationDialog" class="confirmation-dialog">
+        <p id="dialogMessage">Are you sure you want to perform this action?</p>
+        <!-- Add inside the confirmation-dialog, below <p id="dialogMessage"> -->
+        <!-- inadd koto -->
+        <textarea id="rejectionReason" placeholder="Enter reason for rejection..." class="rejection-reason"
+            style="display: none;" cols="50" rows="5"></textarea>
+        <div class="confirmation-buttons">
+            <button id="cancelAction" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmAction" class="approve-btn">
+                <i class="fas fa-check"></i> <span class="action-text">Confirm</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Dialog -->
+    <div id="logoutDialog" class="confirmation-dialog">
+        <p>Are you sure you want to logout?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelLogout" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmLogout" class="reject-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <nav>
+        <div class="nav-header">
+            <ul class="nav-links">
+                <li><a href="admin_dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li><a href="admin_pendingshops.html"><i class="fas fa-clock"></i> Pending Shops</a></li>
+                <li><a href="admin_approvedshops.html"><i class="fas fa-check-circle"></i> Approved Shops</a></li>
+                <li><a href="admin_rejectedshops.html"><i class="fas fa-times-circle"></i> Rejected Shops</a></li>
+                <li><a href="admin_login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="right-menu">
+                <span class="username-display">Admin</span>
+                <div class="menu-btn"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="animate-slide">Welcome to the Admin Dashboard</h1>
+        <br>
+        <!-- Pending Shops Section -->
+        <section id="pending-shops" class="animate-fade">
+            <h2><i class="fas fa-clock"></i> Pending Shops</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-alt"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-check"></i> Date Registered</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingShopsTableBody">
+                        <!-- data galing db -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Approved Shops Section -->
+        <section id="approved-shops" class="animate-fade">
+            <h2><i class="fas fa-check-circle"></i> Approved Shops History</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-alt"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-check"></i> Date Approved</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvedShopsTableBody">
+                        <!-- data galing db -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Rejected Shops Section -->
+        <section id="rejected-shops" class="animate-fade">
+            <h2><i class="fas fa-times-circle"></i> Rejected Shops History</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user-tie"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-certificate"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-check"></i> Date Rejected</th>
+                            <th><i class="fas fa-comment-dots"></i> Reason</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rejectedShopsTableBody">
+                        <!-- data galing db -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+    <script src="/admin/js/admin_dashboard.js" type="module"></script>
+</body>
+
+</html>

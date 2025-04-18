@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Shops - Admin</title>
+    <link rel="stylesheet" href="/admin/css/admin_rejectedshops.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+    
+    <!-- Confirmation Dialog -->
+    <div id="confirmationDialog" class="confirmation-dialog">
+        <p id="dialogMessage">Are you sure you want to perform this action?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelAction" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmAction" class="approve-btn"><i class="fas fa-check"></i> <span class="action-text">Confirm</span></button>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Dialog -->
+    <div id="logoutDialog" class="confirmation-dialog">
+        <p>Are you sure you want to logout?</p>
+        <div class="confirmation-buttons">
+            <button id="cancelLogout" class="cancel-btn"><i class="fas fa-times"></i> Cancel</button>
+            <button id="confirmLogout" class="reject-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <nav>
+        <div class="nav-header">
+            <ul class="nav-links">
+                <li><a href="/admin/html/admin_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/admin/html/admin_pendingshops.html"><i class="fas fa-clock"></i> Pending Shops</a></li>
+                <li><a href="/admin/html/admin_approvedshops.html"><i class="fas fa-check-circle"></i> Approved Shops</a></li>
+                <li><a href="/admin/html/admin_rejectedshops.html" class="active"><i class="fas fa-times-circle"></i> Rejected Shops</a></li>
+                <li><a href="/admin/html/admin_login.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="right-menu">
+                <span class="username-display">Admin</span>
+                <div class="menu-btn"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container animate-fade">
+        <h1 class="animate-slide"><i class="fas fa-times-circle"></i> Rejected Shops</h1>
+
+        <div class="search-container animate-slide">
+            <input type="text" id="shopSearch" placeholder="Search shops by id, name, owner, or email..." class="search-input">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            <button id="clearSearch" class="clear-btn"><i class="fas fa-eraser"></i> Clear</button>
+        </div>
+
+        <section id="rejected-shops" class="animate-fade">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> Shop ID</th>
+                            <th><i class="fas fa-store"></i> Shop Name</th>
+                            <th><i class="fas fa-user"></i> Owner</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-file-alt"></i> Business Permit</th>
+                            <th><i class="fas fa-calendar-day"></i> Date Submitted</th>
+                            <th><i class="fas fa-comment-alt"></i> Reason</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- nilagyan ko ng id -->
+                    <tbody id="rejectedShopsTableBody">
+                       <!-- dito papasok data galing db -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="pagination animate-fade">
+            <button class="pagination-btn" id="prevBtn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+            <button class="pagination-btn page-btn active">1</button>
+            <button class="pagination-btn" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script src="admin_rejectedshops.js" type="module"></script>
+</body>
+</html>
